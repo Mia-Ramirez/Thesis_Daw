@@ -31,31 +31,18 @@
 
         <center>
         <div class="head">
-            <h2> CUSTOMERS </h2>
+            <h2> EMPLOYEES </h2>
             <h4>Welcome, Admin!</h4>
         </div>
         </center>
 
         <div class="main">
-            <div class="card history">
-                <h3>HISTORY</h3>
-                <img class="pic" src="../../assets/images/history.png" alt="history">
-            </div>
-            <div class="card recovery">
-                <h3>ACCOUNT RECOVERY</h3>
-                <img class="pic" src="../../assets/images/recover.png" alt="recovery">
-            </div>
-            <a href="#">
-            <div class="card profile">
-                <h3>PROFILE</h3>
-                <img class="pic" src="../../assets/images/profile.png" alt="profile">
-            </div>
-            </a>
+            
         </div>
 
         <script>
             window.onload = function() {
-                setActivePage("nav_customer");
+                setActivePage("nav_employee");
             };
         </script>
     </body>

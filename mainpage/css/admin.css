@@ -17,7 +17,6 @@ font-family: 1rem;
 .report{
   width: 20rem;
 background-color: lightsalmon;
-margin: 1rem;
 padding: 0.2rem;
 }
 .grid {
@@ -106,7 +105,7 @@ padding: 0.2rem;
   color: white;
 }
 
-div.head {
+.head {
   width:100%;
   font-family:Arial;
   background-color:white;
@@ -168,5 +167,5 @@ i:hover{
 .menu {
   display: flex;
   align-items: center; /* Vertically align the items */
-  gap: 10px; /* Add spacing between the icon and the text */
+  gap: 20px; /* Add spacing between the icon and the text */
 }

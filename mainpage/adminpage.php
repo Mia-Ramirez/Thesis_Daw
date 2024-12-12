@@ -17,31 +17,35 @@ Admin Dashboard
 
 		<div class="menu">
 			<i class="fas fa-dashboard"></i>
-			<a href="#">Dashboard</a>
+			<a href="adminpage.php">Dashboard</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-shopping-bag"></i>
-			<a href="#">Shop</a>
+			<a href="shop.php">Shop</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-user"></i>
-			<a href="#">Customer</a>
+			<a href="customerpage.php">Customer</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-cart-shopping"></i>
-			<a href="#">Order</a>
+			<a href="order.php">Order</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-cash-register"></i>
-			<a href="#">Point of Sale</a>
+			<a href="pos.php">Point of Sale</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-warehouse"></i>
-			<a href="#">Inventory</a>
+			<a href="inventory.php">Inventory</a>
 		</div>
 		<div class="menu">
 			<i class="fas fa-chart-line"></i>
-			<a href="#">Sales Report</a>
+			<a href="salesReport.php">Sales Report</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-users"></i>
+			<a href="employee.php">Employee</a>
 		</div>
 </div>
 			

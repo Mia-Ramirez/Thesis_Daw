@@ -44,7 +44,7 @@ if (isset($_POST['signIn'])) {
         session_start();
         $row = $result->fetch_assoc();
         $_SESSION['email'] = $row['email'];
-        header("Location: customerpage.php");
+        header("Location: customerUser.php");
         exit;
     } 
     // Fixed email and password condition for admin

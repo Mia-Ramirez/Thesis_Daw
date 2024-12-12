@@ -30,4 +30,8 @@
         <i class="fas fa-chart-line"></i>
         <a href="../sales_report/index.php">Sales Report</a>
     </div>
+    <div id="nav_employee" class="menu">
+        <i class="fas fa-users"></i>
+        <a href="../employee/index.php">Employee</a>
+    </div>
 </div>

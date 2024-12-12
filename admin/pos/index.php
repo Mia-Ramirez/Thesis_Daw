@@ -25,13 +25,13 @@
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
-        <!-- <div class="topnav">
+        <div class="topnav">
             <a href="../../account/logout.php">Logout(Logged-in as Admin)</a>
-        </div> -->
+        </div>
 
         <center>
         <div class="head">
-            <h2> ADMIN DASHBOARD </h2>
+            <h2> POINT OF SALE </h2>
             <h4>Welcome, Admin!</h4>
         </div>
         </center>

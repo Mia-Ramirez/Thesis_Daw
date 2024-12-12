@@ -25,19 +25,34 @@
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
-        <!-- <div class="topnav">
+        <div class="topnav">
             <a href="../../account/logout.php">Logout(Logged-in as Admin)</a>
-        </div> -->
+        </div>
 
         <center>
         <div class="head">
-            <h2> ADMIN DASHBOARD </h2>
+            <h2> ORDERS </h2>
             <h4>Welcome, Admin!</h4>
         </div>
         </center>
 
         <div class="main">
-            
+            <div class="card history">
+                <h3>HISTORY</h3>
+                <img class="pic" src="../../assets/images/history.png" alt="history">
+            </div>
+            <div class="card cancel">
+                <h3>CANCELLED</h3>
+                <img class="pic" src="../../assets/images/cancel.png" alt="recovery">
+            </div>
+            <div class="card pickup">
+                <h3>FOR PICKUP</h3>
+                <img class="pic" src="../../assets/images/pickup.png" alt="recovery">
+            </div>
+            <div class="card new">
+                <h3>NEW ORDER</h3>
+                <img class="pic" src="../../assets/images/new.png" alt="profile">
+            </div>
         </div>
 
         <script>

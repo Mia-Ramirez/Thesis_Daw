@@ -31,7 +31,7 @@
 
         <center>
         <div class="head">
-            <h2> ADMIN DASHBOARD </h2>
+            <h2> DASHBOARD </h2>
             <h4>Welcome, Admin!</h4>
         </div>
         </center>

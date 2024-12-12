@@ -25,19 +25,30 @@
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
-        <!-- <div class="topnav">
+        <div class="topnav">
             <a href="../../account/logout.php">Logout(Logged-in as Admin)</a>
-        </div> -->
+        </div>
 
         <center>
         <div class="head">
-            <h2> ADMIN DASHBOARD </h2>
+            <h2> INVENTORY </h2>
             <h4>Welcome, Admin!</h4>
         </div>
         </center>
 
         <div class="main">
-            
+            <div class="card stock">
+                <h3>LOW STOCKS</h3>
+                <img class="pic" src="../../assets/images/stock.png" alt="history">
+            </div>
+            <div class="card category">
+                <h3>MEDS CATEGORIES</h3>
+                <img class="pic" src="../../assets/images/categories.png" alt="recovery">
+            </div>
+            <div class="card medicine">
+                <h3>MEDICINE</h3>
+                <img class="pic" src="../../assets/images/meds.png" alt="profile">
+            </div>
         </div>
 
         <script>

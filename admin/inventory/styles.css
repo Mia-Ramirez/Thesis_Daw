@@ -1,4 +1,4 @@
-.main{
+/* .main{
     width: 20%;
     background-color: lightcoral;
     border-radius: 20% solid black;
@@ -10,7 +10,7 @@
     margin-top: 10%;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-family: 1rem;
-}
+} */
 
 #logo{
     width: 100px;
@@ -55,3 +55,95 @@ i:hover{
     align-items: center; /* Vertically align the items */
     gap: 10px; /* Add spacing between the icon and the text */
 }
+
+.lamesa{
+    background-color: white;
+    width: 55%;
+    padding: 3%;
+    float: right;
+    font-family: Arial;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow:auto;
+    margin-top: 2%;
+    margin-right: 15%;
+
+}
+
+.lamesa td, .lamesa th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th{
+    width: 10%;
+}
+
+.lamesa tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+.lamesa tr:hover {
+    background-color: #ddd;
+}
+
+.lamesa th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: lightsalmon;
+    color: black;
+}
+
+.card {
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+/* .stock{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.category{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.medicine{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+} */
+
+.main{
+    margin-right: 15%;
+}
+
+.pic{
+    width: 20%;
+}
+  
