@@ -1,0 +1,191 @@
+  .pot{
+    width: 84%;
+    background-color: white;
+    border-radius: 20% solid black;
+    float: right;
+   margin-top: 1%;
+   margin-left: 2%;
+   font-size: 0.7rem;
+  }
+
+  .pots{
+    float: right;
+    margin-right: 58%;
+    margin-left: 3%;
+  }
+    
+.threecard,.twocard,.onecard{
+    width: 13rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+  }
+
+  .fivecard,.fourcard{
+    width: 13rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+  }
+
+  body{
+    background-color: lightsalmon;
+  }
+  .main{
+    width: 13rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    margin-top: 4%;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    background-color: white;
+    font-weight: bolder;
+    margin: 0.5rem;
+    text-align: center;
+  }
+  
+  .box{
+    box-sizing: border-box;
+    width: 85%;
+    background-color: white;
+  }
+  
+  #logo{
+    width: 100px;
+    float: left;
+    border-radius: 100%;
+    border: solid 2px black;
+    margin: 1.5rem;
+    margin-left: 3rem;
+  }
+  .topnav {
+    overflow: hidden;
+    background-color: transparent;
+    margin:0px;
+    vertical-align:top;
+    width: 100%;
+    height:9%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  .topnav a {
+    float: right;
+    text-align: center;
+    padding: 18px 20px;
+    text-decoration: none;
+    font-size: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    color: black;
+    display: block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .topnav a:hover {
+    color: lightsalmon;
+  }
+  
+  .topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .head {
+    width:100%;
+    font-family:Arial;
+    background-color:white;
+    color:black;
+    float:right;;
+    margin-top:0px;
+    margin-right:0px;
+    margin-left:10px;
+    top: 0;
+    right: 0;
+    overflow:hidden;
+    }
+  
+  
+  .sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: white;
+    padding-top: 10px;
+    padding-left:5px;
+    font-family:Arial;
+    
+  }
+  
+  .sidenav a,.dropdown-btn {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #050505;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  .sidenav a:hover, .dropdown-btn:hover {
+    color: lightsalmon;
+  }
+  
+  i{
+    padding:0.8rem 0.2rem;
+    border-radius:10px;
+    font-size:1.10rem;
+    cursor:pointer;
+    margin:0 15px;
+    transition:1s;
+  }
+  i:hover{
+    color:lightsalmon;
+    font-size:1.10rem;
+  }
+  .menu {
+    display: flex;
+    align-items: center; /* Vertically align the items */
+    gap: 20px; /* Add spacing between the icon and the text */
+  }
+  
+  

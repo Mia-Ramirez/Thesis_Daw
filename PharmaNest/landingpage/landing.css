@@ -1,0 +1,152 @@
+*{
+    text-decoration: none;
+}
+.photo{
+    background-image: url(gamot.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    
+}
+.descript{
+    width: 50%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    color: black;
+    text-shadow: 1px 1px beige;
+    font-size: 1rem;
+    margin: 2%; 
+    margin-right: 0%;
+    margin-left: 35%;
+    padding: 10%;
+    
+}
+.search{
+    background-color: transparent;
+    width: 70%;
+    margin-top: 2%;
+    margin-left: 0.5%;
+    margin-bottom: 0.5%;
+}
+input{
+    padding: 1%; 
+    width: 25%;
+}
+  .btns{
+    background-color: lightsalmon; 
+    padding: 1%;
+    border: solid 1px black;
+}
+.categories{
+    width: 90%;
+    background: transparent;
+    margin-right: 5%;
+    margin-left: 5%;
+}
+.meds{
+    float: left;
+    color:black;
+    background: lightsalmon;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    border-radius: 4px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    padding: 1%;
+    width: 10%;
+    text-align: center;
+    margin-top: 1.5%;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.meds a{
+    color:black;  
+}
+
+.meds :hover{
+    color: rgba(235, 227, 227, 0.897);
+    
+}
+.navbar{
+    background: linear-gradient(to bottom right, lightsalmon, white);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.navbar{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
+    padding-right: 15px;
+    padding-left: 15px;
+}
+.navdiv{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between;
+}
+.menu{
+    background-color: transparent;
+    float: left;
+    width: 50%;
+}
+.logo a{
+    font-size: 35px; 
+    font-weight: 600; 
+    color: white;
+}
+li{
+    list-style: none; 
+    display: inline-block;
+}
+.menu :hover{
+    color: lightgrey;
+}
+li a{
+    color: rgb(15, 15, 15); 
+    font-size: 18px; 
+    font-weight: bold; 
+    margin-right: 25px;
+}
+button{
+    background-color: lightsalmon; 
+    margin-left: 10px; 
+    border-radius: 2px; 
+    padding: 10px; 
+    width: 90px;
+    border: transparent;
+}
+.head {
+    width:100%;
+    font-family:Arial;
+    background-color:white;
+    color:black;
+    float:right;;
+    margin-top:0px;
+    margin-right:0px;
+    margin-left:10px;
+    top: 0;
+    right: 0;
+    overflow:hidden;
+}
+.title{
+    background-color: transparent;
+    width: 70%;
+    margin-top: 3%;
+    font-size: 1rem;
+    margin-left: 0%;
+}
+.container{
+    background: linear-gradient(to bottom right, lightsalmon, white);
+    padding: 2%;
+    padding-left: 4%;
+    text-align: justify;
+}
+.containers{
+    padding: 2%;
+    padding-left: 4%;
+    
+}
+footer{
+    background-color: lightsalmon;
+    text-align: center;
+    padding: 0.5%;
+    margin-top: 0.3%;
+}
