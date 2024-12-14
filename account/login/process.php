@@ -9,7 +9,7 @@
         $password = mysqli_real_escape_string($conn, $_POST['password']);
     
         // Query to check email and password in the database
-        $sqlCheck = "SELECT email, role, id, password FROM user WHERE email=\"$email_or_username\" OR username=\"$email_or_username\"";
+        $sqlCheck = "SELECT email, role, id, password, username FROM user WHERE email=\"$email_or_username\" OR username=\"$email_or_username\"";
         $result = mysqli_query($conn, $sqlCheck);
         
         if ($result->num_rows < 1){
@@ -22,13 +22,17 @@
         if ($result->num_rows > 0) {
             $row = mysqli_fetch_array($result);
             $hashedPasswordFromDb = $row["password"]; // Fetch password from your database
-            error_log("HERE: ".$hashedPasswordFromDb." | ".$password);
+            
             if (password_verify($password, $hashedPasswordFromDb)) {
                 $role = $row['role'];
 
                 // $_SESSION['user_email'] = $row['email'];
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_role'] = $role;
+                $_SESSION['user_name'] = $row['username'];
+
+                list($first_name, $creationDate) = explode("_", $row['username']);
+                $_SESSION['first_name'] = $first_name;
                 
                 if ($role == 'customer'){
                     header("Location: ../../customer/index.php");

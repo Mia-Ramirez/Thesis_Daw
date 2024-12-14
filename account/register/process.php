@@ -37,7 +37,7 @@
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
             $deletionDate = date('Y-m-d H:i:s', strtotime($currentDate . ' +1 day')); // add 1 day to current time
-            $username = $lastName."_".date('YmdHis');
+            $username = $firstName."_".$lastName."_".date('YmdHis');
             $reference_key = base64_encode("register|".$email."|".$deletionDate); // generate a random key
             $jsonData = json_encode([
                 "first_name" => $firstName,

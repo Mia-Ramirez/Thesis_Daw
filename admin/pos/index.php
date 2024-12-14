@@ -19,22 +19,14 @@
           } else if ($_SESSION["user_role"] == "pharmacist"){
             header("Location:../../pharmacist/dashboard/index.php");
           };
+          $current_page_title = "point of sale";
         } else {
             header("Location:../../account/index.php"); // Temporary while waiting for Landing
         };
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
-        <div class="topnav">
-            <a href="../../account/logout.php">Logout(Logged-in as Admin)</a>
-        </div>
-
-        <center>
-        <div class="head">
-            <h2> POINT OF SALE </h2>
-            <h4>Welcome, Admin!</h4>
-        </div>
-        </center>
+        <?php include '../components/top_nav.php'; ?>  
 
         <div class="main">
             
