@@ -12,24 +12,27 @@
 
     <body>
         <?php
-        session_start();
-        if (isset($_SESSION["user_role"])) {
-          if ($_SESSION["user_role"] == "customer"){
-            header("Location:../../customer/home/index.php");
-          } else if ($_SESSION["user_role"] == "pharmacist"){
-            header("Location:../../pharmacist/dashboard/index.php");
-          };
-          $current_page_title = "employees";
-        } else {
-            header("Location:../../account/index.php"); // Temporary while waiting for Landing
-        };
+            session_start();
+            $current_page_title = "employees";
+            include '../components/unauth_redirection.php';
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
         <?php include '../components/top_nav.php'; ?>  
 
         <div class="main">
-            
+          <div class="card create-account">
+              <h3>CREATE ACCOUNT</h3>
+              <img class="pic" src="../../assets/images/addAcct.png" alt="add_employee">
+          </div>
+          <div class="card accounts">
+              <h3>ACCOUNTS</h3>
+              <img class="pic" src="../../assets/images/acct.png" alt="list_employees">
+          </div>
+          <div class="card profile">
+              <h3>PROFILES</h3>
+              <img class="pic" src="../../assets/images/profile.png" alt="profile">
+          </div>
         </div>
 
         <script>

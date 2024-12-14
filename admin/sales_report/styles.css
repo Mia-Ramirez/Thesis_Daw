@@ -1,57 +1,49 @@
-.main{
-    width: 20%;
-    background-color: lightcoral;
-    border-radius: 20% solid black;
+.card{
+    width: 17%;
+    background-color: white;
     float: right;
-    margin-left: 60%;
-    font-size: 0.7rem;
-    display: flex;
-    position: absolute;
-    margin-top: 10%;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-family: 1rem;
-}
-
-#logo{
-    width: 100px;
-    float: left;
-    border-radius: 100%;
-    border: solid 2px black;
-    margin: 1.5rem;
-    margin-left: 3rem;
-}
-
-div.head {
-    width:100%;
-    font-family:Arial;
-    background-color:white;
-    color:black;
-    float:right;;
-    margin-top:0px;
-    margin-right:0px;
-    margin-left:10px;
-    top: 0;
-    right: 0;
-    overflow:hidden;
-}
-
-
-i{
-    padding:0.8rem 0.2rem;
-    border-radius:10px;
-    font-size:1.10rem;
-    cursor:pointer;
-    margin:0 15px;
-    transition:1s;
-}
-
-i:hover{
-    color:lightsalmon;
-    font-size:1.10rem;
-}
-
-.menu {
-    display: flex;
-    align-items: center; /* Vertically align the items */
-    gap: 10px; /* Add spacing between the icon and the text */
-}
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  
+  .main{
+    margin-right: 3%;
+  }
+  .pic{
+    width: 15%;
+  }
+  
+  .lamesa{
+    background-color: white;
+    width: 55%;
+    padding: 3%;
+    float: right;
+    font-family: Arial;
+    border-collapse: collapse;
+    border-radius: 5px;
+    overflow:auto;
+    margin-top: 2%;
+    margin-right: 15%;
+  
+  }
+  .lamesa td, .lamesa th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  th{
+    width: 10%;
+  }
+  .lamesa tr:nth-child(even){background-color: #f2f2f2;}
+  
+  .lamesa tr:hover {background-color: #ddd;}
+  
+  .lamesa th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: lightsalmon;
+    color: black;
+  }

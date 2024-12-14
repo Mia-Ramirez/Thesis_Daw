@@ -1,16 +1,18 @@
 .main{
-    width: 20%;
-    background-color: lightcoral;
-    border-radius: 20% solid black;
-    float: right;
-    margin-left: 60%;
-    font-size: 0.7rem;
-    display: flex;
-    position: absolute;
-    margin-top: 10%;
+    width: 13rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-family: 1rem;
-}
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    margin-top: 4%;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+  }
 
 .report{
     width: 20rem;
@@ -49,9 +51,11 @@
     width: 13rem;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 0.8rem;
+    float: left;
     padding-top: 0.2rem;
     padding-bottom: 0.2rem;
     padding-left: 1rem;
+    padding: 1rem;
     margin: 1rem;
     background-color: lightsalmon;
     color: black;
@@ -64,46 +68,5 @@
     background-color: white;
 }
 
-#logo{
-    width: 100px;
-    float: left;
-    border-radius: 100%;
-    border: solid 2px black;
-    margin: 1.5rem;
-    margin-left: 3rem;
-}
-
-div.head {
-    width:100%;
-    font-family:Arial;
-    background-color:white;
-    color:black;
-    float:right;;
-    margin-top:0px;
-    margin-right:0px;
-    margin-left:10px;
-    top: 0;
-    right: 0;
-    overflow:hidden;
-}
 
 
-i{
-    padding:0.8rem 0.2rem;
-    border-radius:10px;
-    font-size:1.10rem;
-    cursor:pointer;
-    margin:0 15px;
-    transition:1s;
-}
-
-i:hover{
-    color:lightsalmon;
-    font-size:1.10rem;
-}
-
-.menu {
-    display: flex;
-    align-items: center; /* Vertically align the items */
-    gap: 10px; /* Add spacing between the icon and the text */
-}

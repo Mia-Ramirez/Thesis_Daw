@@ -12,17 +12,9 @@
 
     <body>
         <?php
-        session_start();
-        if (isset($_SESSION["user_role"])) {
-          if ($_SESSION["user_role"] == "customer"){
-            header("Location:../../customer/home/index.php");
-          } else if ($_SESSION["user_role"] == "pharmacist"){
-            header("Location:../../pharmacist/dashboard/index.php");
-          };
-          $current_page_title = "inventory";
-        } else {
-            header("Location:../../account/index.php"); // Temporary while waiting for Landing
-        };
+            session_start();
+            $current_page_title = "inventory";
+            include '../components/unauth_redirection.php';
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
@@ -31,15 +23,15 @@
         <div class="main">
             <div class="card stock">
                 <h3>LOW STOCKS</h3>
-                <img class="pic" src="../../assets/images/stock.png" alt="history">
+                <img class="pic" src="../../assets/images/stock.png" alt="stock">
             </div>
             <div class="card category">
                 <h3>MEDS CATEGORIES</h3>
-                <img class="pic" src="../../assets/images/categories.png" alt="recovery">
+                <img class="pic" src="../../assets/images/categories.png" alt="category">
             </div>
             <div class="card medicine">
                 <h3>MEDICINE</h3>
-                <img class="pic" src="../../assets/images/meds.png" alt="profile">
+                <img class="pic" src="../../assets/images/meds.png" alt="medicine">
             </div>
         </div>
 

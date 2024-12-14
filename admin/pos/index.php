@@ -12,17 +12,9 @@
 
     <body>
         <?php
-        session_start();
-        if (isset($_SESSION["user_role"])) {
-          if ($_SESSION["user_role"] == "customer"){
-            header("Location:../../customer/home/index.php");
-          } else if ($_SESSION["user_role"] == "pharmacist"){
-            header("Location:../../pharmacist/dashboard/index.php");
-          };
-          $current_page_title = "point of sale";
-        } else {
-            header("Location:../../account/index.php"); // Temporary while waiting for Landing
-        };
+            session_start();
+            $current_page_title = "point of sale";
+            include '../components/unauth_redirection.php';
         ?>
         <?php include '../components/side_nav.php'; ?>
                 

@@ -29,8 +29,12 @@
         
         // Get the host name
         $host = $_SERVER['HTTP_HOST'];
+        $base_url = $protocol . $host;
+        if (strpos($base_url, "localhost") != false){
+            return $base_url . "/pharmanest/";
+        };
 
-        return $protocol . $host;
+        return $base_url;
     };
 
     function getCurrentURL() {

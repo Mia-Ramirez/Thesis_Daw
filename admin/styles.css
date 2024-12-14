@@ -76,3 +76,51 @@ body{
     background-color: #4CAF50;
     color: white;
 }
+
+.menu {
+    display: flex;
+    align-items: center; /* Vertically align the items */
+    gap: 10px; /* Add spacing between the icon and the text */
+}
+
+i{
+    padding:0.8rem 0.2rem;
+    border-radius:10px;
+    font-size:1.10rem;
+    cursor:pointer;
+    margin:0 15px;
+    transition:1s;
+}
+
+i:hover{
+    color:lightsalmon;
+    font-size:1.10rem;
+}
+
+#logo{
+    width: 100px;
+    float: left;
+    border-radius: 100%;
+    border: solid 2px black;
+    margin: 1.5rem;
+    margin-left: 3rem;
+}
+
+div.head {
+    width:100%;
+    font-family:Arial;
+    background-color:white;
+    color:black;
+    float:right;;
+    margin-top:0px;
+    margin-right:0px;
+    margin-left:10px;
+    top: 0;
+    right: 0;
+    overflow:hidden;
+}
+
+.card:hover{
+    background-color: lightcoral;
+    cursor: pointer;
+}

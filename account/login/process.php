@@ -1,5 +1,6 @@
 <?php 
     include('../../utils/connect.php');
+    include('../../utils/common_fx_and_const.php'); // getBaseURL
 
     session_start();
 
@@ -33,6 +34,7 @@
 
                 list($first_name, $creationDate) = explode("_", $row['username']);
                 $_SESSION['first_name'] = $first_name;
+                $_SESSION['BASE_URL'] = getBaseURL();
                 
                 if ($role == 'customer'){
                     header("Location: ../../customer/index.php");

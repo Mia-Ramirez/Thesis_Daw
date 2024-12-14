@@ -12,56 +12,47 @@
 
     <body>
         <?php
-        session_start();
-        if (isset($_SESSION["user_role"])) {
-          if ($_SESSION["user_role"] == "customer"){
-            header("Location:../../customer/home/index.php");
-          } else if ($_SESSION["user_role"] == "pharmacist"){
-            header("Location:../../pharmacist/dashboard/index.php");
-          };
-          $current_page_title = "dashboard";
-        } else {
-            header("Location:../../account/index.php"); // Temporary while waiting for Landing
-        };
+            session_start();
+            $current_page_title = "dashboard";
+            include '../components/unauth_redirection.php';
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
         <?php include '../components/top_nav.php'; ?>  
 
         <div class="pot">
-            <div class="pots">
-                <div id="two" class="card">
-                    <h2>0</h2>
-                    <p>Not Moving Meds</p>
-                </div>
-                <div id="four" class="card">
-                    <h2>0</h2>
-                    <p>Meds Shortage</p>
-                </div>
-            </div>
-            <div id="three" class="card">
+	        <div class="main">
+				<h2 style="text-align: center;">Today's Report</h2>
+				<br>
+				<div class="grid">
+					<div class="boxs"><h4>Total Sales</h4>
+					    <h3>0</h3>
+					</div>
+					<div class="boxs"><h4>Total Purchase</h4>
+					    <h3>0</h3>
+					</div>
+				</div>
+			</div>
+			
+            <div class="card">
                 <h2>0</h2>
                 <p>New Orders</p>
             </div>
-            <div id="one" class="card">
+
+            <div class="card">
+                <h2>0</h2>
+                <p>Meds Shortage</p>
+            </div>
+
+            <div class="card">
                 <h2>0</h2>
                 <p>Soon to Expire</p>
             </div>
-        </div>
 
-        <div class="main">
-            <div class="report">
-                <h2 style="text-align: center;">Today's Report</h2>
-                <div class="grid">
-                    <div class="box"><h4>Total Sales</h4>
-                        <h3>0</h3>
-                    </div>
-                    <div class="box"><h4>Total Purchase</h4>
-                        <h3>0</h3>
-                    </div>
-                </div>
+            <div class="card">
+                <h2>0</h2>
+                <p>Not Moving Meds</p>
             </div>
-        </div>
 
         <script>
             window.onload = function() {
