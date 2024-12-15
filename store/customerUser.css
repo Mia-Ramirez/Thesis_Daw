@@ -181,11 +181,20 @@ footer{
         transform: rotate(360deg);
     }
 }
-.ikot :hover{
+#ikot :hover{
     color: lightgrey;
     display: inline-block;
     animation: spin 2s linear infinite;
+    cursor: pointer;
 }
 .li :hover{
     color: lightgrey;
+    cursor: pointer;
+}
+.btn{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.btn :hover{
+    color: lightgrey;
+    cursor: pointer;
 }
