@@ -32,8 +32,8 @@
                 $_SESSION['user_role'] = $role;
                 $_SESSION['user_name'] = $row['username'];
 
-                list($first_name, $creationDate) = explode("_", $row['username']);
-                $_SESSION['first_name'] = $first_name;
+                // list($first_name, $creationDate) = explode("_", $row['username']);
+                $_SESSION['first_name'] = explode("_", $row['username'])[0];
                 $_SESSION['BASE_URL'] = getBaseURL();
                 
                 if ($role == 'customer'){
@@ -46,6 +46,7 @@
 
             } else {
                 $_SESSION["login_error"] = "Incorrect Password";
+                $_SESSION["email_username"] = $email_or_username;
                 header("Location:index.php");
             };
             exit;

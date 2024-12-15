@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2024 at 02:57 AM
+-- Generation Time: Dec 15, 2024 at 03:01 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,9 @@ CREATE TABLE `batch` (
   `expiration_date` date NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `medicine_id` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL
+  `employee_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `date_disposed` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -61,7 +63,9 @@ CREATE TABLE `customer` (
   `last_name` varchar(256) NOT NULL,
   `contact_number` varchar(25) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `address` text NOT NULL
+  `address` text NOT NULL,
+  `date_of_birth` date DEFAULT NULL,
+  `sex` varchar(7) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -76,8 +80,8 @@ CREATE TABLE `customer_order` (
   `medicine_list` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`medicine_list`)),
   `date_ordered` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(25) NOT NULL,
-  `prescription_id` int(11) DEFAULT NULL,
-  `reference_number` varchar(256) NOT NULL
+  `reference_number` varchar(256) NOT NULL,
+  `prescription_ids` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -111,7 +115,8 @@ CREATE TABLE `medicine` (
   `name` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `current_quantity` int(11) NOT NULL
+  `current_quantity` int(11) NOT NULL,
+  `prescription_is_required` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -142,7 +147,7 @@ CREATE TABLE `stock_movements` (
   `medicine_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `movement_type` varchar(25) NOT NULL,
-  `remarks` text NOT NULL
+  `reference` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -198,7 +203,7 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
-  `password` varchar(256) NOT NULL,
+  `password` varchar(256) DEFAULT NULL,
   `role` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -207,7 +212,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
-(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'admin');
+(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'admin')
+;
 
 --
 -- Indexes for dumped tables
@@ -240,8 +246,7 @@ ALTER TABLE `customer`
 --
 ALTER TABLE `customer_order`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `ordered_by` (`customer_id`),
-  ADD KEY `prescription_reference` (`prescription_id`);
+  ADD KEY `ordered_by` (`customer_id`);
 
 --
 -- Indexes for table `employee`

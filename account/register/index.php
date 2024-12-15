@@ -43,7 +43,7 @@
             </div>
             <div class="input-group">
                 <i class="fas fa-address-book"></i>
-                <input type="text" name="contact" id="contact" placeholder="Contact" required>
+                <input type="text" name="contact" id="contact" placeholder="Contact" required pattern="[+0-9]*" title="Only numbers and + are allowed">
                 <label for="contact">Contact Number (Digits Only)</label>
             </div>
             <div class="input-group">

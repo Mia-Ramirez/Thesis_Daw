@@ -8,6 +8,7 @@
     include('../../utils/common_fx_and_const.php'); // getBaseURL, enable_logging, enable_send_email
 
     if(isset($_POST['signUp'])){
+        session_start();
         $firstName= mysqli_real_escape_string($conn, $_POST['fName']);
         $lastName= mysqli_real_escape_string($conn, $_POST['lName']);
         $address= mysqli_real_escape_string($conn, $_POST['address']);
@@ -23,13 +24,15 @@
         $temp_record_result=$conn->query($checkTemporaryRecord);
 
         if ($user_result->num_rows > 0){
-            $_SESSION["register_error"] = "Email Address Already Exists !";
+            error_log("HERE: user_result");
+            $_SESSION["register_error"] = "Email Address Already Exists! Please proceed to Login or Forgot Password";
             header("Location:index.php");
-
+            exit;
         } else if ($temp_record_result->num_rows > 0) {
+            error_log("HERE: temp_record_result");
             $_SESSION["register_error"] = "User already submitted registration, please verify on your emai!";
             header("Location:index.php");
-
+            exit;
         } else{
             $currentDate = date('Y-m-d H:i');
                 
@@ -55,13 +58,8 @@
             };
             
             $base_url = getBaseURL();
-            if (strpos($base_url, "localhost") != false){
-                $link = $base_url . "/pharmanest/account/activate?key=$reference_key";
-            } else {
-                $link = $base_url . "/account/activate?key=$reference_key";
-            };
-            
-
+            $link = $base_url . "/account/activate?key=$reference_key";
+        
             if ($enable_logging == "1"){
                 error_log("This is a log message for debugging purposes: ".$link);
             };

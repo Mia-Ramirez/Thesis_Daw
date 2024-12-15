@@ -36,7 +36,7 @@
 	display: inline-block;
   }
   
-  input[type=submit]{
+  button#add-customer{
 	background-color: rgb(253, 253, 253);
 	color: rgb(5, 5, 5);
 	padding: 12px 20px;
@@ -47,6 +47,10 @@
 	margin-top:20px;
 	margin-left: 17%;
 	width: 60%;
+  }
+
+  button#add-customer:hover {
+	background-color: lightcoral;
   }
   
   

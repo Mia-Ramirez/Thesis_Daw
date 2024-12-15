@@ -37,21 +37,45 @@
             $password = $dataArray['password'];
             $role = $dataArray['role'];
 
-            $sqlInsertUser = "INSERT INTO user(username , email , password , role) VALUES ('$username','$email','$password', '$role')";
-            if(!mysqli_query($conn,$sqlInsertUser)){
-                die("Something went wrong");
-            };
-
-            $user_id = mysqli_insert_id($conn);
-            
             $contact = $dataArray['contact'];
             $address = $dataArray['address'];
             $first_name = $dataArray['first_name'];
             $last_name = $dataArray['last_name'];
 
-            $sqlInsertCustomer = "INSERT INTO customer(first_name , last_name , contact_number , address, user_id) VALUES ('$first_name','$last_name','$contact', '$address', '$user_id')";
-            if(!mysqli_query($conn,$sqlInsertCustomer)){
-                die("Something went wrong");
+
+            $checkCustomer="SELECT c.id AS customer_id, u.id AS user_id FROM customer c LEFT JOIN user u ON c.user_id=u.id WHERE c.first_name='$first_name' AND c.last_name='$last_name' AND (c.contact_number='$contact' OR u.email='$email')";
+            error_log("HERE: checkCustomer ".$checkCustomer);
+            $customer_result=$conn->query($checkCustomer);
+            $user_id = NULL;
+            
+            if ($customer_result->num_rows != 0){
+                $row = mysqli_fetch_array($customer_result);
+                $user_id = $row['user_id'];
+                error_log("HERE: user_id ".$user_id);
+            };
+            
+            if ($user_id == NULL){
+                $sqlInsertUser = "INSERT INTO user(username , email , password , role) VALUES ('$username','$email','$password', '$role')";
+                if(!mysqli_query($conn,$sqlInsertUser)){
+                    die("Something went wrong");
+                };
+                $user_id = mysqli_insert_id($conn);
+            };
+
+            if ($customer_result->num_rows == 0){
+                $sqlInsertCustomer = "INSERT INTO customer(first_name , last_name , contact_number , address, user_id) VALUES ('$first_name','$last_name','$contact', '$address', '$user_id')";
+                error_log("HERE: sqlInsertCustomer ".$sqlInsertCustomer);
+                if(!mysqli_query($conn,$sqlInsertCustomer)){
+                    die("Something went wrong");
+                };
+
+            } else {
+                $customer_id = $row['customer_id'];
+                $sqlUpdateCustomer = "UPDATE customer SET first_name = '$first_name', last_name = '$last_name', contact_number = '$contact', address='$address', user_id='$user_id' WHERE id='$customer_id'";
+                error_log("HERE: customer_id ".$customer_id." | sqlUpdateCustomer ".$sqlUpdateCustomer);
+                if(!mysqli_query($conn,$sqlUpdateCustomer)){
+                    die("Something went wrong");
+                };
             };
             
             $sqlDelete = "DELETE FROM temporary_record WHERE reference_key=\"$reference_key\"";

@@ -27,7 +27,7 @@
         <form method="post" action="process.php">
           <div class="input-group">
               <i class="fas fa-envelope"></i>
-              <input type="text" name="email_or_username" id="email_or_username" placeholder="Email or Username" required>
+              <input type="text" name="email_or_username" id="email_or_username" placeholder="Email or Username" required value="<?php if(isset($_SESSION["email_username"])){echo $_SESSION["email_username"];unset($_SESSION["email_username"]);}?>">
               <label for="email_or_username">Email or Username</label>
           </div>
           <div class="input-group">
@@ -36,7 +36,7 @@
               <label for="password">Password</label>
           </div>
           <p class="recover">
-            <a href="#">Recover Password</a>
+            <a href="../recover/index.php">Recover Password</a>
           </p>
          <input type="submit" class="btn" value="Sign In" name="signIn">
         </form>

@@ -20,6 +20,15 @@
                 
         <?php include '../../components/top_nav.php'; ?>  
 
+        <?php
+            include('../../../utils/connect.php');
+            $sqlGetLogs = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email FROM customer c
+                            LEFT JOIN user u ON c.user_id=u.id
+                            ORDER BY c.id DESC";
+    
+            $result = mysqli_query($conn,$sqlGetLogs);
+        ?>
+
         <div class="search">
             <form method="GET" action="">
                 <input type="text" name="query" placeholder="Search anything..." required>
@@ -41,7 +50,23 @@
                 </thead>
 
                 <tbody>
+                    <?php
+                    while($data = mysqli_fetch_array($result)){
+                    ?>
+                    <tr>
+                        
+                        <td><?php echo $data["first_name"];?></td>
+                        <td><?php echo $data["last_name"];?></td>
+                        <td><?php echo $data["address"];?></td>
+                        <td><?php echo $data["contact_number"];?></td>
+                        <td><?php echo $data["email"];?></td>
+                        <td>
 
+                        </td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
                 </tbody>
 
             </table>
