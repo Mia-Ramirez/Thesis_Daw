@@ -22,7 +22,7 @@
 
         <?php
             include('../../../utils/connect.php');
-            $sqlGetLogs = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email FROM customer c
+            $sqlGetLogs = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
                             ORDER BY c.id DESC";
     
@@ -61,7 +61,7 @@
                         <td><?php echo $data["contact_number"];?></td>
                         <td><?php echo $data["email"];?></td>
                         <td>
-
+                            <a href="./edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>">Edit</a> | <a href="#">Delete</a>
                         </td>
                     </tr>
                     <?php
