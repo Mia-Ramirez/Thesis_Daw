@@ -32,7 +32,7 @@
                                 echo $_SESSION["message_string"];
                                 ?>
                             </div>
-                            <hr style="border: 1px solid #000 !important; width: 80%; margin: 20px auto;">
+                            
                         <?php
                         unset($_SESSION["message_string"]);
                         unset($_SESSION["message_class"]);
@@ -58,10 +58,10 @@
                             <p class="column">
                                 <label for="sex">Sex: </label><br>
                                 <select id="sex" name="sex" required>
-                                        <option value="selected">Select</option>
-                                        <option>Female</option>
-                                        <option>Male</option>
-                                        <option>Others</option>
+                                    <option value="">Select</option>
+                                    <option>Female</option>
+                                    <option>Male</option>
+                                    <option>Others</option>
                                 </select>
                             </p>
                         </div>
@@ -70,7 +70,7 @@
                     <div class="column">
                         <p>
                             <label for="contact_number">Contact Number: </label><br>
-                            <input type="text" name="contact_number" required>
+                            <input type="text" name="contact_number" required pattern="[+0-9]*" title="Only numbers and + are allowed">
                         </p>
 
                         <p>
@@ -85,7 +85,7 @@
                     </div>
                     
                 
-                    <button name="action" id="add-customer" value="add_customer">Submit</button>
+                    <button name="action" id="add-customer" value="add_customer">Add</button>
                 </form>
             </div>
         </div>
