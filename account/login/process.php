@@ -38,7 +38,7 @@
                 
                 if ($role == 'customer'){
                     header("Location: ../../customer/index.php");
-                } else if ($role == 'admin'){
+                } else if (strpos($role, "admin") !== false) {
                     header("Location: ../../admin/index.php");
                 } else {
                     header("Location: ../../pharmacist/index.php");
