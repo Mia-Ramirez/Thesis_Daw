@@ -38,7 +38,7 @@
         <?php 
             if (isset($_SESSION["message_string"])) {
             ?>
-                <hr style="border: 1px solid #000 !important; width: 80%; margin: 20px auto;">
+                
                 <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
                     <?php 
                     echo $_SESSION["message_string"];

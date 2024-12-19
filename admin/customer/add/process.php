@@ -55,7 +55,7 @@
                     die("Something went wrong");
                 };
 
-                $_SESSION["message_string"] = "Customer added successfully";
+                $_SESSION["message_string"] = "Customer added successfully!";
                 $_SESSION["message_class"] = "success";
                 header("Location:index.php");
                 exit;

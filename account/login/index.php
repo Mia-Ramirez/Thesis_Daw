@@ -49,7 +49,7 @@
         // DISPLAY SUCCESS MESSAGE WHEN REGISTRATION SUCCEEDED
         if (isset($_SESSION["register_success"])) {
         ?>
-        <hr style="border: 1px solid #000 !important; width: 80%; margin: 20px auto;">
+        
         <div class="alert alert-success">
             <?php 
             echo $_SESSION["register_success"];
@@ -62,7 +62,7 @@
         // DISPLAY ERROR MESSAGE WHEN EMAIL IS NOT YET REGISTERED OR WRONG PASSWORD
         if (isset($_SESSION["login_error"])) {
         ?>
-        <hr style="border: 1px solid #000 !important; width: 80%; margin: 20px auto;">
+        
         <div class="alert alert-danger">
             <?php 
             echo $_SESSION["login_error"];

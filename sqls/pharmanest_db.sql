@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 15, 2024 at 03:01 PM
+-- Generation Time: Dec 19, 2024 at 01:41 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -48,7 +48,8 @@ CREATE TABLE `batch` (
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `covered_by_discount` tinyint(1) NOT NULL
+  `applicable_discounts` varchar(25) NOT NULL,
+  `prescription_is_required` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -65,7 +66,8 @@ CREATE TABLE `customer` (
   `user_id` int(11) DEFAULT NULL,
   `address` text NOT NULL,
   `date_of_birth` date DEFAULT NULL,
-  `sex` varchar(7) DEFAULT NULL
+  `sex` varchar(7) DEFAULT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -80,8 +82,7 @@ CREATE TABLE `customer_order` (
   `medicine_list` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`medicine_list`)),
   `date_ordered` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(25) NOT NULL,
-  `reference_number` varchar(256) NOT NULL,
-  `prescription_ids` longtext DEFAULT NULL
+  `reference_number` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -115,8 +116,7 @@ CREATE TABLE `medicine` (
   `name` int(11) NOT NULL,
   `price` int(11) NOT NULL,
   `category_id` int(11) DEFAULT NULL,
-  `current_quantity` int(11) NOT NULL,
-  `prescription_is_required` tinyint(1) NOT NULL
+  `current_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -204,16 +204,16 @@ CREATE TABLE `user` (
   `username` varchar(256) NOT NULL,
   `email` varchar(256) NOT NULL,
   `password` varchar(256) DEFAULT NULL,
-  `role` varchar(25) NOT NULL
+  `role` varchar(25) NOT NULL,
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`) VALUES
-(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'admin')
-;
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `is_active`) VALUES
+(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 1);
 
 --
 -- Indexes for dumped tables

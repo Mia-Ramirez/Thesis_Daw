@@ -10,7 +10,7 @@
         $password = mysqli_real_escape_string($conn, $_POST['password']);
     
         // Query to check email and password in the database
-        $sqlCheck = "SELECT email, role, id, password, username FROM user WHERE email=\"$email_or_username\" OR username=\"$email_or_username\"";
+        $sqlCheck = "SELECT email, role, id, password, username, is_active FROM user WHERE email=\"$email_or_username\" OR username=\"$email_or_username\"";
         $result = mysqli_query($conn, $sqlCheck);
         
         if ($result->num_rows < 1){
@@ -38,12 +38,15 @@
                 
                 if ($role == 'customer'){
                     header("Location: ../../customer/index.php");
-                } else if ($role == 'admin'){
+                } else if (strpos($role, "admin") !== false) {
                     header("Location: ../../admin/index.php");
                 } else {
                     header("Location: ../../pharmacist/index.php");
                 };
-
+            } else if ($row['is_active'] == 0){
+                $_SESSION["login_error"] = "Your Account is disabled/inactive, please contact the Admin";
+                $_SESSION["email_username"] = $email_or_username;
+                header("Location:index.php");
             } else {
                 $_SESSION["login_error"] = "Incorrect Password";
                 $_SESSION["email_username"] = $email_or_username;

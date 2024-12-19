@@ -24,12 +24,10 @@
         $temp_record_result=$conn->query($checkTemporaryRecord);
 
         if ($user_result->num_rows > 0){
-            error_log("HERE: user_result");
             $_SESSION["register_error"] = "Email Address Already Exists! Please proceed to Login or Forgot Password";
             header("Location:index.php");
             exit;
         } else if ($temp_record_result->num_rows > 0) {
-            error_log("HERE: temp_record_result");
             $_SESSION["register_error"] = "User already submitted registration, please verify on your emai!";
             header("Location:index.php");
             exit;

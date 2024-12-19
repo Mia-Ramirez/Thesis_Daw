@@ -23,7 +23,8 @@
                     <li><a href="#">Home</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
-                    <li><a href="./account/register/index.php">SignUp</a></li>
+                    <li><a href="./account/login/index.php">Sign In</a></li>
+                    <li><a href="./account/register/index.php">Sign Up</a></li>
                 </ul>
             </div>
 		</div>

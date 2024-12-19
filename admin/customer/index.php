@@ -21,12 +21,12 @@
         <?php include '../components/top_nav.php'; ?>  
 
         <div class="main">
-            <!-- <div class="card account-recovery" onclick="redirectToPage('recover')">
-                <h3>REQUEST RECOVERY</h3>
+            <div class="card account-recovery" onclick="redirectToPage('archived')">
+                <h3>RECOVER ARCHIVED</h3>
                 <img class="pic" src="../../assets/images/recover.png" alt="recovery">
-            </div> -->
-            <div class="card">
             </div>
+            <!-- <div class="card">
+            </div> -->
             <div class="card add-customer" onclick="redirectToPage('add')">
                 <h3>ADD CUSTOMER</h3>
                 <img class="pic" src="../../assets/images/addAcct.png" alt="add_customer">
