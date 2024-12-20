@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "list of customers";
+            $current_page_title = "recover archived customers";
             include '../../components/unauth_redirection.php';
         ?>
         <?php include '../../components/side_nav.php'; ?>
@@ -27,13 +27,13 @@
                 $query = $_GET['query'];
                 $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=1 OR u.is_active=1) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
+                            WHERE (c.is_active=0 OR u.is_active=0) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
                             ORDER BY c.id DESC";
             } else {
                 $query = NULL;
                 $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
-                            WHERE c.is_active=1 OR u.is_active=1
+                            WHERE c.is_active=0 OR u.is_active=0
                             ORDER BY c.id DESC";
             }
             
@@ -42,7 +42,7 @@
 
         <div class="search">
             <form method="GET" action="">
-                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+            <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                 <button class="btns" type="submit">Search</button>
             </form>
         </div>
@@ -85,8 +85,8 @@
                         <td><?php echo $data["contact_number"];?></td>
                         <td><?php echo $data["email"];?></td>
                         <td>
-                            <a href="../edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>">Edit</a>
-                            | <a href="../archive/index.php?customer_id=<?php echo $data["customer_id"]; ?>">Archive</a>
+                            <a href="./process.php?action=recover&customer_id=<?php echo $data["customer_id"]; ?>">Recover</a>
+                            <!-- | <a href="./process.php?action=delete&customer_id=<?php?>">Delete</a> -->
                         </td>
                     </tr>
                     <?php

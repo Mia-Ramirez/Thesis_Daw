@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "add customer";
+            $current_page_title = "update customer details";
             include '../../components/unauth_redirection.php';
         ?>
         
@@ -22,6 +22,27 @@
                 
         <?php include '../../components/top_nav.php'; ?>  
 
+
+        <?php
+            include('../../../utils/connect.php');
+            if (isset($_GET['customer_id'])) {
+                $customer_id = $_GET['customer_id'];
+                $_SESSION["customer_id"] = $customer_id;
+                $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email FROM customer c
+                            LEFT JOIN user u ON c.user_id=u.id
+                            WHERE c.id=$customer_id";
+
+                $customer_result = mysqli_query($conn,$sqlGetCustomer);
+                if ($customer_result->num_rows == 0){
+                    header("Location:../../../page/404.php");
+                }
+
+                $row = mysqli_fetch_array($customer_result);
+                
+            } else {
+                header("Location:../../../page/404.php");
+            };
+        ?>
         <div class="main">
             <div class="row">
                 <?php
@@ -42,26 +63,26 @@
                     <div class="column">
                         <p>
                             <label for="first_name">First Name:</label><br>
-                            <input type="text" name="first_name" required>
+                            <input type="text" name="first_name" value="<?php echo $row['first_name'];?>" required>
                         </p>
 
                         <p>
                             <label for="last_name">Last Name:</label><br>
-                            <input type="text" name="last_name" required>
+                            <input type="text" name="last_name" value="<?php echo $row['last_name'];?>" required>
                         </p>
 
                         <div class="row">
                             <p class="column">
                                 <label for="date_of_birth">Date of Birth:</label><br>
-                                <input type="date" name="date_of_birth" required>
+                                <input type="date" name="date_of_birth" value="<?php echo $row['date_of_birth'];?>" required>
                             </p>
                             <p class="column">
                                 <label for="sex">Sex: </label><br>
                                 <select id="sex" name="sex" required>
                                     <option value="">Select</option>
-                                    <option>Female</option>
-                                    <option>Male</option>
-                                    <option>Others</option>
+                                    <option <?php if ($row['sex'] == "Female"){echo "selected";};?>>Female</option>
+                                    <option <?php if ($row['sex'] == "Male"){echo "selected";};?>>Male</option>
+                                    <option <?php if ($row['sex'] == "Others"){echo "selected";};?>>Others</option>
                                 </select>
                             </p>
                         </div>
@@ -70,22 +91,22 @@
                     <div class="column">
                         <p>
                             <label for="contact_number">Contact Number: </label><br>
-                            <input type="text" name="contact_number" required pattern="[+0-9]*" title="Only numbers and + are allowed">
+                            <input type="text" name="contact_number" value="<?php echo $row['contact_number'];?>" required pattern="[+0-9]*" title="Only numbers and + are allowed">
                         </p>
 
                         <p>
                             <label for="address">Address:</label><br>
-                            <input type="text" name="address" required>
+                            <input type="text" name="address" value="<?php echo $row['address'];?>" required>
                         </p>
 
                         <p>
                             <label for="email">Email Address:</label><br>
-                            <input type="email" name="email">
+                            <input type="email" name="email" value="<?php echo $row['email'];?>">
                         </p>
                     </div>
                     
                 
-                    <button name="action" id="add-customer" value="add_customer">Add</button>
+                    <button name="action" id="update-customer" value="update_customer">Update</button>
                 </form>
             </div>
         </div>
