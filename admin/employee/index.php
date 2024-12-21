@@ -21,21 +21,25 @@
         <?php include '../components/top_nav.php'; ?>  
 
         <div class="main">
-          <div class="card create-account">
-              <h3>CREATE ACCOUNT</h3>
-              <img class="pic" src="../../assets/images/addAcct.png" alt="add_employee">
-          </div>
-          <div class="card accounts">
-              <h3>ACCOUNTS</h3>
-              <img class="pic" src="../../assets/images/acct.png" alt="list_employees">
-          </div>
-          <div class="card profile">
-              <h3>PROFILES</h3>
-              <img class="pic" src="../../assets/images/profile.png" alt="profile">
-          </div>
+            <div class="card account-recovery" onclick="redirectToPage('archived')">
+                <h3>ARCHIVED</h3>
+                <img class="pic" src="../../assets/images/recover.png" alt="recovery">
+            </div>
+            <div class="card create-account" onclick="redirectToPage('add')">
+                <h3>CREATE ACCOUNT</h3>
+                <img class="pic" src="../../assets/images/addAcct.png" alt="add_employee">
+            </div>
+            <div class="card accounts" onclick="redirectToPage('list')">
+                <h3>ACCOUNTS</h3>
+                <img class="pic" src="../../assets/images/acct.png" alt="list_employees">
+            </div>
         </div>
 
         <script>
+            function redirectToPage(page) {
+                window.location.href = './'+page+'/index.php';
+            };
+
             window.onload = function() {
                 setActivePage("nav_employee");
             };

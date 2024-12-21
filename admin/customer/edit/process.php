@@ -26,25 +26,25 @@
                 $customer_result=$conn->query($checkCustomer);
                 
                 if ($customer_result->num_rows != 0){
-                    $_SESSION["message_string"] = "This Customer Already Exists !";
+                    $_SESSION["message_string"] = "This Customer/Contact Number already exists/used !";
                     $_SESSION["message_class"] = "danger";
                     header("Location:index.php?customer_id=".$customer_id);
                     exit;
                 };
 
-                $sqlGetCurrentRecord = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, c.user_id FROM customer c
+                $sqlGetCurrentRecord = "SELECT c.user_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
                             WHERE c.id=$customer_id";
                 
                 $result = mysqli_query($conn,$sqlGetCurrentRecord);
                 $row = mysqli_fetch_array($result);
                 $user_id = $row['user_id'];
-                error_log("HERE: user_id ".$user_id." | ".is_null($user_id));
+                
                 if ($email && !is_null($user_id)){
                     $checkUser="SELECT * FROM user WHERE email='$email' AND id!=$user_id";
                     $user_result=$conn->query($checkUser);
                     if ($user_result->num_rows > 0){
-                        $_SESSION["message_string"] = "Email Address Already Exists !";
+                        $_SESSION["message_string"] = "Email Address already used !";
                         $_SESSION["message_class"] = "danger";
                         header("Location:index.php?customer_id=".$customer_id);
                         exit;
@@ -73,7 +73,6 @@
                     $sqlUpdateCustomer = "UPDATE customer SET first_name='$first_name', last_name='$last_name', contact_number='$contact_number', address='$address', sex='$sex', date_of_birth='$date_of_birth' WHERE id='$customer_id'";
                 };
                 
-                error_log("HERE: sqlUpdateCustomer ".$sqlUpdateCustomer);
                 if(!mysqli_query($conn,$sqlUpdateCustomer)){
                     die("Something went wrong");
                 };

@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "archived customers";
+            $current_page_title = "archived employees";
             include '../../components/unauth_redirection.php';
         ?>
         <?php include '../../components/side_nav.php'; ?>
@@ -25,19 +25,19 @@
             include('../../../utils/connect.php');
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=0 OR u.is_active=0) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
-                            ORDER BY c.id DESC";
+                $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.address, e.contact_number, u.email, e.id AS employee_id FROM employee e
+                            LEFT JOIN user u ON e.user_id=u.id
+                            WHERE u.is_active=0 AND CONCAT(e.first_name, e.last_name, e.address, e.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
+                            ORDER BY e.id DESC";
             } else {
                 $query = NULL;
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=0 OR u.is_active=0)
-                            ORDER BY c.id DESC";
+                $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.address, e.contact_number, u.email, e.id AS employee_id FROM employee e
+                            LEFT JOIN user u ON e.user_id=u.id
+                            WHERE u.is_active=0
+                            ORDER BY e.id DESC";
             }
             
-            $result = mysqli_query($conn,$sqlGetCustomers);
+            $result = mysqli_query($conn, $sqlGetEmployees);
         ?>
 
         <div class="search">
@@ -85,8 +85,8 @@
                         <td><?php echo $data["contact_number"];?></td>
                         <td><?php echo $data["email"];?></td>
                         <td>
-                            <a href="./process.php?action=recover&customer_id=<?php echo $data["customer_id"]; ?>">Recover</a>
-                            <!-- | <a href="./process.php?action=delete&customer_id=<?php?>">Delete</a> -->
+                            <a href="./process.php?action=recover&employee_id=<?php echo $data["employee_id"]; ?>">Recover</a>
+                            <!-- | <a href="./process.php?action=delete&employee_id=<?php?>">Delete</a> -->
                         </td>
                     </tr>
                     <?php
@@ -99,7 +99,7 @@
 
         <script>
             window.onload = function() {
-                setActivePage("nav_customer");
+                setActivePage("nav_employee");
             };
         </script>
     </body>

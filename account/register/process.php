@@ -24,7 +24,7 @@
         $temp_record_result=$conn->query($checkTemporaryRecord);
 
         if ($user_result->num_rows > 0){
-            $_SESSION["register_error"] = "Email Address Already Exists! Please proceed to Login or Forgot Password";
+            $_SESSION["register_error"] = "Email Address already exists! Please proceed to Login or Forgot Password";
             header("Location:index.php");
             exit;
         } else if ($temp_record_result->num_rows > 0) {

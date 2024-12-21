@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <?php
-    if (!isset($_GET['customer_id']) || !isset($_GET['action']) ) {
+    if (!isset($_GET['employee_id']) || !isset($_GET['action']) ) {
         header("Location:../list/index.php");
         exit;
     };
 
     session_start();
     
-    $customer_id = $_GET['customer_id'];
+    $employee_id = $_GET['employee_id'];
     $action = $_GET['action'];
 
     include('../../../utils/connect.php');
-    $sqlGetCustomer = "SELECT user_id FROM customer WHERE id=$customer_id";
+    $sqlGetemployee = "SELECT user_id FROM employee WHERE id=$employee_id";
 
-    $customer_result = mysqli_query($conn,$sqlGetCustomer);
-    if ($customer_result->num_rows == 0){
+    $employee_result = mysqli_query($conn,$sqlGetemployee);
+    if ($employee_result->num_rows == 0){
         header("Location:../../../page/404.php");
     };
     
-    $row = mysqli_fetch_array($customer_result);
+    $row = mysqli_fetch_array($employee_result);
     $user_id = $row['user_id'];
     
     if ($action == 'recover'){
@@ -29,11 +29,7 @@
             };
         };
 
-        $sqlUpdateCustomer = "UPDATE customer SET is_active='1' WHERE id='$customer_id'";
-        if(!mysqli_query($conn,$sqlUpdateCustomer)){
-            die("Something went wrong");
-        };
-        $_SESSION["message_string"] = "Customer record recovered successfully!";
+        $_SESSION["message_string"] = "employee record recovered successfully!";
         $_SESSION["message_class"] = "success";
 
     } else {

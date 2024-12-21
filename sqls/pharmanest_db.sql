@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 19, 2024 at 01:41 AM
+-- Generation Time: Dec 20, 2024 at 01:51 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -95,13 +95,10 @@ CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
   `first_name` varchar(256) NOT NULL,
   `last_name` varchar(256) NOT NULL,
-  `sex` varchar(6) NOT NULL,
   `contact_number` varchar(25) NOT NULL,
   `address` text NOT NULL,
   `date_of_birth` date NOT NULL,
   `job_title` varchar(128) NOT NULL,
-  `job_salary` double NOT NULL,
-  `employment_date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

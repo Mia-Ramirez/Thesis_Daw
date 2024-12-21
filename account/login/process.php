@@ -33,7 +33,7 @@
                 $_SESSION['user_name'] = $row['username'];
 
                 // list($first_name, $creationDate) = explode("_", $row['username']);
-                $_SESSION['first_name'] = explode("_", $row['username'])[0];
+                $_SESSION['user_first_name'] = explode("_", $row['username'])[0];
                 $_SESSION['BASE_URL'] = getBaseURL();
                 
                 if ($role == 'customer'){
