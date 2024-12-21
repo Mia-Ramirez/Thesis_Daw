@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "add customer";
+            $current_page_title = "add employee";
             include '../../components/unauth_redirection.php';
         ?>
         
@@ -50,28 +50,40 @@
                             <input type="text" name="last_name" required value="<?php if(isset($_SESSION["last_name"])){echo $_SESSION["last_name"];unset($_SESSION["last_name"]);}?>">
                         </p>
 
-                        <div class="row">
-                            <p class="column">
-                                <label for="date_of_birth">Date of Birth:</label><br>
-                                <input type="date" name="date_of_birth" required value="<?php if(isset($_SESSION["date_of_birth"])){echo $_SESSION["date_of_birth"];unset($_SESSION["date_of_birth"]);}?>">
-                            </p>
-                            <p class="column">
-                                <label for="sex">Sex: </label><br>
-                                <select id="sex" name="sex" required>
-                                    <option value="">Select</option>
-                                    <option>Female</option>
-                                    <option>Male</option>
-                                    <option>Others</option>
-                                </select>
-                            </p>
-                        </div>
-                    
-                    </div>
-                    <div class="column">
-                        <p>
+                        <p class="column">
+                            <label for="date_of_birth">Date of Birth:</label><br>
+                            <input type="date" name="date_of_birth" required value="<?php if(isset($_SESSION["date_of_birth"])){echo $_SESSION["date_of_birth"];unset($_SESSION["date_of_birth"]);}?>">
+                        </p>
+
+                        <p class="column">
                             <label for="contact_number">Contact Number: </label><br>
                             <input type="text" id="contact_number" name="contact_number" required pattern="[+0-9]*" title="Only numbers and + are allowed" maxlength=13 value="<?php if(isset($_SESSION["contact_number"])){echo $_SESSION["contact_number"];unset($_SESSION["contact_number"]);}?>">
                         </p>
+                    
+                    </div>
+
+                    <div class="column">
+
+                        <div class="row">
+                            <p class="column">
+                                <label for="job_title">Job Title: </label><br>
+                                <select id="job_title" name="job_title" required>
+                                    <option value="">Select</option>
+                                    <option>Pharmacist</option>
+                                    <?php
+                                        if ($_SESSION["user_role"] == "super admin"){
+                                            echo '<option>Manager</option>';
+                                        };
+                                    ?>
+                                </select>
+                            </p>
+                            
+                            <p class="column">
+                                <label for="employment_date">Employment Date:</label><br>
+                                <input type="date" id="employment_date" name="employment_date" value="<?php if(isset($_SESSION["employment_date"])){echo $_SESSION["employment_date"];unset($_SESSION["employment_date"]);}?>">
+                            </p>
+                            
+                        </div>
 
                         <p>
                             <label for="address">Address:</label><br>
@@ -80,7 +92,7 @@
 
                         <p>
                             <label for="email">Email Address:</label><br>
-                            <input type="email" name="email" value="<?php if(isset($_SESSION["email"])){echo $_SESSION["email"];unset($_SESSION["email"]);}?>">
+                            <input type="email" name="email" required value="<?php if(isset($_SESSION["email"])){echo $_SESSION["email"];unset($_SESSION["email"]);}?>">
                         </p>
                     </div>
                     
@@ -91,8 +103,10 @@
         </div>
 
         <script>
+            <?php echo "console.log('HELLO WORLD');"; ?>
+
             window.onload = function() {
-                setActivePage("nav_customer");
+                setActivePage("nav_employee");
             };
         </script>
     </body>
