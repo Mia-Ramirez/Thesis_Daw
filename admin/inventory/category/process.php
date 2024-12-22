@@ -21,8 +21,8 @@
             // Edit category
             
             $sql = "UPDATE category SET name = '$categoryName' WHERE id = $id";
-            $message_string = "Category successfully updated!";
-
+            $message_string = "Category details updated successfully!";
+            $_SESSION["message_class"] = "info";
         } else {
 
             $sqlCheck="SELECT id FROM category WHERE name='$categoryName'";
@@ -37,7 +37,8 @@
 
             // Add new category
             $sql = "INSERT INTO category (name) VALUES ('$categoryName')";
-            $message_string = "Category successfully added!";
+            $message_string = "Category added successfully !";
+            $_SESSION["message_class"] = "success";
         }
 
         if(!mysqli_query($conn,$sql)){
@@ -45,7 +46,6 @@
         };
 
         $_SESSION["message_string"] = $message_string;
-        $_SESSION["message_class"] = "success";
         header("Location:index.php");
     };
 

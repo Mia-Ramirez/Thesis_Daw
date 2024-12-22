@@ -29,8 +29,8 @@
             };
         };
 
-        $_SESSION["message_string"] = "employee record recovered successfully!";
-        $_SESSION["message_class"] = "success";
+        $_SESSION["message_string"] = "Employee record recovered successfully!";
+        $_SESSION["message_class"] = "info";
 
     } else {
 

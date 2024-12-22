@@ -21,7 +21,7 @@
         <?php include '../components/top_nav.php'; ?>  
 
         <div class="main">
-            <div class="card stock">
+            <div class="card stock" onclick="redirectToPage('stock')">
                 <h3>LOW STOCKS</h3>
                 <img class="pic" src="../../assets/images/stock.png" alt="stock">
             </div>
@@ -29,7 +29,7 @@
                 <h3>MEDS CATEGORIES</h3>
                 <img class="pic" src="../../assets/images/categories.png" alt="category">
             </div>
-            <div class="card medicine">
+            <div class="card medicine" onclick="redirectToPage('medicine')">
                 <h3>MEDICINE</h3>
                 <img class="pic" src="../../assets/images/meds.png" alt="medicine">
             </div>

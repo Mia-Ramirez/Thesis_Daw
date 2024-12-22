@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "add employee";
+            $current_page_title = "update employee details";
             include '../../components/unauth_redirection.php';
         ?>
         

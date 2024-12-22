@@ -26,7 +26,7 @@
                     die("Something went wrong");
                 };
                 $_SESSION["message_string"] = "Customer archived successfully!";
-                $_SESSION["message_class"] = "success";
+                $_SESSION["message_class"] = "info";
             };
 
             header("Location:../list/index.php");

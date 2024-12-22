@@ -22,7 +22,7 @@
                 };
 
                 $_SESSION["message_string"] = "Employee archived successfully!";
-                $_SESSION["message_class"] = "success";
+                $_SESSION["message_class"] = "info";
             };
 
             header("Location:../list/index.php");
