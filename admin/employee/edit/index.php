@@ -119,14 +119,12 @@
                     </div>
                     
                 
-                    <button name="action" id="update-employee" value="update_employee">Update</button>
+                    <button name="action" value="update_employee">Update</button>
                 </form>
             </div>
         </div>
 
         <script>
-            <?php echo "console.log('HELLO WORLD');"; ?>
-
             window.onload = function() {
                 setActivePage("nav_employee");
             };

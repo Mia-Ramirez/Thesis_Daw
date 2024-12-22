@@ -25,7 +25,7 @@
                 <h3>LOW STOCKS</h3>
                 <img class="pic" src="../../assets/images/stock.png" alt="stock">
             </div>
-            <div class="card category">
+            <div class="card category" onclick="redirectToPage('category')">
                 <h3>MEDS CATEGORIES</h3>
                 <img class="pic" src="../../assets/images/categories.png" alt="category">
             </div>
@@ -36,6 +36,10 @@
         </div>
 
         <script>
+            function redirectToPage(page) {
+                window.location.href = './'+page+'/index.php';
+            };
+            
             window.onload = function() {
                 setActivePage("nav_inventory");
             };

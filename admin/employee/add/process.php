@@ -5,7 +5,7 @@
         session_start();
         if (isset($_POST["action"])) {
             include('../../../utils/connect.php');
-            if ($_POST['action'] === 'add_customer') {
+            if ($_POST['action'] === 'add_employee') {
                 $first_name = mysqli_real_escape_string($conn, $_POST["first_name"]);
                 $last_name = mysqli_real_escape_string($conn, $_POST["last_name"]);
                 $date_of_birth = mysqli_real_escape_string($conn, $_POST["date_of_birth"]);

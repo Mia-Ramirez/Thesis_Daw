@@ -97,14 +97,12 @@
                     </div>
                     
                 
-                    <button name="action" value="add_customer">Add</button>
+                    <button name="action" value="add_employee">Add</button>
                 </form>
             </div>
         </div>
 
         <script>
-            <?php echo "console.log('HELLO WORLD');"; ?>
-
             window.onload = function() {
                 setActivePage("nav_employee");
             };
