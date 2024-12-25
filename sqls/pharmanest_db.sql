@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 20, 2024 at 01:51 AM
+-- Generation Time: Dec 25, 2024 at 10:56 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -47,9 +47,7 @@ CREATE TABLE `batch` (
 
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `applicable_discounts` varchar(25) NOT NULL,
-  `prescription_is_required` tinyint(1) NOT NULL
+  `name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,7 +77,7 @@ CREATE TABLE `customer` (
 CREATE TABLE `customer_order` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `medicine_list` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`medicine_list`)),
+  `order_lines` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
   `date_ordered` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(25) NOT NULL,
   `reference_number` varchar(256) NOT NULL
@@ -99,6 +97,7 @@ CREATE TABLE `employee` (
   `address` text NOT NULL,
   `date_of_birth` date NOT NULL,
   `job_title` varchar(128) NOT NULL,
+  `employment_date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -110,10 +109,19 @@ CREATE TABLE `employee` (
 
 CREATE TABLE `medicine` (
   `id` int(11) NOT NULL,
-  `name` int(11) NOT NULL,
+  `name` varchar(256) NOT NULL,
   `price` int(11) NOT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `current_quantity` int(11) NOT NULL
+  `current_quantity` int(11) NOT NULL DEFAULT 0,
+  `applicable_discounts` varchar(128) NOT NULL,
+  `prescription_is_required` tinyint(1) NOT NULL,
+  `photo` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE `medicine_categories` (
+  `id` int(11) NOT NULL,
+  `medicine_id` int(11) NOT NULL,
+  `category_ids` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -256,8 +264,15 @@ ALTER TABLE `employee`
 -- Indexes for table `medicine`
 --
 ALTER TABLE `medicine`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `medicine_categories`
+--
+ALTER TABLE `medicine_categories`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine_group` (`category_id`) USING BTREE;
+  ADD KEY `medicine` (`medicine_id`),
+  ADD KEY `category` (`category_ids`(768));
 
 --
 -- Indexes for table `prescription`
@@ -340,6 +355,12 @@ ALTER TABLE `medicine`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `medicine_categories`
+--
+ALTER TABLE `medicine_categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
@@ -403,12 +424,6 @@ ALTER TABLE `customer_order`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
---
--- Constraints for table `medicine`
---
-ALTER TABLE `medicine`
-  ADD CONSTRAINT `medicine_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`) ON DELETE SET NULL;
 
 --
 -- Constraints for table `prescription`

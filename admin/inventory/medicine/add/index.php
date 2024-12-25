@@ -22,6 +22,26 @@
                 
         <?php include '../../../components/top_nav.php'; ?>  
 
+        <?php
+            include('../../../../utils/connect.php');
+            $sqlGetCategories = "SELECT name FROM category ORDER BY id";
+        
+            $result = mysqli_query($conn,$sqlGetCategories);
+            $category_names = array();
+            
+            if ($result){
+                while ($row = mysqli_fetch_assoc($result)){
+                    $category_names[] = $row['name'];
+                };
+            };
+
+            echo "
+                <script>
+                    let validCategories = ".json_encode($category_names).";
+                </script>";
+
+        ?>
+
         <div class="main">
             <div class="row">
                 <?php
@@ -38,17 +58,17 @@
                         unset($_SESSION["message_class"]);
                     }
                 ?>
-                <form action="process.php" method="post">
+                <form action="process.php" method="POST" enctype="multipart/form-data">
                     <div class="column">
                         <div class="row">
                             <p class="column">
                                 <label for="medicine_name">Name:</label><br>
-                                <input type="text" id="medicine_name" name="medicine_name" value="<?php if(isset($_SESSION["medicine_name"])){echo $_SESSION["medicine_name"];unset($_SESSION["medicine_name"]);}?>">
+                                <input type="text" id="medicine_name" name="medicine_name" required value="<?php if(isset($_SESSION["medicine_name"])){echo $_SESSION["medicine_name"];unset($_SESSION["medicine_name"]);}?>">
                             </p>
 
                             <p class="column">
                                 <label for="price">Price:</label><br>
-                                <input type="number" id="price" name="price" value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
+                                <input type="number" id="price" name="price" required value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
                             </p>
                         </div>
                         
@@ -74,14 +94,23 @@
                             </p>
                             
                         </div>
+                        
+                        <p>
+                            <label for="category-input">Categories:</label>
+                            <div class="categories-container" id="categories-container">
+                                <input type="text" id="category-input" class="category-input" placeholder="Type and press Enter" autocomplete="off">
+                                <ul class="suggestions" id="suggestions-list"></ul>
+                            </div>
+                            <input type="hidden" name="category_names" id="category-names">
+                        </p>
                     
                     </div>
 
                     <div class="column">
-                        <label for="photo">Photo: </label><br>
+                        <label for="image">Photo: </label><br>
                         <div class="image-container">
-                            <input name="photo" type="file" accept="image/*" onchange="previewImage(event)">
-                            <span>Click or drag to upload an image</span>
+                            <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'add')" required>
+                            <span id="span_image_text">Click or drag to upload an image</span>
                         </div>
                     </div>
                     
@@ -89,8 +118,14 @@
                 </form>
             </div>
         </div>
-        
-        <script src="script.js"></script>
+                
+        <script src="../scripts.js"></script>
+
+        <script>
+            // Array to track already selected categories
+            const selectedCategories = [];            
+        </script>
+
         <script>
             window.onload = function() {
                 setActivePage("nav_inventory");

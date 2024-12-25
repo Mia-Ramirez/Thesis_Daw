@@ -27,8 +27,13 @@
             if (isset($_GET['medicine_id'])) {
                 $medicine_id = $_GET['medicine_id'];
                 $_SESSION["medicine_id"] = $medicine_id;
-                $sqlGetMedicine = "SELECT * FROM medicine
-                            WHERE id=$medicine_id";
+                $sqlGetMedicine = "SELECT
+                                    name, price, applicable_discounts, prescription_is_required, photo,
+                                    (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ', ') AS category_names FROM medicine_categories mc
+                                        JOIN category c ON FIND_IN_SET(c.id, mc.category_ids) > 0
+                                        WHERE mc.medicine_id=$medicine_id
+                                    ) as category_names FROM medicine
+                                    WHERE id=$medicine_id";
 
                 $medicine_result = mysqli_query($conn,$sqlGetMedicine);
                 if ($medicine_result->num_rows == 0){
@@ -36,7 +41,30 @@
                 }
 
                 $row = mysqli_fetch_array($medicine_result);
+                $_SESSION['photo_url'] = $row['photo'];
+
+                // Split the string by commas
+                $medicineCategoriesJSON = json_encode(array());
+                if ($row['category_names'] != ''){
+                    $medicineCategoriesJSON = json_encode(explode(",", $row["category_names"]));
+                };
+
+                $sqlGetCategories = "SELECT name FROM category ORDER BY id";
+        
+                $category_result = mysqli_query($conn,$sqlGetCategories);
+                $category_names = array();
                 
+                if ($category_result){
+                    while ($category_row = mysqli_fetch_assoc($category_result)){
+                        $category_names[] = $category_row['name'];
+                    };
+                };
+
+                echo "
+                    <script>
+                        let validCategories = ".json_encode($category_names).";
+                    </script>";
+
             } else {
                 header("Location:../../../../page/404.php");
             };
@@ -58,7 +86,7 @@
                         unset($_SESSION["message_class"]);
                     }
                 ?>
-                <form action="process.php" method="post">
+                <form action="process.php" method="post" enctype="multipart/form-data">
                     <div class="column">
                         <div class="row">
                             <p class="column">
@@ -94,14 +122,23 @@
                             </p>
                             
                         </div>
+
+                        <p>
+                            <label for="categories">Categories:</label><br>
+                            <div class="categories-container" id="categories-container">
+                                <input type="text" id="category-input" class="category-input" placeholder="Type and press Enter" autocomplete="off">
+                                <ul class="suggestions" id="suggestions-list"></ul>
+                            </div>
+                            <input type="hidden" name="category_names" id="category-names" value="<?php echo $row["category_names"];?>">
+                        </p>
                     
                     </div>
 
                     <div class="column">
                         <label for="photo">Photo: </label><br>
                         <div class="image-container">
-                            <input name="photo" type="file" accept="image/*" onchange="previewImage(event)">
-                            <span>Click or drag to upload an image</span>
+                            <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'update')">
+                            <img id="img_photo" src="<?php echo $row['photo']; ?>">
                         </div>
                     </div>
                     
@@ -110,6 +147,19 @@
                 </form>
             </div>
         </div>
+        
+        <script src="../scripts.js"></script>
+
+        <script>
+            // Array to track already selected categories
+            const selectedCategories = [];
+            var medicineCategories = <?php echo $medicineCategoriesJSON; ?>;
+            medicineCategories.forEach(categoryValue => {
+                addCategory(categoryValue.trim());
+                selectedCategories.push(categoryValue.trim())
+            });
+            
+        </script>
 
         <script>
             window.onload = function() {
