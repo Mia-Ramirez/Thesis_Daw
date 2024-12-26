@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" type="text/css" href="nav.css">
+<link rel="stylesheet" href="customerusers.css">
+
+<title>
+Admin Dashboard
+</title>
+</head>
+
+<body style="background: linear-gradient(to bottom right, lightsalmon, white);
+background-repeat: no-repeat;
+background-attachment: fixed;">
+
+<div class="sidenav">
+	<img id="logo" src="logo.png" alt="Logo">
+		<h2 style="text-align: center;"> Pharmanest Essential </h2>
+
+		<div class="menu">
+			<i class="fas fa-dashboard"></i>
+			<a href="adminpage.php">Dashboard</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-shopping-bag"></i>
+			<a href="shop.php">Shop</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-user"></i>
+			<a href="customerpage.php">Customer</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-cart-shopping"></i>
+			<a href="order.php">Order</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-cash-register"></i>
+			<a href="pos.php">Point of Sale</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-warehouse"></i>
+			<a href="inventory.php">Inventory</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-chart-line"></i>
+			<a href="salesReport.php">Sales Report</a>
+		</div>
+		<div class="menu">
+			<i class="fas fa-users"></i>
+			<a href="employee.php">Employee</a>
+		</div>
+</div>
+			
+	<div class="topnav">
+		<a href="logout.php">Logout(Logged in as Admin)</a>
+	</div>
+
+	<center>
+	<div class="head">
+	<h2> ADMIN DASHBOARD </h2>
+	<h4>Welcome, Admin!</h4>
+	</div>
+	</center>
+	
+    <div class="container">
+        <div class="search">
+        <form method="GET" action="">
+            <input type="text" name="query" placeholder="Search anything..." required>
+            <button class="btns" type="submit">Search</button>
+        </form>
+        </div>
+    
+        <div class="categories"> <!-- show different types of meds for faster and easier navigation -->
+               
+                <div class="meds"><a href="#">Tablet</a></div>
+                <div class="meds"><a href="#">Capsul</a></div>
+                <div class="meds"><a href="#">Syrup</a></div>
+                <div class="meds"><a href="#">Antibiotics</a></div>
+                <div class="meds"><a href="#">Pain Reliever</a></div>
+                <div class="meds"><a href="#">Paracetamol</a></div>
+                <div class="meds"><a href="#">Prescription</a></div>
+      
+        </div>
+    
+        <div class="details">
+            <div class="product">
+                <center>
+                <img class="img" src="Untitled-1.png" alt="Tempra for Kids">
+                </center>
+                <p>Price &#8369 120.00</p>
+                <p>Tempra for Kids</p>
+            </div>
+            <div class="product">
+                <center>
+                <img class="img" src="Untitled-2.png" alt="Biogesic">
+                </center>
+                <p>Price &#8369 5.00</p>
+                <p>Biogesic</p>
+            </div>
+            <div class="product">
+                <center>
+                <img class="img" src="Untitled-3.png" alt="Losartan">
+                </center>
+                <p>Price &#8369 10.00</p>
+                <p>Losartan</p>
+            </div>
+            <div class="product">
+                <center>
+                <img class="img" src="Untitled-4.png" alt="Loperamide">
+                </center>
+                <p>Price &#8369 15.00</p>
+                <p>Loperamide</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
