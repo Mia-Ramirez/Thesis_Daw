@@ -1,0 +1,65 @@
+/* .main{
+    width: 20%;
+    background-color: lightcoral;
+    border-radius: 20% solid black;
+    float: right;
+    margin-left: 60%;
+    font-size: 0.7rem;
+    display: flex;
+    position: absolute;
+    margin-top: 10%;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: 1rem;
+} */
+
+.card {
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+/* .profile{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+} */
+
+/* .recovery{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+
+.history{
+    width: 20%;
+    background-color: white;
+    float: right;
+    margin-top: 1%;
+    text-align: center;
+    border-radius: 5px;
+    margin-left: 2%;
+    margin-right: 2%;
+} */
+
+.main {
+    margin-right: 15%;
+}
+
+.pic{
+    width: 20%;
+}

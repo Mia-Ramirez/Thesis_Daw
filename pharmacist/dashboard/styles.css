@@ -1,0 +1,72 @@
+.main{
+    width: 13rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    margin-top: 4%;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+  }
+
+.report{
+    width: 20rem;
+    background-color: lightsalmon;
+    margin: 1rem;
+    padding: 0.2rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    background-color: white;
+    font-weight: bolder;
+    margin: 0.5rem;
+    text-align: center;
+}
+
+.pot{
+    width: 84%;
+    background-color: white;
+    border-radius: 20% solid black;
+    float: right;
+    margin-top: 1%;
+    margin-left: 2%;
+    font-size: 0.7rem;
+}
+
+.pots{
+    float: right;
+    margin-right: 58%;
+    margin-left: 2%;
+}
+
+.card{
+    width: 13rem;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    float: left;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+    padding-left: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background-color: lightsalmon;
+    color: black;
+    border-radius: 5%
+}
+
+.box{
+    box-sizing: border-box;
+    width: 85%;
+    background-color: white;
+}
+
+
+
