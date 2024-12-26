@@ -38,26 +38,32 @@
             </div>
                 <div class="li">
                     <div class="menu">
-                    <i class="fas fa-home"></i> <!-- home icon -->
-                    <a href="<?php echo $base_url."customer/home/index.php";?>"></a>
+                    <a href="<?php echo $base_url."customer/home/index.php";?>">
+                        <i class="fas fa-home"></i> <!-- home icon -->
+                    </a>
                     </div>
 
                     <div class="menu">
-                    <i class="fas fa-cart-shopping"></i> <!-- add to cart icon -->
-                    <a href="#"></a>
+                    <a href="#">
+                        <i class="fas fa-cart-shopping"></i> <!-- add to cart icon -->
+                    </a>
                     </div>
 
                     <div class="menu">
-                    <i class="fas fa-envelope"></i> <!-- chat icon -->
-                    <a href="#"></a>
+                    <a href="#">
+                        <i class="fas fa-envelope"></i> <!-- chat icon -->
+                    </a>
                     </div>
+
                     <div id="ikot" class="menu"  > <!-- gusto kong paikutin -->
-                    <i  class="fas fa-gear"></i> <!-- settings icon -->
-                    <a href="#"></a>
-                    <div class="sub-menu">
-                        <a href="#">My Account</a>
-                        <a href="#">Logout</a>
-                    </div>
+                        <a href="#">
+                            <i  class="fas fa-gear"></i> <!-- settings icon -->
+                        </a>
+
+                        <div class="sub-menu">
+                            <a href="#">My Account</a>
+                            <a href="#">Logout</a>
+                        </div>
                     </div>
                 </div>
                 
@@ -91,22 +97,25 @@
             <?php
                 include('../../utils/connect.php');
                 
-                $sqlGetMedicines = "SELECT id AS medicine_id, name AS medicine_name, price, photo FROM medicine";
+                $sqlGetMedicines = "SELECT m.id AS medicine_id, name AS medicine_name, price, photo
+                                        FROM medicine_categories mc
+                                        JOIN medicine m ON mc.medicine_id = m.id
+                                    ";
 
                 if ($category_id){
-                    $sqlGetMedicines .= " WHERE id IN (SELECT medicine_id FROM medicine_categories WHERE FIND_IN_SET($category_id, category_ids) > 0)";
+                    $sqlGetMedicines .= " WHERE m.id IN (SELECT medicine_id FROM medicine_categories WHERE FIND_IN_SET($category_id, category_ids) > 0)";
                 };
 
                 if ($query){
                     if (strpos($sqlGetMedicines, "WHERE") != false){
-                        $sqlGetMedicines .= " AND name LIKE '%.$query.%'";
+                        $sqlGetMedicines .= " AND (m.name LIKE '%$query%') OR (FIND_IN_SET((SELECT id FROM category WHERE name LIKE '%$query%'), mc.category_ids) > 0)";
                     } else {
-                        $sqlGetMedicines .= " WHERE name LIKE '%$query%'";
+                        $sqlGetMedicines .= " WHERE (m.name LIKE '%$query%') OR (FIND_IN_SET((SELECT id FROM category WHERE name LIKE '%$query%'), mc.category_ids) > 0)";
                     };
                 };
                 
-                $sqlGetMedicines .= " ORDER BY id DESC";
-
+                $sqlGetMedicines .= " ORDER BY m.id DESC";
+                
                 $medicine_results = mysqli_query($conn,$sqlGetMedicines);
                 while($data = mysqli_fetch_array($medicine_results)){
             ?>

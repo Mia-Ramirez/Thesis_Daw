@@ -202,3 +202,11 @@ footer{
 .active-category {
     color: white !important;
 }
+
+a {
+    color: black !important;
+}
+
+a.active {
+    color: white !important;
+}
