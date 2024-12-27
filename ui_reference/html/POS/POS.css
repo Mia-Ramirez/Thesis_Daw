@@ -1,0 +1,59 @@
+.shoulder{
+    background-color: white; 
+    width: 60%;
+    float: right;
+    margin-top: 1%;
+    margin-right: 13%;
+}
+.container{
+    width: 85%;
+    float: right;
+    margin-top: 0.5%;
+} 
+.search{
+    background-color: transparent;
+    width: 70%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 0.5%;        
+}  
+input{
+    padding: 1%; 
+    width: 50%;
+}
+.look{
+    padding: 1%; 
+    width: 25%;
+}
+  .btns{
+    padding: 1%;
+}
+.btn{
+        padding: 1%;
+        width: 30%;
+}
+.one{
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding:30px;
+    padding-right:10px;
+    padding-left: 60px;
+    width:70%;
+    float:right;
+    margin-right:10%;
+    margin-top:0px;
+    margin-bottom:50px;
+    font-family:Arial;
+  }
+  
+  .column {
+    float: left;
+    width: 50%;
+   }
+  
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
