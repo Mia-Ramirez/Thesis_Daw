@@ -24,7 +24,12 @@
                 $row = mysqli_fetch_array($result);
                 $hashedPasswordFromDb = $row["password"]; // Fetch password from your database
                 
-                if (password_verify($password, $hashedPasswordFromDb)) {
+                if ($row['is_active'] == 0){
+                    $_SESSION["login_error"] = "Your Account is disabled/inactive, please contact the Admin";
+                    $_SESSION["email_username"] = $email_or_username;
+                    header("Location:index.php");
+
+                } else if (password_verify($password, $hashedPasswordFromDb)) {
                     $role = $row['role'];
 
                     // $_SESSION['user_email'] = $row['email'];
@@ -43,10 +48,7 @@
                     } else {
                         header("Location: ../../pharmacist/index.php");
                     };
-                } else if ($row['is_active'] == 0){
-                    $_SESSION["login_error"] = "Your Account is disabled/inactive, please contact the Admin";
-                    $_SESSION["email_username"] = $email_or_username;
-                    header("Location:index.php");
+                    
                 } else {
                     $_SESSION["login_error"] = "Incorrect Password";
                     $_SESSION["email_username"] = $email_or_username;
