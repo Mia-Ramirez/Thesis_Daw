@@ -78,9 +78,15 @@
 
                 if ($query){
                     if (strpos($sqlGetMedicines, "WHERE") != false){
-                        $sqlGetMedicines .= " AND (m.name LIKE '%$query%') OR (FIND_IN_SET((SELECT id FROM category WHERE name LIKE '%$query%'), mc.category_ids) > 0)";
+                        $sqlGetMedicines .= " AND (m.name LIKE '%$query%')";
                     } else {
-                        $sqlGetMedicines .= " WHERE (m.name LIKE '%$query%') OR (FIND_IN_SET((SELECT id FROM category WHERE name LIKE '%$query%'), mc.category_ids) > 0)";
+                        $sqlGetMedicines .= " WHERE (m.name LIKE '%$query%')";
+                    };
+
+                    $sqlGetCategoryIDs = "SELECT id FROM category WHERE name LIKE '%$query%'";
+                    $category_id_results = mysqli_query($conn,$sqlGetCategoryIDs);
+                    while($data = mysqli_fetch_array($category_id_results)){
+                        $sqlGetMedicines .= " OR (FIND_IN_SET(".$data['id'].", mc.category_ids) > 0)";
                     };
                 };
                 
