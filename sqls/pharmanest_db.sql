@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 25, 2024 at 10:56 AM
+-- Generation Time: Dec 28, 2024 at 04:40 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -114,7 +114,9 @@ CREATE TABLE `medicine` (
   `current_quantity` int(11) NOT NULL DEFAULT 0,
   `applicable_discounts` varchar(128) NOT NULL,
   `prescription_is_required` tinyint(1) NOT NULL,
-  `photo` text NOT NULL
+  `photo` text NOT NULL,
+  `rack_location` text NOT NULL,
+  `maintaining_quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -137,7 +139,7 @@ CREATE TABLE `prescription` (
   `date_prescribed` date DEFAULT NULL,
   `history` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
   `reference_number` varchar(256) DEFAULT NULL,
-  `attached_file` longblob NOT NULL
+  `prescription_photo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -394,7 +396,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables

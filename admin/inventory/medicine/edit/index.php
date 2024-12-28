@@ -28,7 +28,7 @@
                 $medicine_id = $_GET['medicine_id'];
                 $_SESSION["medicine_id"] = $medicine_id;
                 $sqlGetMedicine = "SELECT
-                                    name, price, applicable_discounts, prescription_is_required, photo,
+                                    name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity,
                                     (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ', ') AS category_names FROM medicine_categories mc
                                         JOIN category c ON FIND_IN_SET(c.id, mc.category_ids) > 0
                                         WHERE mc.medicine_id=$medicine_id
@@ -135,14 +135,27 @@
                     </div>
 
                     <div class="column">
-                        <label for="photo">Photo: </label><br>
-                        <div class="image-container">
-                            <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'update')">
-                            <img id="img_photo" src="<?php echo $row['photo']; ?>">
+                        <div class="row">
+                            <p class="column">
+                                <label for="rack_location">Rack Location:</label><br>
+                                <input type="text" id="rack_location" name="rack_location" required value="<?php echo $row["rack_location"];?>">
+                            </p>
+
+                            <p class="column">
+                                <label for="maintaining_quantity">Maintaining Quantity:</label><br>
+                                <input type="number" id="maintaining_quantity" name="maintaining_quantity" required value="<?php echo $row["maintaining_quantity"];?>">
+                            </p>
+                        </div>
+                        
+                        <div class="row" style="margin-left: 10px">
+                            <label for="image">Photo: </label><br>
+                            <div class="image-container">
+                                <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'update')">
+                                <img id="img_photo" src="<?php echo $row['photo']; ?>">
+                            </div>
                         </div>
                     </div>
-                    
-                
+
                     <button name="action" value="update_medicine">Update</button>
                 </form>
             </div>

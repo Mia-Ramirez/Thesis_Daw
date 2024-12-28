@@ -64,7 +64,8 @@
                     <tr>
                         <th>Name</th>
                         <th>Price</th>
-                        <th>Current Number of Stocks</th>
+                        <th>Rack Location</th>
+                        <th>Current Number of Quantity</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -77,6 +78,7 @@
                         
                         <td><?php echo $data["name"];?></td>
                         <td>₱<?php echo $data["price"];?></td>
+                        <td><?php echo $data["rack_location"];?></td>
                         <td><?php echo $data["current_quantity"];?></td>
                         <td>
                             <a href="./edit/index.php?medicine_id=<?php echo $data["id"]; ?>">Edit</a>
