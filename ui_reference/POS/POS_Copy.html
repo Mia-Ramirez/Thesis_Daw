@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy POS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="POS.css">
+</head>
+<body>
+    <div class="sidenav">
+        <img id="logo" src="logo.png" alt="Logo">
+            <h2 style="text-align: center;"> Pharmanest Essential </h2>
+    
+            <div class="menu">
+                <i class="fas fa-dashboard"></i>
+                <a href="adminpage.php">Dashboard</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-shopping-bag"></i>
+                <a href="shop.php">Shop</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-user"></i>
+                <a href="customerpage.php">Customer</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-cart-shopping"></i>
+                <a href="order.php">Order</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-cash-register"></i>
+                <a href="pos.php">Point of Sale</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-warehouse"></i>
+                <a href="inventory.php">Inventory</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-chart-line"></i>
+                <a href="salesReport.php">Sales Report</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-users"></i>
+                <a href="employee.php">Employee</a>
+            </div>
+            <div class="time">
+                <i class="fas fa-clock"></i>
+                <span id="date-time"></span>
+            </div>
+    </div>
+                
+        <div class="topnav">
+            <a href="logout.php">Logout(Logged in as Admin)</a>
+        </div>
+    
+        <center>
+        <div class="head">
+            <h2> ADMIN DASHBOARD </h2>
+            <h4>Welcome, Admin!</h4>
+            
+        </div>
+        </center>
+    </center>
+    
+         <center>
+            <div class="shoulder">
+            <h2> POINT OF SALE </h2>
+            </div>
+        </center>
+    <div class="main-content">
+        <div class="container">
+            <div class="product-list">
+                <h2>Products</h2>
+                <input type="text" id="search" placeholder="Search Medicine/Product..." oninput="filterProducts()">
+                <div id="products">
+                    <div class="product" data-name="Aspirin">
+                        <span>Aspirin 500mg - &#8369 5.00</span>
+                        <button onclick="addToCart('Aspirin', 5.00)">Add</button>
+                    </div>
+                    <div class="product" data-name="Ibuprofen">
+                        <span>Ibuprofen 200mg - &#8369 7.00</span>
+                        <button onclick="addToCart('Ibuprofen', 7.00)">Add</button>
+                    </div>
+                    <div class="product" data-name="Paracetamol">
+                        <span>Paracetamol 250mg - &#8369 3.50</span>
+                        <button onclick="addToCart('Paracetamol', 3.50)">Add</button>
+                    </div>
+                    <div class="product" data-name="Vitamin C">
+                        <span>Vitamin C 1000mg - &#8369 2.00</span>
+                        <button onclick="addToCart('Vitamin C', 2.00)">Add</button>
+                    </div>
+                    <div class="product" data-name="Cough Syrup">
+                        <span>Cough Syrup 150ml - &#8369 4.50</span>
+                        <button onclick="addToCart('Cough Syrup', 4.50)">Add</button>
+                    </div>
+                    <div class="product" data-name="Losartan">
+                        <span>Losartan 50mg - &#8369 10.00</span>
+                        <button onclick="addToCart('Cough Syrup', 4.50)">Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="cart">
+                <h2>Your Cart</h2>
+                <div id="cart-items"></div>
+                <div class="totals">
+                    <div><span>Quantity:</span> <input type="number" id="discount" value="0" min="0" max="100" onchange="updateTotal()"></div>
+                    <div><span>Subtotal:</span> <span id="subtotal">$0.00</span></div>
+                    <div><span>Discount (%):</span> <input type="number" id="discount" value="0" min="0" max="100" onchange="updateTotal()"></div>
+                    <div><span>Total:</span> <span id="total">$0.00</span></div>
+                </div>
+                <button class="btn" onclick="checkout()">Checkout</button>
+                <button class="btn" style="background:#dc3545" onclick="clearCart()">Clear Cart</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        const cart = [];
+
+        function filterProducts() {
+            const search = document.getElementById('search').value.toLowerCase();
+            const products = document.querySelectorAll('.product');
+
+            products.forEach(product => {
+                const name = product.getAttribute('data-name').toLowerCase();
+                product.style.display = name.includes(search) ? 'flex' : 'none';
+            });
+        }
+
+        function addToCart(name, price) {
+            const existingProduct = cart.find(item => item.name === name);
+
+            if (existingProduct) {
+                existingProduct.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+            }
+            renderCart();
+        }
+
+        function removeFromCart(name) {
+            const index = cart.findIndex(item => item.name === name);
+
+            if (index !== -1) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+
+            let subtotal = 0;
+            cart.forEach(item => {
+                subtotal += item.price * item.quantity;
+                const div = document.createElement('div');
+                div.className = 'cart-item';
+                div.innerHTML = `
+                    <span>${item.name} x ${item.quantity} - $${(item.price * item.quantity).toFixed(2)}</span>
+                    <button onclick="removeFromCart('${item.name}')">Remove</button>
+                `;
+                cartItems.appendChild(div);
+            });
+
+            document.getElementById('subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+            const subtotal = parseFloat(document.getElementById('subtotal').innerText.replace('$', ''));
+            const total = subtotal - (subtotal * (discount / 100));
+            document.getElementById('total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function checkout() {
+            alert('Thank you for your purchase!');
+            clearCart();
+        }
+
+        function clearCart() {
+            cart.length = 0;
+            renderCart();
+        }
+
+        function updateDateTime() {
+            const now = new Date();
+            const formatted = now.toLocaleString('en-US', {
+                dateStyle: 'short',
+                timeStyle: 'medium'
+            });
+            document.getElementById('date-time').innerText = formatted;
+        }
+
+        setInterval(updateDateTime, 1000);
+    </script>
+    
+</body>
+</html>
