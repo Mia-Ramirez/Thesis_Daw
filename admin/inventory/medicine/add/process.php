@@ -13,10 +13,15 @@
                 $price = mysqli_real_escape_string($conn, $_POST["price"]);
                 $valid_discounts = mysqli_real_escape_string($conn, $_POST["valid_discounts"]);
                 $required_prescription = mysqli_real_escape_string($conn, $_POST["required_prescription"]);
+                $rack_location = mysqli_real_escape_string($conn, $_POST["rack_location"]);
+                $maintaining_quantity = mysqli_real_escape_string($conn, $_POST["maintaining_quantity"]);
+                
                 $imagePath = '';
                 
                 $_SESSION["medicine_name"] = $medicine_name;
                 $_SESSION["price"] = $price;
+                $_SESSION["rack_location"] = $rack_location;
+                $_SESSION["maintaining_quantity"] = $maintaining_quantity;
                 
                 $category_names = str_replace(", ", ",", $category_names);
                 $category_names = "'".str_replace(",", "','", $category_names)."'";
@@ -101,7 +106,7 @@
                     exit;
                 };
                 
-                $sqlInsertMedicine = "INSERT INTO medicine(name , price , applicable_discounts, prescription_is_required, photo) VALUES ('$medicine_name','$price', '$valid_discounts', '$required_prescription', '$imagePath')";
+                $sqlInsertMedicine = "INSERT INTO medicine(name , price , applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$medicine_name','$price', '$valid_discounts', '$required_prescription', '$imagePath', '$rack_location', '$maintaining_quantity')";
                 if(!mysqli_query($conn,$sqlInsertMedicine)){
                     die("Something went wrong");
                 };
