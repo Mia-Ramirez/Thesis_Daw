@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gear Icon Dropdown Menu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom right, lightsalmon, white);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Gear Icon Container */
+        .menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu i {
+            font-size: 2rem;
+            color: #ff6f61;
+            cursor: pointer;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            width: 150px;
+        }
+
+        .dropdown a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 3px;
+        }
+
+        .dropdown a:hover {
+            background-color: #555;
+        }
+
+        /* Show dropdown on active */
+        .menu.active .dropdown {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Gear Icon -->
+    <div class="menu" id="gearMenu">
+        <i class="fas fa-gear"></i>
+        <div class="dropdown">
+            <a href="#">My Profile</a>
+            <a href="#">Change Password</a>
+            <a href="#">Logout</a>
+        </div>
+    </div>
+
+    <script>
+        const gearMenu = document.getElementById("gearMenu");
+
+        // Toggle dropdown visibility
+        gearMenu.addEventListener("click", () => {
+            gearMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener("click", (event) => {
+            if (!gearMenu.contains(event.target)) {
+                gearMenu.classList.remove("active");
+            }
+        });
+    </script>
+</body>
+</html>

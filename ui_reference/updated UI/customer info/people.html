@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="addToCart.css">
     <link rel="stylesheet" href="people.css">
+    <link rel="stylesheet" href="clip.css">
 
 </head>
 <body style="background: linear-gradient(to bottom right, lightsalmon, white);
@@ -36,13 +37,12 @@
                 <i class="fas fa-envelope"></i> <!-- chat icon -->
                 <a href="#"></a>
                 </div>
-                <div id="ikot" class="menu"  > 
-                <i  class="fas fa-gear"></i> <!-- settings icon -->
-                <a href="#"></a>
-                <div class="sub-menu">
-                    <a href="#">My Account</a>
-                    <a href="#">Logout</a>
-                </div>
+                <div class="menu" id="gearMenu">
+                    <i class="fas fa-gear"></i>
+                    <div class="dropdown">
+                        <a href="people.html">My Profile</a>
+                        <a href="#">Logout</a>
+                    </div>
                 </div>
             </div>
             
@@ -85,6 +85,22 @@
         <input type="submit" class="btn" value="Save" name="signUp">
        </form>
     </div>
+
+    <script>
+        const gearMenu = document.getElementById("gearMenu");
+
+        // Toggle dropdown visibility
+        gearMenu.addEventListener("click", () => {
+            gearMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener("click", (event) => {
+            if (!gearMenu.contains(event.target)) {
+                gearMenu.classList.remove("active");
+            }
+        });
+    </script>
 
 </body>
 </html>
