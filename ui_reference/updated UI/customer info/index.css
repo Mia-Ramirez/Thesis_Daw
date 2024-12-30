@@ -1,15 +1,15 @@
-.form-container{
-    width: 35%;
-    background-color:white;
-    padding: 1%;
-    padding-left: 3%;
-    padding-right: 3%;
-    padding-bottom: 3%;
-    margin: 1%;
-    margin-left: 27%;
-    border-radius: 5px;
-   }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"poppins",sans-serif;
+}
+body{
+    background-color: #c9d6ff;
+    background:linear-gradient(to right,#e2e2e2,#c9d6ff);
+}
 .container{
+    background-image: url('/images/pharmLogo.png');
     background-size: 30rem 30rem;
     background-repeat: no-repeat;
     background-position: center;
@@ -69,7 +69,20 @@ input:focus~label,input:not(:placeholder-shown)~label{
     color:hsl(357, 93%, 49%);
     font-size:15px;
 }
+.recover{
+    text-align:right;
+    font-size:1rem;
+    margin-bottom:1rem;
 
+}
+.recover a{
+    text-decoration:none;
+    color:rgb(241, 87, 87);
+}
+.recover a:hover{
+    color:rgb(236, 23, 23);
+    text-decoration:underline;
+}
 .btn{
     font-size:1.1rem;
     padding:8px 0;
@@ -84,4 +97,49 @@ input:focus~label,input:not(:placeholder-shown)~label{
 }
 .btn:hover{
     background:rgb(236, 23, 23);
+}
+.or{
+    font-size:1.1rem;
+    margin-top:0.5rem;
+    text-align:center;
+}
+.icons{
+    text-align:center;
+}
+.icons i{
+    color:rgb(125,125,235);
+    padding:0.8rem 1.5rem;
+    border-radius:10px;
+    font-size:1.5rem;
+    cursor:pointer;
+    border:2px solid #dfe9f5;
+    margin:0 15px;
+    transition:1s;
+}
+.icons i:hover{
+    background:#07001f;
+    font-size:1.6rem;
+    border:2px solid rgb(125,125,235);
+}
+.links{
+    display:flex;
+    justify-content:space-around;
+    padding:0 4rem;
+    margin-top:0.9rem;
+    font-weight:bold;
+}
+button{
+    color:rgb(241, 87, 87);
+    border:none;
+    background-color:transparent;
+    font-size:1rem;
+    font-weight:bold;
+}
+button:hover{
+    text-decoration:underline;
+    color:rgb(236, 23, 23);
+}
+#logo{
+    border-radius: 50%;
+    width: 10%;
 }
