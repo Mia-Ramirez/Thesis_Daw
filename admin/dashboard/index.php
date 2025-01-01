@@ -53,7 +53,8 @@
                 <h2>0</h2>
                 <p>Not Moving Meds</p>
             </div>
-
+        </div>
+        
         <script>
             window.onload = function() {
                 setActivePage("nav_dashboard");
