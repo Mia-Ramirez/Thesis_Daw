@@ -14,7 +14,7 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "add employee";
+            $current_page_title = "update employee details";
             include '../../components/unauth_redirection.php';
         ?>
         
@@ -119,14 +119,12 @@
                     </div>
                     
                 
-                    <button name="action" id="update-employee" value="update_employee">Update</button>
+                    <button name="action" value="update_employee">Update</button>
                 </form>
             </div>
         </div>
 
         <script>
-            <?php echo "console.log('HELLO WORLD');"; ?>
-
             window.onload = function() {
                 setActivePage("nav_employee");
             };

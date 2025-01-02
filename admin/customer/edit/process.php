@@ -77,8 +77,8 @@
                     die("Something went wrong");
                 };
 
-                $_SESSION["message_string"] = "Details updated successfully!";
-                $_SESSION["message_class"] = "success";
+                $_SESSION["message_string"] = "Customer details updated successfully!";
+                $_SESSION["message_class"] = "info";
                 header("Location:index.php?customer_id=".$customer_id);
                 exit;
 

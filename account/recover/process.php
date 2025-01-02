@@ -39,7 +39,7 @@
             };
             
             $_SESSION["message_string"] = "Email Sent";
-            $_SESSION["message_class"] = "success";
+            $_SESSION["message_class"] = "info";
         }
         header("Location:index.php");
         exit;

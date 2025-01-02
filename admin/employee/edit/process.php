@@ -52,7 +52,7 @@
 
                 if ($job_title == 'Manager'){ $role = "admin";}
                 else { $role = "pharmacist";};
-                error_log("HERE: job_title ".$job_title." | role ".$role);
+                
                 $sqlUpdateEmployee = "UPDATE employee SET first_name='$first_name', last_name='$last_name', contact_number='$contact_number', address='$address', job_title='$job_title', date_of_birth='$date_of_birth', employment_date='$employment_date' WHERE id='$employee_id'";
                 
                 if(!mysqli_query($conn,$sqlUpdateEmployee)){
@@ -65,8 +65,8 @@
                     die("Something went wrong");
                 };
 
-                $_SESSION["message_string"] = "Details updated successfully!";
-                $_SESSION["message_class"] = "success";
+                $_SESSION["message_string"] = "Employee details updated successfully!";
+                $_SESSION["message_class"] = "info";
                 header("Location:index.php?employee_id=".$employee_id);
                 exit;
             };
