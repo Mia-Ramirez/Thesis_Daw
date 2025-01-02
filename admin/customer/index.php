@@ -22,7 +22,7 @@
 
         <div class="main">
             <div class="card account-recovery" onclick="redirectToPage('archived')">
-                <h3>RECOVER ARCHIVED</h3>
+                <h3>ARCHIVED</h3>
                 <img class="pic" src="../../assets/images/recover.png" alt="recovery">
             </div>
             <!-- <div class="card">
