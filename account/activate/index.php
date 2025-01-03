@@ -41,7 +41,8 @@
             $address = $dataArray['address'];
             $first_name = $dataArray['first_name'];
             $last_name = $dataArray['last_name'];
-
+            
+            $password_length = $dataArray['password_length'];
 
             $checkCustomer="SELECT c.id AS customer_id, u.id AS user_id FROM customer c LEFT JOIN user u ON c.user_id=u.id WHERE c.first_name='$first_name' AND c.last_name='$last_name' AND (c.contact_number='$contact' OR u.email='$email')";
             $customer_result=$conn->query($checkCustomer);
@@ -53,7 +54,7 @@
             };
             
             if ($user_id == NULL){
-                $sqlInsertUser = "INSERT INTO user(username , email , password , role) VALUES ('$username','$email','$password', '$role')";
+                $sqlInsertUser = "INSERT INTO user(username , email , password , role, password_length) VALUES ('$username','$email','$password', '$role', '$password_length')";
                 if(!mysqli_query($conn,$sqlInsertUser)){
                     die("Something went wrong");
                 };

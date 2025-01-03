@@ -212,6 +212,7 @@ CREATE TABLE `user` (
   `email` varchar(256) NOT NULL,
   `password` varchar(256) DEFAULT NULL,
   `role` varchar(25) NOT NULL,
+  `password_length` int(11) NOT NULL DEFAULT 8,
   `is_active` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -219,8 +220,8 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `is_active`) VALUES
-(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 1);
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `password_length`, `is_active`) VALUES
+(1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 8, 1);
 
 --
 -- Indexes for dumped tables

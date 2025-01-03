@@ -18,6 +18,8 @@
             $email= mysqli_real_escape_string($conn, $_POST['email']);
             $password= mysqli_real_escape_string($conn, $_POST['password']);
 
+            $password_len = strlen($password);
+
             $checkUser="SELECT * FROM user WHERE email='$email'";
             $user_result=$conn->query($checkUser);
 
@@ -49,6 +51,7 @@
                     "email" => $email,
                     "username" => $username,
                     "password" => $hashed_password,
+                    "password_length" => $password_len,
                     "role" => "customer"
                 ]);
         

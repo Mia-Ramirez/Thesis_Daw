@@ -5,7 +5,7 @@
     if ($_POST['action'] === 'set_password') {
         $password = mysqli_real_escape_string($conn, $_POST["password"]);
         $confirm_password = mysqli_real_escape_string($conn, $_POST["confirm_password"]);
-
+        $password_len = strlen($password);
         session_start();
         
         $email = $_SESSION["email"];
@@ -21,7 +21,7 @@
         } else {
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
             
-            $sqlUpdate = "UPDATE user SET password = '$hashed_password' WHERE email='$email'";
+            $sqlUpdate = "UPDATE user SET password = '$hashed_password', password_length = $password_len WHERE email='$email'";
             if(mysqli_query($conn,$sqlUpdate)){
                 //loggedChanges($conn, $user_id, "Account", "Set New Password (Forgot Password)", $username);
                 $_SESSION["register_success"] = "Password updated successfully, please sign in using your new password";
