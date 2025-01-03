@@ -13,16 +13,20 @@
     <body>
         <?php
             session_start();
-            $current_page_title = "dashboard";
+            $current_page_title = "point of sale";
             include '../components/unauth_redirection.php';
         ?>
         <?php include '../components/side_nav.php'; ?>
                 
         <?php include '../components/top_nav.php'; ?>  
 
+        <div class="main">
+            
+        </div>
+
         <script>
             window.onload = function() {
-                setActivePage("nav_dashboard");
+                setActivePage("nav_pos");
             };
         </script>
     </body>
