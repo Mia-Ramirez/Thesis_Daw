@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="../styles.css">
+        <link rel="stylesheet" href="../../assets/styles/bootstrap.css">
         <script src="../../assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
@@ -30,7 +31,20 @@
         
         <?php include '../components/navbar.php'; ?>  
         
-
+        <?php 
+            if (isset($_SESSION["message_string"])) {
+            ?>
+                
+                <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                    <?php 
+                    echo $_SESSION["message_string"];
+                    ?>
+                </div>
+            <?php
+            unset($_SESSION["message_string"]);
+            unset($_SESSION["message_class"]);
+            }
+        ?>
 
         <div class="search">
         <form method="GET" action="">
