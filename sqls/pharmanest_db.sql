@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 28, 2024 at 04:40 AM
+-- Generation Time: Jan 02, 2025 at 01:22 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,6 +66,19 @@ CREATE TABLE `customer` (
   `date_of_birth` date DEFAULT NULL,
   `sex` varchar(7) DEFAULT NULL,
   `is_active` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer_cart`
+--
+
+CREATE TABLE `customer_cart` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `product_lines` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`product_lines`)),
+  `discount_type` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -136,9 +149,8 @@ CREATE TABLE `prescription` (
   `id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `medicine_list` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `date_prescribed` date DEFAULT NULL,
   `history` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
-  `reference_number` varchar(256) DEFAULT NULL,
+  `reference_name` varchar(256) DEFAULT NULL,
   `prescription_photo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -250,6 +262,13 @@ ALTER TABLE `customer`
   ADD KEY `customer_login` (`user_id`) USING BTREE;
 
 --
+-- Indexes for table `customer_cart`
+--
+ALTER TABLE `customer_cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cart_owner` (`customer_id`);
+
+--
 -- Indexes for table `customer_order`
 --
 ALTER TABLE `customer_order`
@@ -337,6 +356,12 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `customer_cart`
+--
+ALTER TABLE `customer_cart`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
