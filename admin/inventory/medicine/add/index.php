@@ -107,10 +107,24 @@
                     </div>
 
                     <div class="column">
-                        <label for="image">Photo: </label><br>
-                        <div class="image-container">
-                            <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'add')" required>
-                            <span id="span_image_text">Click or drag to upload an image</span>
+                        <div class="row">
+                            <p class="column">
+                                <label for="rack_location">Rack Location:</label><br>
+                                <input type="text" id="rack_location" name="rack_location" required value="<?php if(isset($_SESSION["rack_location"])){echo $_SESSION["rack_location"];unset($_SESSION["rack_location"]);}?>">
+                            </p>
+
+                            <p class="column">
+                                <label for="maintaining_quantity">Maintaining Quantity:</label><br>
+                                <input type="number" id="maintaining_quantity" name="maintaining_quantity" required value="<?php if(isset($_SESSION["maintaining_quantity"])){echo $_SESSION["maintaining_quantity"];unset($_SESSION["maintaining_quantity"]);}?>">
+                            </p>
+                        </div>
+                        
+                        <div class="row" style="margin-left: 10px">
+                            <label for="image">Photo: </label><br>
+                            <div class="image-container">
+                                <input name="image" type="file" accept="image/*" onchange="previewImage(event, 'add')" required>
+                                <span id="span_image_text">Click or drag to upload an image</span>
+                            </div>
                         </div>
                     </div>
                     
