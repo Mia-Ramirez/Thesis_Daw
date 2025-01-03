@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>PHARMANEST ESSENTIAL</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link rel="stylesheet" href="addToCart.css">
+    <link rel="stylesheet" href="people.css">
+    <link rel="stylesheet" href="clip.css">
+
+</head>
+<body style="background: linear-gradient(to bottom right, lightsalmon, white);
+    background-repeat: no-repeat;
+    background-attachment: fixed;">
+	<nav class="navbar">
+		<div class="navdiv">
+        <div class="logo">
+            <img style="width: 100px; float: left; border-radius: 100%; border: solid 1px rgb(0, 0, 0); margin: 1.5rem; margin-left: 3rem;" 
+            src="logo.png" alt="PHARMANEST ESSENTIAL LOGO">
+        </div>
+        <div class="title">
+        <h1> PHARMANEST ESSENTIAL </h1>
+        </div>
+            <div class="li">
+                <div class="menu">
+                <i class="fas fa-home"></i> <!-- home icon -->
+                <a href="#"></a>
+                </div>
+
+                <div class="menu">
+                <i class="fas fa-cart-shopping"></i> <!-- add to cart icon -->
+                <a href="#"></a>
+                </div>
+
+                <div class="menu">
+                <i class="fas fa-envelope"></i> <!-- chat icon -->
+                <a href="#"></a>
+                </div>
+                <div class="menu" id="gearMenu">
+                    <i class="fas fa-gear"></i>
+                    <div class="dropdown">
+                        <a href="people.html">My Profile</a>
+                        <a href="#">My Order</a> <!-- order cancellation and order updates -->
+                        <a href="#">Logout</a>
+                    </div>
+                </div>
+            </div>
+            
+		</div>
+	</nav>
+
+    <div class="form-container">
+        <form method="" action="">
+            <center><h2>Your Information</h2></center>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="fName" id="fName" placeholder="First Name" required>
+            <label for="fname">First Name</label>
+         </div>
+         <div class="input-group">
+             <i class="fas fa-user"></i>
+             <input type="text" name="lName" id="lName" placeholder="Last Name" required>
+             <label for="lName">Last Name</label>
+         </div>
+         <div class="input-group">
+             <i class="fas fa-address-book"></i>
+             <input type="text" name="address" id="address" placeholder="Address" required>
+             <label for="address">Address</label>
+         </div>
+         <div class="input-group">
+             <i class="fas fa-mobile"></i>
+             <input type="text" name="contact" id="contact" placeholder="Contact" required>
+             <label for="contact">Contact Number Digits Only</label>
+         </div>
+         <div class="input-group">
+             <i class="fas fa-envelope"></i>
+             <input type="email" name="email" id="email" placeholder="Email" required>
+             <label for="email">Email</label>
+         </div>
+         <div class="input-group">
+             <i class="fas fa-lock"></i>
+             <input type="password" name="password" id="password" placeholder="Password" required>
+             <label for="password">Password</label>
+         </div>
+        <input type="submit" class="btn" value="Save" name="signUp">
+       </form>
+    </div>
+
+    <script>
+        const gearMenu = document.getElementById("gearMenu");
+
+        // Toggle dropdown visibility
+        gearMenu.addEventListener("click", () => {
+            gearMenu.classList.toggle("active");
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener("click", (event) => {
+            if (!gearMenu.contains(event.target)) {
+                gearMenu.classList.remove("active");
+            }
+        });
+    </script>
+
+</body>
+</html>
