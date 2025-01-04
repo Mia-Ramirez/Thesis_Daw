@@ -20,7 +20,11 @@
                 
         <?php include '../components/top_nav.php'; ?>  
 
-        <div class="main">
+        <div class="main" style="margin-left: 135px; margin-right: 0%">
+            <div class="card history">
+                <h3>HISTORY</h3>
+                <img class="pic" src="../../assets/images/history.png" alt="history">
+            </div>
             <div class="card stock" onclick="redirectToPage('stock')">
                 <h3>LOW STOCKS</h3>
                 <img class="pic" src="../../assets/images/stock.png" alt="stock">

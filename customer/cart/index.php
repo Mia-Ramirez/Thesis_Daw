@@ -13,19 +13,47 @@
         <?php
             session_start();
             include '../components/unauth_redirection.php';
+
+            include('../../utils/connect.php');
             $base_url = $_SESSION["BASE_URL"];
 
+            $user_id = $_SESSION['user_id'];
 
+            $sqlGetProductLines = "SELECT 
+                                        pl.id AS line_id,
+                                        m.name AS medicine_name,
+                                        price,
+                                        applicable_discounts,
+                                        prescription_is_required,
+                                        photo,
+                                        qty,
+                                        m.id AS medicine_id
+                                    FROM product_line pl
+                                    INNER JOIN customer_cart cc ON pl.cart_id=cc.id
+                                    INNER JOIN medicine m ON pl.medicine_id=m.id
+                                    INNER JOIN customer c ON cc.customer_id=c.id
+                                    WHERE c.user_id=$user_id
+            ";
+            $product_lines = mysqli_query($conn,$sqlGetProductLines);
+            if ($product_lines->num_rows == 0){
+                $_SESSION["message_string"] = "Cart is empty!";
+                $_SESSION["message_class"] = "error";
+                header("Location:../index.php");
+            };
 
+            $products = array();
         ?>
         
         <?php include '../components/navbar.php'; ?> 
 
         <div class="container">
         <!-- Product Table -->
-            <div class="cart-left">
+            <div class="cart-left" style="width: 50%;">
                 <div class="card">
                     <h2>Product List</h2>
+                    <div class="legends">
+                        <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
+                    </div>
                     <table id="productTable">
                         <thead>
                             <tr>
@@ -34,39 +62,48 @@
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
-                                <th>Total</th>
+                                <th>Subtotal</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Sample Products -->
-                            <tr>
-                                <td><input type="checkbox" class="product-checkbox" data-index="0"></td>
-                                <td>Paracetamol 500mg</td>
-                                <td class="price">10</td>
-                                <td class="discounted-price">10</td>
-                                <td><input type="number" value="1" class="quantity" data-index="0" min="1"></td>
-                                <td class="total">10</td>
-                                <td><a href="#">Delete</a></td>
+                            <?php
+                                while($data = mysqli_fetch_array($product_lines)){
+                                    $dictionary = [
+                                        "lineID" => $data['line_id'],
+                                        "price" => $data['price'],
+                                        "discountedPrice" => $data['price'],
+                                        "quantity" => $data['qty'],
+                                        "selected" => 'false',
+                                        "applicableDiscounts" => $data['applicable_discounts'],
+                                        "prescription_is_required" => $data['prescription_is_required'],
+                                    ];
+                                    array_push($products, $dictionary);
+                            ?>
+                                
+                                <tr>
+                                <td><input type="checkbox" class="product-checkbox" data-index="<?php echo $data['line_id']; ?>"></td>
+                                <td>
+                                    <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px">
+                                    <?php echo $data['medicine_name'];?>
+                                    <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Attach Prescription' style='color: red !important;'></i>";} ?>
+                                </td>
+                                <td class="price">₱<?php echo $data['price'];?></td>
+                                <td class="discounted-price">₱<?php echo $data['price'];?></td>
+                                <td><input type="number" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
+                                <td class="total">₱0</td>
+                                <td>
+                                    <a href="#"><i class="button-icon fas fa-trash" title="Remove"></i></a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td><input type="checkbox" class="product-checkbox" data-index="1"></td>
-                                <td>Ibuprofen 400mg</td>
-                                <td class="price">15</td>
-                                <td class="discounted-price">15</td>
-                                <td><input type="number" value="1" class="quantity" data-index="1" min="1"></td>
-                                <td class="total">15</td>
-                                <td><a href="#">Delete</a></td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="product-checkbox" data-index="2"></td>
-                                <td>Amoxicillin 500mg</td>
-                                <td class="price">25</td>
-                                <td class="discounted-price">25</td>
-                                <td><input type="number" value="1" class="quantity" data-index="2" min="1"></td>
-                                <td class="total">25</td>
-                                <td><a href="#">Delete</a></td>
-                            </tr>
+                            <?php
+                                };
+                                echo "
+                                    <script>
+                                        let products = ".json_encode($products).";
+                                    </script>
+                                ";
+                            ?>
                         </tbody>
                     </table>
                 </div>
@@ -79,17 +116,24 @@
                     <div class="discount">
                         <label for="discount">Discount</label>
                         <select id="discount">
-                            <option value="0">No Discount</option>
-                            <option value="0.2">Senior Citizen (20%)</option>
-                            <option value="0.3">PWD (30%)</option>
+                            <option value="No Discount_0">No Discount</option>
+                            <option value="Senior Citizen_0.2">Senior Citizen (20%)</option>
+                            <option value="Person With Disabilities_0.2">Person With Disabilities (20%)</option>
                         </select>
                     </div>
                     <div id="summary">
-                        <p>Subtotal: <span id="subtotal">0</span></p>
-                        <p>Discount: <span id="discountAmount">0</span></p>
-                        <p>Total: <span id="total">0</span></p>
+                        <p>Subtotal: ₱<span id="subtotal">0</span></p>
+                        <p>Discount: ₱<span id="discountAmount">0</span></p>
+                        <p>Total: ₱<span id="total">0</span></p>
                     </div>
-                    <button id="checkout">Checkout</button>
+
+                    <form action="process.php" method="POST">
+                        <input type="hidden" name="selected_ids" id="selected_ids">
+                        <input type="hidden" name="selected_items_qty" id="selected_items_qty">
+                        <input type="hidden" name="selected_discount" id="selected_discount">
+                        <button type="submit" name="action" value="checkout_cart" id="checkout">Checkout</button>
+                    </form>
+                    
                 </div>
             </div>
         </div>

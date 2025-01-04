@@ -1,5 +1,10 @@
 <!DOCTYPE html>
 <?php
+    if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
+        header("Location:index.php");
+        exit;
+    };
+        
     if (!isset($_GET['medicine_id']) || !isset($_GET['action']) ) {
         header("Location:index.php");
         exit;
@@ -39,52 +44,31 @@
         $customer_cart_id = mysqli_insert_id($conn);  
     };
     
-    $sqlGetCustomerCart = "SELECT product_lines FROM customer_cart WHERE id=$customer_cart_id";
-    $result = mysqli_query($conn,$sqlGetCustomerCart);
+    if ($action == "buy_now"){
+        $for_checkout = 1;
+    } else {
+        $for_checkout = 0;
+    };
+
+    $sqlGetProductLine = "SELECT id, qty FROM product_line WHERE cart_id=$customer_cart_id AND medicine_id=$medicine_id";
+    $result = mysqli_query($conn,$sqlGetProductLine);
+    if ($result->num_rows != 0){
+        $row = mysqli_fetch_array($result);
+        $qty = $row['qty'] + 1;
+        $line_id = $row['id'];
+        $sqlUpdateProductLine = "UPDATE product_line SET qty='$qty', for_checkout='$for_checkout' WHERE id=$line_id";
+        if(!mysqli_query($conn,$sqlUpdateProductLine)){
+            die("Something went wrong");
+        };
+
+    } else {
+        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, medicine_id, qty, for_checkout) VALUES ('$customer_cart_id', '$medicine_id', '1', '$for_checkout')";
+        if(!mysqli_query($conn,$sqlInsertProductLine)){
+            die("Something went wrong");
+        };
+    };
+
     $row = mysqli_fetch_array($result);
-    $productLineData = $row['product_lines'];
-    
-    if (is_null($productLineData)){
-        $productLineArray = [];
-    } else {
-        $productLineData = str_replace(['"{', '}"'], ['{', '}'], $productLineData);
-        $productLineArray = json_decode($productLineData , true);
-    };
-
-    if ($productLineArray === false){
-        die("JSON encoding error: " . json_last_error_msg());
-    };
-
-    if (!is_null($productLineArray) && array_key_exists($medicine_id, $productLineArray)) {
-        if ($action == "buy_now"){
-            $productLineArray[$medicine_id]["for_checkout"] = true;
-        } else {
-            $productLineArray[$medicine_id]["qty"] += 1;
-            $productLineArray[$medicine_id]["for_checkout"] = false;
-        };
-    } else {
-        $for_checkout = false;
-        if ($action == "buy_now"){
-            $for_checkout = true;
-        };
-
-        $productLineArray[$medicine_id] = json_encode([
-            "qty" => 1,
-            "for_checkout" => $for_checkout
-        ]);
-
-        if ($productLineArray[$medicine_id] === false){
-            die("JSON encoding error: " . json_last_error_msg());
-        };
-    };
-
-    $productLineArray = json_encode($productLineArray);
-
-    $sqlUpdateCustomerCart = "UPDATE customer_cart SET product_lines='$productLineArray' WHERE id=$customer_cart_id";
-    if(!mysqli_query($conn,$sqlUpdateCustomerCart)){
-        die("Something went wrong");
-    };
-
     if ($action == "buy_now"){
         header("Location:../cart/checkout/index.php");
     } else {

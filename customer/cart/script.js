@@ -6,12 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const discountAmountElement = document.getElementById('discountAmount');
     const totalElement = document.getElementById('total');
     const checkoutButton = document.getElementById('checkout');
+
+    const selectedIDs = document.getElementById('selected_ids');
+    const selectedQty = document.getElementById('selected_items_qty');
+    const selectedDiscount = document.getElementById('selected_discount');
     
-    let products = [
-        { name: "Paracetamol 500mg", price: 10, discountedPrice: 10, quantity: 1, selected: false },
-        { name: "Ibuprofen 400mg", price: 15, discountedPrice: 15, quantity: 1, selected: false },
-        { name: "Amoxicillin 500mg", price: 25, discountedPrice: 25, quantity: 1, selected: false }
-    ];
 
     // Update product selection based on checkbox
     checkboxes.forEach((checkbox, index) => {
@@ -40,33 +39,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Update discounted prices based on selected discount
     function updateDiscountedPrices() {
-        const discountRate = parseFloat(discountDropdown.value);
+        let selected_discount = discountDropdown.value.split("_");
+    
+        const discountRate = parseFloat(selected_discount[1]);
+        const discountLabel = selected_discount[0];
+        selectedDiscount.value = discountLabel;
+
         products.forEach(product => {
-            product.discountedPrice = product.price * (1 - discountRate);
-            document.querySelectorAll('.discounted-price')[products.indexOf(product)].textContent = product.discountedPrice.toFixed(2);
+            if (product.applicableDiscounts.includes(discountLabel) || product.applicableDiscounts === "Both"){
+                product.discountedPrice = product.price * (1 - discountRate);
+                document.querySelectorAll('.discounted-price')[products.indexOf(product)].textContent = '₱'+product.discountedPrice.toFixed(2);
+            } else {
+                product.discountedPrice = product.price;
+                document.querySelectorAll('.discounted-price')[products.indexOf(product)].textContent = '₱'+product.discountedPrice;
+            };            
         });
     }
 
     // Calculate and update summary
     function updateSummary() {
         let subtotal = 0;
-        products.forEach((product, index) => {
-            if (product.selected) {
-                const total = product.discountedPrice * product.quantity;
-                subtotal += total;
-                document.querySelectorAll('.total')[index].textContent = total.toFixed(2);
-            } else {
-                document.querySelectorAll('.total')[index].textContent = '0';
-            }
-        });
+        let discountAmount = 0;
 
-        const discountRate = parseFloat(discountDropdown.value);
-        const discountAmount = subtotal * discountRate;
+        let selected_ids = '';
+        let selected_qty = '';
+
+        products.forEach((product, index) => {
+            if (product.selected === true) {
+                console.log("HERE: index",index,"product.quantity",product.quantity);
+                if (selected_ids === ''){
+                    selected_ids = product.lineID.toString();
+                    selected_qty = product.quantity.toString();
+                } else {
+                    selected_ids += "," + product.lineID.toString();
+                    selected_qty += "," + product.quantity.toString();
+                };
+                console.log("HERE: 72 selected_ids",selected_ids,"selected_qty",selected_qty);
+                const total = product.price * product.quantity;
+                const discount = total - (product.discountedPrice * product.quantity);
+                subtotal += total;
+                discountAmount += discount;
+                document.querySelectorAll('.total')[index].textContent = '₱'+total.toFixed(2);
+            } else {
+                document.querySelectorAll('.total')[index].textContent = '₱0';
+            };
+        });
+        console.log("HERE: 82 selected_ids",selected_ids,"selected_qty",selected_qty);
         const total = subtotal - discountAmount;
 
         subtotalElement.textContent = subtotal.toFixed(2);
         discountAmountElement.textContent = discountAmount.toFixed(2);
         totalElement.textContent = total.toFixed(2);
+
+        selectedIDs.value = selected_ids;
+        selectedQty.value = selected_qty;
     }
 
     // Checkout button functionality
