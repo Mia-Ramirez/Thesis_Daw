@@ -56,7 +56,7 @@
             die("Something went wrong");
         };
 
-        $sqlGetMedicine = "SELECT medicine_id, prescription_is_required FROM product_line pl INNER JOIN medicine m ON pl.medicine_id=m.id WHERE pl.cart_id=$customer_cart_id AND id=$line_id";
+        $sqlGetMedicine = "SELECT medicine_id, prescription_is_required FROM product_line pl INNER JOIN medicine m ON pl.medicine_id=m.id WHERE pl.cart_id=$customer_cart_id AND pl.id=$line_id";
         $medicine_result = mysqli_query($conn,$sqlGetMedicine);
         $medicine_row = mysqli_fetch_array($medicine_result);
         
