@@ -45,6 +45,7 @@
                 <i class="fas fa-gear"></i>
                 <div class="dropdown">
                     <a href="<?php echo $base_url."customer/profile/index.php";?>">My Profile</a>
+                    <a href="<?php echo $base_url."customer/orders/index.php";?>">My Order</a> 
                     <a href="<?php echo $base_url."account/logout.php";?>">Logout</a>
                 </div>
             </div>

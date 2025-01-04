@@ -68,7 +68,7 @@
 
                             <p class="column">
                                 <label for="price">Price:</label><br>
-                                <input type="number" id="price" name="price" required value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
+                                <input type="number" step="0.01" min="1" id="price" name="price" required value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
                             </p>
                         </div>
                         
