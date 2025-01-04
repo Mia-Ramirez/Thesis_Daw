@@ -57,3 +57,97 @@ button {
 button:hover {
     background-color: salmon;
 }
+
+
+.customer-name {
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #ffccbc;
+    border-bottom: 1px solid #f3cfcf;
+}
+
+.messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.message {
+    margin-bottom: 10px;
+    max-width: 70%;
+}
+
+.message.customer {
+    text-align: left;
+    color: #fff;
+    background: #ffa726;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    clear: both;
+}
+.message.customer {
+    float: right;
+}
+.message.pharmacist{
+    float: left;
+}
+.message.pharmacist {
+    text-align: right;
+    color: #333;
+    background: #e0f7fa;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    clear: both;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #f3cfcf;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+}
+
+.chat-input button {
+    margin-left: 10px;
+    background: #ffa726;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-input button:hover {
+    background: #ff8a50;
+}
+
+.chat-input .photo-button {
+    margin-left: 10px;
+    background: lightsalmon;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+
+.chat-input .photo-button:hover {
+    background: salmon;
+}

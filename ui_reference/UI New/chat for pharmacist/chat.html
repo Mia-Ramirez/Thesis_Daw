@@ -66,23 +66,26 @@
    <div class="chat-container">
     <center><h1>Chatting System</h1></center>
 
-    <div class="chat-box" id="chat-box">
-        <!-- Chat messages will appear here -->
+    <div class="chat-system">
+        <!-- Chat Section -->
+        <div class="chat">
+            <div class="customer-name">Customer: John Doe</div>
+            <div class="messages" id="messages">
+                <!-- Initial chat messages -->
+                <div class="message customer">Hi! I have a question about my prescription.</div>
+                <div class="message pharmacist">Hello! Sure, how can I help you?</div>
+                <div class="message customer">I was prescribed 500mg of amoxicillin. Can you tell me how often I should take it?</div>
+                <div class="message pharmacist">Typically, amoxicillin 500mg is taken every 8 hours. However, please follow the specific instructions your doctor provided. Do you have any additional details from your prescription?</div>
+                <div class="message customer">The prescription says every 8 hours, but I wasn’t sure if I should take it with food.</div>
+                <div class="message pharmacist">It’s usually okay to take amoxicillin with or without food. Taking it with food might reduce the chances of an upset stomach. Let me know if you have any other questions!</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton">Send</button>
+                <button class="photo-button" id="photoButton">📷</button>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="message">Enter your message:</label>
-        <textarea id="message" rows="3" placeholder="Type your message..."></textarea>
-    </div>
-    <input type="file">
-
-    <div class="form-group" id="contact-field" style="display: none;">
-        <label for="contact">Enter email or phone number:</label>
-        <input type="text" id="contact" placeholder="Enter recipient's contact">
-    </div>
-
-    <button onclick="sendMessage()">Send</button>
-</div>
 </div>
 <div class="inbox">
     <div class="inbox-container">
@@ -189,7 +192,75 @@
             }
         });
     </script>
+ <script>
+    // Mock chat messages
+    const messages = document.getElementById('messages');
+    const messageInput = document.getElementById('messageInput');
+    const sendButton = document.getElementById('sendButton');
+    const photoButton = document.getElementById('photoButton');
 
+    const addMessage = (content, sender) => {
+        const message = document.createElement('div');
+        message.className = `message ${sender}`;
+        message.textContent = content;
+        messages.appendChild(message);
+        messages.scrollTop = messages.scrollHeight;
+    };
+
+    sendButton.addEventListener('click', () => {
+        const text = messageInput.value;
+        if (text.trim()) {
+            addMessage(text, 'customer');
+            messageInput.value = '';
+
+            // Simulate a pharmacist reply
+            setTimeout(() => {
+                addMessage('Thank you for your message. How can I help you?', 'pharmacist');
+            }, 1000);
+        }
+    });
+
+    // Optional: Allow pressing Enter to send
+    messageInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            sendButton.click();
+        }
+    });
+
+    photoButton.addEventListener('click', () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    img.style.maxWidth = '150px';
+                    img.style.maxHeight = '150px';
+                    img.style.borderRadius = '8px';
+                    img.style.marginTop = '10px';
+                    img.style.display = 'block';
+                    
+                    const message = document.createElement('div');
+                    message.className = 'message customer';
+                    message.appendChild(img);
+                    messages.appendChild(message);
+                    messages.scrollTop = messages.scrollHeight;
+
+                    // Simulate pharmacist response
+                    setTimeout(() => {
+                        addMessage('I’ve received the image. Let me review it for you.', 'pharmacist');
+                    }, 1000);
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    });
+</script>
 
 </body>
 </html>

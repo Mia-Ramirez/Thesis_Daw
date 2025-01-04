@@ -49,24 +49,29 @@
    </nav>
 
    <div class="chat-container">
-    <center><h1>Chatting System</h1></center>
+    <center><h1>Your Pharmacist</h1></center>
 
-    <div class="chat-box" id="chat-box">
-        <!-- Chat messages will appear here -->
+    <div class="chat-system">
+        <!-- Chat Section -->
+        <div class="chat">
+            <div class="customer-name">Pharmacist</div>
+            <div class="messages" id="messages">
+                <!-- Initial chat messages -->
+                <div class="message customer">Hi! I have a question about my prescription.</div>
+                <div class="message pharmacist">Hello! Sure, how can I help you?</div>
+                <div class="message customer">I was prescribed 500mg of amoxicillin. Can you tell me how often I should take it?</div>
+                <div class="message pharmacist">Typically, amoxicillin 500mg is taken every 8 hours. However, please follow the specific instructions your doctor provided. Do you have any additional details from your prescription?</div>
+                <div class="message customer">The prescription says every 8 hours, but I wasn’t sure if I should take it with food.</div>
+                <div class="message pharmacist">It’s usually okay to take amoxicillin with or without food. Taking it with food might reduce the chances of an upset stomach. Let me know if you have any other questions!</div>
+            </div>
+            <div class="chat-input">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button id="sendButton">Send</button>
+                <button class="photo-button" id="photoButton">📷</button>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-        <label for="message">Enter your message:</label>
-        <textarea id="message" rows="3" placeholder="Type your message..."></textarea>
-    </div>
-
-    <div class="form-group" id="contact-field" style="display: none;">
-        <label for="contact">Enter email or phone number:</label>
-        <input type="text" id="contact" placeholder="Enter recipient's contact">
-        
-    </div>
-    <input type="file">
-    <button onclick="sendMessage()">Send</button>
+    
 </div>
 
 <script>
