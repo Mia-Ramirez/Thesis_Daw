@@ -44,7 +44,9 @@
             $products = array();
         ?>
         
-        <?php include '../components/navbar.php'; ?> 
+        <?php include '../components/navbar.php'; ?>
+
+        <?php include '../components/yesNo_modal.php'; ?>  
 
         <div class="container">
         <!-- Product Table -->
@@ -76,7 +78,7 @@
                                         "quantity" => $data['qty'],
                                         "selected" => 'false',
                                         "applicableDiscounts" => $data['applicable_discounts'],
-                                        "prescription_is_required" => $data['prescription_is_required'],
+                                        "prescriptionIsRequired" => $data['prescription_is_required'],
                                     ];
                                     array_push($products, $dictionary);
                             ?>
@@ -84,7 +86,7 @@
                                 <tr>
                                 <td><input type="checkbox" class="product-checkbox" data-index="<?php echo $data['line_id']; ?>"></td>
                                 <td>
-                                    <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px">
+                                    <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
                                     <?php echo $data['medicine_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Attach Prescription' style='color: red !important;'></i>";} ?>
                                 </td>
@@ -93,7 +95,7 @@
                                 <td><input type="number" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
                                 <td class="total">₱0</td>
                                 <td>
-                                    <a href="#"><i class="button-icon fas fa-trash" title="Remove"></i></a>
+                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>')" title="Remove"></i></a>
                                 </td>
                             </tr>
                             <?php
@@ -131,7 +133,7 @@
                         <input type="hidden" name="selected_ids" id="selected_ids">
                         <input type="hidden" name="selected_items_qty" id="selected_items_qty">
                         <input type="hidden" name="selected_discount" id="selected_discount">
-                        <button type="submit" name="action" value="checkout_cart" id="checkout">Checkout</button>
+                        <button class="disabled" type="submit" name="action" value="checkout_cart" id="checkout" disabled>Checkout</button>
                     </form>
                     
                 </div>

@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedQty = document.getElementById('selected_items_qty');
     const selectedDiscount = document.getElementById('selected_discount');
     
+    let prescription_is_required = false;
 
     // Update product selection based on checkbox
     checkboxes.forEach((checkbox, index) => {
@@ -63,10 +64,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let selected_ids = '';
         let selected_qty = '';
+        
+        let checkout_is_disabled = true;
+        prescription_is_required = false;
 
         products.forEach((product, index) => {
             if (product.selected === true) {
-                console.log("HERE: index",index,"product.quantity",product.quantity);
+                checkout_is_disabled = false;
                 if (selected_ids === ''){
                     selected_ids = product.lineID.toString();
                     selected_qty = product.quantity.toString();
@@ -74,17 +78,22 @@ document.addEventListener('DOMContentLoaded', () => {
                     selected_ids += "," + product.lineID.toString();
                     selected_qty += "," + product.quantity.toString();
                 };
-                console.log("HERE: 72 selected_ids",selected_ids,"selected_qty",selected_qty);
+
+                if (product.prescriptionIsRequired == 1){
+                    prescription_is_required = true;
+                };
+
                 const total = product.price * product.quantity;
                 const discount = total - (product.discountedPrice * product.quantity);
                 subtotal += total;
                 discountAmount += discount;
                 document.querySelectorAll('.total')[index].textContent = '₱'+total.toFixed(2);
+                
             } else {
                 document.querySelectorAll('.total')[index].textContent = '₱0';
             };
         });
-        console.log("HERE: 82 selected_ids",selected_ids,"selected_qty",selected_qty);
+        
         const total = subtotal - discountAmount;
 
         subtotalElement.textContent = subtotal.toFixed(2);
@@ -93,11 +102,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selectedIDs.value = selected_ids;
         selectedQty.value = selected_qty;
+
+        checkoutButton.disabled = checkout_is_disabled;
+        if (checkout_is_disabled === false){
+            checkoutButton.style.backgroundColor = "green";
+        } else {
+            checkoutButton.style.backgroundColor = "gray";
+        };
     }
 
     // Checkout button functionality
     checkoutButton.addEventListener('click', () => {
-        alert(`Checkout Successful! Total: ₱${totalElement.textContent}`);
+        if (prescription_is_required === true){
+            alert(`Medicine(s) with required Prescription detected, please select the respective Prescription`);
+        } else {
+            alert(`Checkout Successful! Please review your order and confirm on the next page`);
+        };
     });
 
     // Initial update for discount and summary

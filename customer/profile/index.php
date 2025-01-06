@@ -20,16 +20,21 @@
             
             include('../../utils/connect.php');
 
-            $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, u.password_length FROM customer c
+            $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, u.password_length, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
                             WHERE c.user_id=$user_id";
 
             $customer_result = mysqli_query($conn,$sqlGetCustomer);
             if ($customer_result->num_rows == 0){
                 header("Location:../../../page/404.php");
-            }
+            };
 
             $row = mysqli_fetch_array($customer_result);
+
+            if (isset($_SESSION['customer_id']) == false){
+                $_SESSION['customer_id'] = $row['customer_id'];
+            };
+
             if ($row["password_length"] !== null){
                 $pass_len = $row["password_length"];
             } else {
