@@ -54,7 +54,7 @@
             if ($prescribed_meds->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
                 $_SESSION["message_class"] = "error";
-                header("Location:../index.php");
+                header("Location:../../home/index.php");
             };
             
             $sqlGetCustomerPrescriptions = "SELECT
@@ -207,7 +207,7 @@
             };
 
             function redirectToOrderPage() {
-                window.location.href = '../checkout/index.php';
+                window.location.href = '../confirm/index.php';
             };
 
         </script>
