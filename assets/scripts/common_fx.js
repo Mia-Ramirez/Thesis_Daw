@@ -24,3 +24,15 @@ function setActivePage(active_element_id) {
     document.getElementById(active_element_id).classList.add("active");
     
 };
+
+function openFullscreen(imgElement) {
+    if (imgElement.requestFullscreen) {
+        imgElement.requestFullscreen();  // Chrome, Firefox, Safari, Opera
+    } else if (imgElement.mozRequestFullScreen) { // Firefox
+        imgElement.mozRequestFullScreen();
+    } else if (imgElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        imgElement.webkitRequestFullscreen();
+    } else if (imgElement.msRequestFullscreen) { // IE/Edge
+        imgElement.msRequestFullscreen();
+    }
+};
