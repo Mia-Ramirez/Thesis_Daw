@@ -38,7 +38,7 @@
             if ($product_lines->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
                 $_SESSION["message_class"] = "error";
-                header("Location:../index.php");
+                header("Location:../home/index.php");
             };
 
             $products = array();

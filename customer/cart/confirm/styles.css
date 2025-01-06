@@ -1,0 +1,82 @@
+/* General Layout */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+.cart-left, .cart-right {
+    width: 48%;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Product Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Summary Section */
+.discount {
+    margin-bottom: 20px;
+}
+
+#summary p {
+    font-size: 18px;
+}
+
+#confirm_order {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 18px;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+#confirm_order:hover {
+    background-color: #45a049;
+}
+
+
+.button-icon {
+    margin-right: 0px;
+    margin-left: 0px;
+    color: black;
+  }
+  
+/* Responsive Design */
+@media (max-width: 768px) {
+    .cart-left, .cart-right {
+        width: 100%;
+    }
+}

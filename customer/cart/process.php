@@ -28,7 +28,7 @@
         if ($cart_result->num_rows == 0){
             $_SESSION["message_string"] = "Cart is empty!";
             $_SESSION["message_class"] = "error";
-            header("Location:../index.php");
+            header("Location:../home/index.php");
         };
 
         $cart_row = mysqli_fetch_array($cart_result);
@@ -94,7 +94,7 @@
         if ($prescription_is_required){
             header("Location:prescription/index.php");
         } else {
-            header("Location:checkout/index.php");
+            header("Location:confirm/index.php");
         };
         exit;
 
