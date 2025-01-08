@@ -1,6 +1,3 @@
-<?php
-    $base_url = $_SESSION["BASE_URL"];
-?>
 <div class="topnav">
     <a href=<?php echo $base_url."account/logout.php";?>>Logout (Logged-in as <?php echo ucwords($_SESSION['user_role']); ?>)</a>
 </div>

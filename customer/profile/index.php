@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,11 +15,11 @@
         <script src="../../assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
-        <?php
-            session_start();
-            include '../components/unauth_redirection.php';
-            $base_url = $_SESSION["BASE_URL"];
+        <?php include '../components/unauth_redirection.php'; ?>
+        
+        <?php include '../components/navbar.php'; ?>  
 
+        <?php
             $user_id = $_SESSION['user_id'];
             
             include('../../utils/connect.php');
@@ -44,8 +48,6 @@
             $_SESSION["pass_placeholder"] = $pass_placeholder;
         ?>
         
-        <?php include '../components/navbar.php'; ?>  
-
         <div class="form-container">
             <?php
                 if (isset($_SESSION["message_string"])) {

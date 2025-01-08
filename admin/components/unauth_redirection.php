@@ -1,5 +1,4 @@
 <?php
-    $base_url = $_SESSION["BASE_URL"];
     if (isset($_SESSION["user_role"])) {
         if ($_SESSION["user_role"] == "customer"){
           header("Location:".$base_url."customer/home/index.php");

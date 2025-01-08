@@ -14,9 +14,12 @@
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
-        <?php
-            include '../../components/unauth_redirection.php';
 
+        <?php include '../../components/unauth_redirection.php'; ?>
+
+        <?php include '../../components/navbar.php'; ?>  
+
+        <?php
             include('../../../utils/connect.php');
             
             $customer_id = $_SESSION['customer_id'];
@@ -28,17 +31,19 @@
                                         prescription_is_required,
                                         photo,
                                         qty,
-                                        selected_discount
+                                        selected_discount,
+                                        prescription_id
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
                                     INNER JOIN medicine m ON pl.medicine_id=m.id
-                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1
+                                    LEFT JOIN medicine_prescription mp ON pl.medicine_id=mp.medicine_id
+                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
             ";
             
             $product_lines = mysqli_query($conn,$sqlGetProductLines);
             if ($product_lines->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
-                $_SESSION["message_class"] = "error";
+                $_SESSION["message_class"] = "danger";
                 header("Location:../../home/index.php");
             };
 
@@ -46,8 +51,6 @@
 
         ?>
         
-        <?php include '../../components/navbar.php'; ?>  
-
         <div class="container">
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
@@ -72,6 +75,10 @@
                                 $total_discount = 0;
 
                                 while($data = mysqli_fetch_array($product_lines)){
+                                    if ($data['prescription_is_required'] == '1' && is_null($data['prescription_id'])){
+                                        header("Location:../prescription/index.php");
+                                    };
+
                                     if ($data['selected_discount']){
                                         $selected_discount = $data['selected_discount'];
                                     };
@@ -93,7 +100,7 @@
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
                                     <?php echo $data['medicine_name'];?>
-                                    <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Attach Prescription' style='color: red !important;'></i>";} ?>
+                                    <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>
                                 <td class="discounted-price">₱<?php echo $line_discount;?></td>
@@ -121,6 +128,7 @@
                                 } else {
                                     echo "None";
                                 };
+                                $_SESSION['selected_discount'] = $selected_discount;
                             ?>
                         </p>
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>

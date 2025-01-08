@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,13 +14,13 @@
         <script src="../../assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
+        <?php include '../components/unauth_redirection.php'; ?>
+
+        <?php include '../components/navbar.php'; ?>
+
         <?php
-            session_start();
-            include '../components/unauth_redirection.php';
-
             include('../../utils/connect.php');
-            $base_url = $_SESSION["BASE_URL"];
-
+            
             $user_id = $_SESSION['user_id'];
 
             $sqlGetProductLines = "SELECT 
@@ -27,26 +31,26 @@
                                         prescription_is_required,
                                         photo,
                                         qty,
-                                        m.id AS medicine_id
+                                        m.id AS medicine_id,
+                                        for_checkout
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
                                     INNER JOIN medicine m ON pl.medicine_id=m.id
                                     INNER JOIN customer c ON cc.customer_id=c.id
-                                    WHERE c.user_id=$user_id
+                                    WHERE c.user_id=$user_id AND line_type='cart'
             ";
             $product_lines = mysqli_query($conn,$sqlGetProductLines);
             if ($product_lines->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
-                $_SESSION["message_class"] = "error";
+                $_SESSION["message_class"] = "danger";
                 header("Location:../home/index.php");
             };
 
             $products = array();
         ?>
-        
-        <?php include '../components/navbar.php'; ?>
 
-        <?php include '../components/yesNo_modal.php'; ?>  
+        <?php include '../components/yesNo_modal.php'; ?> 
+        
 
         <div class="container">
         <!-- Product Table -->
@@ -71,12 +75,18 @@
                         <tbody>
                             <?php
                                 while($data = mysqli_fetch_array($product_lines)){
+                                    if ($data['for_checkout'] == '1'){
+                                        $is_selected = 'true';
+                                    } else {
+                                        $is_selected = 'false';
+                                    };
+
                                     $dictionary = [
                                         "lineID" => $data['line_id'],
                                         "price" => $data['price'],
                                         "discountedPrice" => $data['price'],
                                         "quantity" => $data['qty'],
-                                        "selected" => 'false',
+                                        "selected" => $is_selected,
                                         "applicableDiscounts" => $data['applicable_discounts'],
                                         "prescriptionIsRequired" => $data['prescription_is_required'],
                                     ];
@@ -84,11 +94,11 @@
                             ?>
                                 
                                 <tr>
-                                <td><input type="checkbox" class="product-checkbox" data-index="<?php echo $data['line_id']; ?>"></td>
+                                <td><input type="checkbox" class="product-checkbox" data-index="<?php echo $data['line_id']; ?>" <?php if ($is_selected == 'true'){echo 'checked';};?>></td>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
                                     <?php echo $data['medicine_name'];?>
-                                    <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Attach Prescription' style='color: red !important;'></i>";} ?>
+                                    <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>
                                 <td class="discounted-price">₱<?php echo $data['price'];?></td>

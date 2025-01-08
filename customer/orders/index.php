@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,15 +14,92 @@
         <script src="../../assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
+        <?php include '../components/unauth_redirection.php'; ?>
+        
+        <?php include '../components/navbar.php'; ?>  
+        
         <?php
-            session_start();
-            include '../components/unauth_redirection.php';
-            $base_url = $_SESSION["BASE_URL"];
+            if (isset($_SESSION["message_string"])) {
+                ?>
+                    <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                        <?php 
+                        echo $_SESSION["message_string"];
+                        ?>
+                    </div>
+                <?php
+                unset($_SESSION["message_string"]);
+                unset($_SESSION["message_class"]);
+            }
+        ?>
+
+        <?php
+            include('../../utils/connect.php');
+            
+            $user_id = $_SESSION['user_id'];
+
+            $sqlGetCustomerOrders = "SELECT
+                                        co.id AS order_id,
+                                        customer_id,
+                                        date_ordered,
+                                        status,
+                                        reference_number
+                                    FROM customer_order co
+                                    INNER JOIN customer c ON co.customer_id=c.id
+                                    WHERE c.user_id=$user_id";
+            
+            $orders = mysqli_query($conn,$sqlGetCustomerOrders);
+            if ($orders->num_rows == 0){
+                $_SESSION["message_string"] = "You didn't order yet";
+                $_SESSION["message_class"] = "danger";
+                header("Location:../home/index.php");
+                exit;
+            };
 
 
         ?>
+    
+        <!-- View Order Modal -->
         
-        <?php include '../components/navbar.php'; ?>  
+        
+        <!-- Cancel Order Modal -->
+        
+
+        <div class="card">
+            <h2 style="text-align: center">
+                Your Orders
+            </h2>
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Order Reference #</th>
+                        <th>Date Ordered</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                while($data = mysqli_fetch_array($orders)){
+                    $date = new DateTime($data["date_ordered"]);
+
+                    // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+                    $formattedDate = $date->format('F j, Y h:i A');
+                ?>
+                    <tr>
+                        <td><?php echo $data['reference_number']; ?></td>
+                        <td><?php echo $formattedDate; ?></td>
+                        <td><?php echo ucwords($data['status']); ?></td>
+                        <td>
+                            <u class="u_action">View</u>
+                            | <u class="u_action">Remove</u>
+                        </td>
+                    </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+            </table>
+        </div>
 
         <script src="../script.js"></script>
 

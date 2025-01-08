@@ -1,5 +1,4 @@
 <?php
-    $base_url = $_SESSION["BASE_URL"];
     if (isset($_SESSION["user_role"])) {
         $role = $_SESSION["user_role"];
       if (strpos($role, "admin") !== false) {

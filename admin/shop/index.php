@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,20 +15,16 @@
     </head>
 
     <body style="background: linear-gradient(to bottom right, lightsalmon, white); background-repeat: no-repeat; background-attachment: fixed;">
-      <?php
-            session_start();
-            $current_page_title = "shop";
-            include '../components/unauth_redirection.php';
-        ?>
+        <?php include '../components/unauth_redirection.php'; ?>
+
         <?php include '../components/side_nav.php'; ?>
-                
-        <?php include '../components/top_nav.php'; ?>  
 
         <?php
-            session_start();
-            include '../components/unauth_redirection.php';
-            $base_url = $_SESSION["BASE_URL"];
+            $current_page_title = "shop";
+            include '../components/top_nav.php';
+        ?>
 
+        <?php
             $category_id = NULL;
             $query = NULL;
 

@@ -2,13 +2,15 @@
 <?php
     session_start();
     $customer_id = $_SESSION['customer_id'];
-    
+    $selected_discount = $_SESSION['selected_discount'];
+    unset($_SESSION["selected_discount"]);
+
     include('../../../utils/connect.php');
 
     $sqlGetProductLines = "SELECT pl.id AS product_line_id
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
-                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1
+                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
                         ";
     $result = mysqli_query($conn, $sqlGetProductLines);
 
@@ -22,15 +24,15 @@
         // Optionally, print the IDs to verify
         print_r($ids);
         // customer_id 	date_ordered 	status 	reference_number 
-        $reference_number = date('YmdHis')."_".$customer_id;
-        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number) VALUES ('$customer_id','processing','$reference_number')";
+        $reference_number = date('YmdHis')."-".$customer_id;
+        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number, selected_discount) VALUES ('$customer_id','processing','$reference_number', '$selected_discount')";
         if(!mysqli_query($conn,$sqlInsertCustomerOrder)){
             die("Something went wrong");
         };
         $order_id = mysqli_insert_id($conn);
 
         $idsString = implode(',', $ids);
-        $sqlTransferCartLinesToOrder = "UPDATE product_line SET cart_id = NULL, order_id = '$order_id', for_checkout=0 WHERE id IN ($idsString)";
+        $sqlTransferCartLinesToOrder = "UPDATE product_line SET cart_id = NULL, order_id = '$order_id', for_checkout=0, line_type='order' WHERE id IN ($idsString)";
         if(!mysqli_query($conn,$sqlTransferCartLinesToOrder)){
             die("Something went wrong");
         };

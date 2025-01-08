@@ -16,15 +16,14 @@
     </head>
 
     <body>
-        <?php
-            session_start();
-            $current_page_title = "add medicine";
-            include '../../../components/unauth_redirection.php';
-        ?>
+        <?php include '../../../components/unauth_redirection.php'; ?>
         
         <?php include '../../../components/side_nav.php'; ?>
-                
-        <?php include '../../../components/top_nav.php'; ?>  
+        
+        <?php
+            $current_page_title = "add medicine";
+            include '../../../components/top_nav.php';
+        ?>
 
         <?php
             include('../../../../utils/connect.php');
