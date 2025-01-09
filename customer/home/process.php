@@ -23,7 +23,7 @@
     if ($result->num_rows < 1){
         // If email is not yet registered it will display an error message in Login Form
         $_SESSION["message_string"] = "Medicine not found!";
-        $_SESSION["message_class"] = "error";
+        $_SESSION["message_class"] = "danger";
         header("Location:index.php");
         exit;
     };
@@ -45,6 +45,10 @@
     };
     
     if ($action == "buy_now"){
+        $sqlResetProductLine = "UPDATE product_line SET for_checkout='0' WHERE cart_id=$customer_cart_id";
+        if(!mysqli_query($conn,$sqlResetProductLine)){
+            die("Something went wrong");
+        };
         $for_checkout = 1;
     } else {
         $for_checkout = 0;
@@ -62,7 +66,7 @@
         };
 
     } else {
-        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, medicine_id, qty, for_checkout) VALUES ('$customer_cart_id', '$medicine_id', '1', '$for_checkout')";
+        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, medicine_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id', '$medicine_id', '1', '$for_checkout', 'cart')";
         if(!mysqli_query($conn,$sqlInsertProductLine)){
             die("Something went wrong");
         };
@@ -70,7 +74,7 @@
 
     $row = mysqli_fetch_array($result);
     if ($action == "buy_now"){
-        header("Location:../cart/checkout/index.php");
+        header("Location:../cart/index.php");
     } else {
         $_SESSION["message_string"] = "Medicine added to cart!";
         $_SESSION["message_class"] = "info";

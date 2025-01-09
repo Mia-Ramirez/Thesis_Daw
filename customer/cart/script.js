@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prescription_is_required = false;
 
         products.forEach((product, index) => {
-            if (product.selected === true) {
+            if (product.selected == true || product.selected == 'true') {
                 checkout_is_disabled = false;
                 if (selected_ids === ''){
                     selected_ids = product.lineID.toString();
@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Checkout button functionality
     checkoutButton.addEventListener('click', () => {
         if (prescription_is_required === true){
-            alert(`Medicine(s) with required Prescription detected, please select the respective Prescription`);
+            alert(`Medicine(s) with required Prescription detected, please check and select the respective Prescription`);
         } else {
             alert(`Checkout Successful! Please review your order and confirm on the next page`);
         };

@@ -15,9 +15,11 @@
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
-        <?php
-            include '../../components/unauth_redirection.php';
+        <?php include '../../components/unauth_redirection.php';?>
 
+        <?php include '../../components/navbar.php'; ?>
+        
+        <?php
             include('../../../utils/connect.php');
             
             $user_id = $_SESSION['user_id'];
@@ -47,13 +49,13 @@
                                         INNER JOIN medicine m ON mp.medicine_id=m.id
                                         INNER JOIN product_line pl ON mp.medicine_id=pl.medicine_id
                                         LEFT JOIN customer_prescription cp ON mp.prescription_id=cp.id
-                                        WHERE for_checkout=1 AND cc.customer_id=$customer_id;
+                                        WHERE for_checkout=1 AND cc.customer_id=$customer_id AND line_type='cart'
             ";
 
             $prescribed_meds = mysqli_query($conn,$sqlGetPrescribedMedicines);
             if ($prescribed_meds->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
-                $_SESSION["message_class"] = "error";
+                $_SESSION["message_class"] = "danger";
                 header("Location:../../home/index.php");
             };
             
@@ -70,7 +72,7 @@
             
         ?>
         
-        <?php include '../../components/navbar.php'; ?>
+        
         
         <!-- Select Prescription Modal -->
         <div class="custom-modal" id="prescriptionModal">
@@ -138,14 +140,14 @@
 
         <div class="card">
             <h2>
-                Medicines that require Prescriptions
+                Medicine(s) that requires Prescription
                 <button id="proceed_button" type="button" class="modal-button yes-button" onclick="redirectToOrderPage()" style="margin-left: 45%">Proceed</button>
             </h2>
 
             <table id="productTable">
                 <thead>
                     <tr>
-                        <th>Product</th>
+                        <th>Medicine</th>
                         <th>Prescription</th>
                         <th>Actions</th>
                     </tr>

@@ -1,8 +1,8 @@
 
-function getDataIndexByValue(value) {
-    const option = document.querySelector(`#prescription-option option[value="${value}"]`);
-    return option ? option.getAttribute('data-index') : null;
-}
+// function getDataIndexByValue(value) {
+//     const option = document.querySelector(`#prescription-option option[value="${value}"]`);
+//     return option ? option.getAttribute('data-index') : null;
+// }
 
 function showPrescriptionModal(prescription_id, medicine_name, selected_option) {
     

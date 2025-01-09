@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 04, 2025 at 06:55 AM
+-- Generation Time: Jan 08, 2025 at 12:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -91,7 +91,9 @@ CREATE TABLE `customer_order` (
   `customer_id` int(11) NOT NULL,
   `date_ordered` datetime NOT NULL DEFAULT current_timestamp(),
   `status` varchar(25) NOT NULL,
-  `reference_number` varchar(256) NOT NULL
+  `reference_number` varchar(256) NOT NULL,
+  `selected_discount` varchar(128) NOT NULL,
+  `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -159,7 +161,7 @@ CREATE TABLE `medicine_categories` (
 CREATE TABLE `medicine_prescription` (
   `id` int(11) NOT NULL,
   `medicine_id` int(11) NOT NULL,
-  `prescription_id` int(11) NOT NULL,
+  `prescription_id` int(11) DEFAULT NULL,
   `cart_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -190,7 +192,8 @@ CREATE TABLE `product_line` (
   `order_id` int(11) DEFAULT NULL,
   `qty` int(11) NOT NULL,
   `for_checkout` tinyint(1) DEFAULT NULL,
-  `transaction_id` int(11) DEFAULT NULL
+  `transaction_id` int(11) DEFAULT NULL,
+  `line_type` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -249,7 +252,8 @@ CREATE TABLE `transaction` (
   `sub_total` double NOT NULL,
   `total` double NOT NULL,
   `discount` double NOT NULL,
-  `order_id` int(11) DEFAULT NULL
+  `order_id` int(11) DEFAULT NULL,
+  `receipt_reference` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

@@ -15,13 +15,14 @@
     </head>
 
     <body>
-        <?php
-            $current_page_title = "customers";
-            include '../components/unauth_redirection.php';
-        ?>
+        <?php include '../components/unauth_redirection.php'; ?>
+
         <?php include '../components/side_nav.php'; ?>
 
-        <?php include '../components/top_nav.php'; ?>  
+        <?php
+            $current_page_title = "customers";
+            include '../components/top_nav.php';
+        ?>  
 
         <div class="main">
             <div class="card account-recovery" onclick="redirectToPage('archived')">

@@ -18,7 +18,7 @@
         };
 
         header("Location:index.php");
-        exit();
+        exit;
 
     } elseif ($_POST['action'] == 'checkout_cart'){
         $user_id = $_SESSION['user_id'];
@@ -27,7 +27,7 @@
         $cart_result = mysqli_query($conn,$sqlGetCustomerCartID);
         if ($cart_result->num_rows == 0){
             $_SESSION["message_string"] = "Cart is empty!";
-            $_SESSION["message_class"] = "error";
+            $_SESSION["message_class"] = "danger";
             header("Location:../home/index.php");
         };
 
@@ -69,7 +69,7 @@
                 die("Something went wrong");
             };
 
-            $sqlGetMedicine = "SELECT medicine_id, prescription_is_required FROM product_line pl INNER JOIN medicine m ON pl.medicine_id=m.id WHERE pl.cart_id=$customer_cart_id AND pl.id=$line_id";
+            $sqlGetMedicine = "SELECT medicine_id, prescription_is_required FROM product_line pl INNER JOIN medicine m ON pl.medicine_id=m.id WHERE pl.cart_id=$customer_cart_id AND pl.id=$line_id AND line_type='cart'";
             $medicine_result = mysqli_query($conn,$sqlGetMedicine);
             $medicine_row = mysqli_fetch_array($medicine_result);
             
@@ -100,6 +100,6 @@
 
     } else {
         header("Location:index.php");
-        exit();
+        exit;
     };
 ?>

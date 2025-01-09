@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,14 +15,14 @@
     </head>
 
     <body>
-        <?php
-            session_start();
-            $current_page_title = "stock movements";
-            include '../../../components/unauth_redirection.php';
-        ?>
+        <?php include '../../../components/unauth_redirection.php'; ?>
+        
         <?php include '../../../components/side_nav.php'; ?>
-                
-        <?php include '../../../components/top_nav.php'; ?>  
+
+        <?php
+            $current_page_title = "stock movements";
+            include '../../../components/top_nav.php';
+        ?>
 
         <div class="main">
             

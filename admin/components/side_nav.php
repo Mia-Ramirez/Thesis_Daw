@@ -1,6 +1,3 @@
-<?php
-    $base_url = $_SESSION["BASE_URL"];
-?>
 <div class="sidenav">
 	<img id="logo" src=<?php echo $base_url."assets/images/logo.png";?> alt="Logo">
     <h2 style="text-align: center;"> Pharmanest Essential </h2>

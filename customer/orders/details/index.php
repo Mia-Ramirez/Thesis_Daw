@@ -9,50 +9,81 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="../../../assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../../styles.css">
-        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
+        <link rel="stylesheet" href="styles.css">
+        
+        <!-- <script src="../../assets/scripts/common_fx.js"></script> -->
     </head>
     <body class="body">
-
         <?php include '../../components/unauth_redirection.php'; ?>
+        
+        <?php include '../../components/navbar.php'; ?>
 
-        <?php include '../../components/navbar.php'; ?>  
+        <?php
+            if (isset($_SESSION["message_string"])) {
+                ?>
+                    <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                        <?php 
+                        echo $_SESSION["message_string"];
+                        ?>
+                    </div>
+                <?php
+                unset($_SESSION["message_string"]);
+                unset($_SESSION["message_class"]);
+            }
+        ?>
 
         <?php
             include('../../../utils/connect.php');
-            
-            $customer_id = $_SESSION['customer_id'];
+            if (isset($_GET['order_id'])) {
+                $order_id = $_GET['order_id'];
+                if (isset($_SESSION['customer_id']) == false){
+                    header("Location:../index.php");
+                };
+                $customer_id = $_SESSION['customer_id'];
 
-            $sqlGetProductLines = "SELECT 
+                $sqlGetCustomerOrder = "SELECT
+                                        id AS order_id,
+                                        date_ordered,
+                                        status,
+                                        reference_number,
+                                        selected_discount,
+                                        remarks
+                                    FROM customer_order
+                                    WHERE id=$order_id AND customer_id=$customer_id";
+
+                $order_result = mysqli_query($conn,$sqlGetCustomerOrder);
+                if ($order_result->num_rows == 0){
+                    header("Location:../../../page/404.php");
+                };
+
+                $row = mysqli_fetch_array($order_result);
+
+                $sqlGetProductLines = "SELECT 
                                         m.name AS medicine_name,
                                         price,
                                         applicable_discounts,
                                         prescription_is_required,
                                         photo,
-                                        qty,
-                                        selected_discount,
-                                        prescription_id
+                                        qty
                                     FROM product_line pl
-                                    INNER JOIN customer_cart cc ON pl.cart_id=cc.id
                                     INNER JOIN medicine m ON pl.medicine_id=m.id
-                                    LEFT JOIN medicine_prescription mp ON pl.medicine_id=mp.medicine_id
-                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
-            ";
-            
-            $product_lines = mysqli_query($conn,$sqlGetProductLines);
-            if ($product_lines->num_rows == 0){
-                $_SESSION["message_string"] = "Cart is empty!";
-                $_SESSION["message_class"] = "danger";
-                header("Location:../../home/index.php");
+                                    WHERE pl.order_id=$order_id
+                ";
+                $product_lines = mysqli_query($conn,$sqlGetProductLines);
+
+                $selected_discount = $row['selected_discount'];
+                
+            } else {
+                header("Location:../index.php");
             };
 
-            $selected_discount = NULL;
-
         ?>
+
+        <?php include '../cancelOrder_modal.php'; ?>
         
         <div class="container">
-        <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
                 <div class="card">
                     <h2>Medicine List</h2>
@@ -75,18 +106,11 @@
                                 $total_discount = 0;
 
                                 while($data = mysqli_fetch_array($product_lines)){
-                                    if ($data['prescription_is_required'] == '1' && is_null($data['prescription_id'])){
-                                        header("Location:../prescription/index.php");
-                                    };
-
-                                    if ($data['selected_discount']){
-                                        $selected_discount = $data['selected_discount'];
-                                    };
-
+                                    
                                     $line_subtotal = $data['price'] * $data['qty'];
 
                                     $discount_rate = 0;
-                                    if ($data['selected_discount'] && ($data['selected_discount'] == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
+                                    if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
                                     };
 
@@ -116,11 +140,28 @@
                 </div>
             </div>
 
-            <!-- Summary -->
+            <!-- Details -->
             <div class="cart-right">
                 <div class="card">
-                    <h2>Summary</h2>
+                    <h2>Details</h2>
                     <div id="summary">
+                        <p>Order Reference Number: <?php echo $row['reference_number']; ?></p>
+                        <p>Status: <?php echo ucwords($row['status']); ?></p>
+                        <?php
+                        if (!is_null($row['remarks'])){
+                        ?>
+                        <p>Remarks: <?php echo $row['remarks']; ?></p>
+                        <?php
+                        }
+                        ?>
+                        <p>Date Ordered: <?php
+                            $date = new DateTime($row["date_ordered"]);
+
+                            // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+                            $formattedDate = $date->format('F j, Y h:i A');
+                            echo $formattedDate;
+                        ?></p>
+
                         <p>Discount Type:
                             <?php
                                 if ($selected_discount){
@@ -128,7 +169,6 @@
                                 } else {
                                     echo "None";
                                 };
-                                $_SESSION['selected_discount'] = $selected_discount;
                             ?>
                         </p>
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
@@ -137,38 +177,17 @@
                     </div>
 
                     <form action="process.php" method="POST">
-                        <button class="disabled" type="submit" name="action" value="confirm_order" id="confirm_order" disabled>Confirm</button>
+                        <!-- <button class="action_button<?php if (!in_array($row['status'], ['cancelled', 'picked up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php if (!in_array($row['status'], ['cancelled', 'picked up'])){echo 'disabled';} ?>>Re-Order</button> -->
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
             </div>
         </div>
 
-
         <script src="../../script.js"></script>
-        
-        <script>
-            window.onload = function() {
-                setActivePage("nav_cart");
-            };
+        <script src="../script.js"></script>
+        <script src="script.js"></script>
 
-            const button = document.getElementById('confirm_order');
-           
-            // Function to check if user has reached the bottom of the page
-            function checkScrollPosition() {
-                const scrollPosition = window.innerHeight + window.scrollY;
-                const pageHeight = document.documentElement.scrollHeight;
-                
-                // If user has reached the bottom, enable the button
-                if (scrollPosition >= pageHeight) {
-                    button.disabled = false;
-                }
-            }
-
-            // Attach the scroll event listener to the window
-            window.addEventListener('scroll', checkScrollPosition);
-            checkScrollPosition();
-
-        </script>
     </body>
 </html>

@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    $base_url = $_SESSION["BASE_URL"];
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,14 +22,14 @@
     </head>
 
     <body>
-        <?php
-            session_start();
-            $current_page_title = "list of categories";
-            include '../../components/unauth_redirection.php';
-        ?>
+        <?php include '../../components/unauth_redirection.php'; ?>
+        
         <?php include '../../components/side_nav.php'; ?>
-                
-        <?php include '../../components/top_nav.php'; ?>  
+        
+        <?php
+            $current_page_title = "list of categories";
+            include '../../components/top_nav.php';
+        ?>
 
         <?php
             include('../../../utils/connect.php');
@@ -94,7 +98,7 @@
             
         </div>
         
-        <!-- Modal Structure -->
+        <!-- Add Category Modal -->
         <div id="categoryModal" class="modal">
             <div class="modal-content">
                 <h3 id="modalTitle">Add Category</h3>

@@ -1,4 +1,3 @@
-/* General Layout */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -51,10 +50,27 @@ th, td {
     font-size: 18px;
 }
 
-#confirm_order {
-    background-color: #4CAF50;
+
+#re_order {
+    background-color: darkgreen;
+}
+
+#re_order:hover {
+    background-color: lightgreen;
+}
+
+#cancel_order {
+    background-color: darkred;
+}
+
+#cancel_order:hover {
+    background-color: lightcoral;
+}
+
+.action_button {
     color: white;
     border: none;
+    margin: 10px;
     padding: 10px 20px;
     cursor: pointer;
     font-size: 18px;
@@ -63,17 +79,27 @@ th, td {
     transition: background-color 0.3s ease;
 }
 
-#confirm_order:hover {
-    background-color: #45a049;
+input[type=text] {
+    width: 80%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
-
-.button-icon {
-    margin-right: 0px;
-    margin-left: 0px;
-    color: black;
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
 }
-  
+
+.input-group{
+    padding:1% 0;
+    position:relative;
+}
+
+.disabled {
+    background-color: gray !important;
+    cursor: not-allowed;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .cart-left, .cart-right {

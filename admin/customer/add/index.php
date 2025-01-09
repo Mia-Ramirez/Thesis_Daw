@@ -16,14 +16,14 @@
     </head>
 
     <body>
+        <?php include '../../components/unauth_redirection.php'; ?>
+
+        <?php include '../../components/side_nav.php'; ?>
+        
         <?php
             $current_page_title = "add customer";
-            include '../../components/unauth_redirection.php';
+            include '../../components/top_nav.php';
         ?>
-        
-        <?php include '../../components/side_nav.php'; ?>
-                
-        <?php include '../../components/top_nav.php'; ?>  
 
         <div class="main">
             <div class="row">
