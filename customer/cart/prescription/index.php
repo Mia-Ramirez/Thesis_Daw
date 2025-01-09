@@ -147,7 +147,7 @@
             <table id="productTable">
                 <thead>
                     <tr>
-                        <th>Product</th>
+                        <th>Medicine</th>
                         <th>Prescription</th>
                         <th>Actions</th>
                     </tr>

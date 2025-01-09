@@ -35,7 +35,25 @@ h2 {
 .u_action:hover {
     cursor: pointer;
 }
-/* Prescription Table */
+
+input[type=text] {
+    width: 80%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+
+.input-group{
+    padding:1% 0;
+    position:relative;
+}
+
+/* Order Table */
 table {
     width: 100%;
     border-collapse: collapse;

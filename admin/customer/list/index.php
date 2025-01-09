@@ -91,7 +91,7 @@
                         <td>
                             <a href="../edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
                             <a href="../archive/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-box-archive" title="Archive"></i></a>
-                            <a href="../../order/history/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-list" title="View Orders"></i></a>
+                            <a href="../../order/history/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-cubes" title="View Orders"></i></a>
                         </td>
                     </tr>
                     <?php

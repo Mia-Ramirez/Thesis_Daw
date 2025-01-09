@@ -93,7 +93,7 @@ CREATE TABLE `customer_order` (
   `status` varchar(25) NOT NULL,
   `reference_number` varchar(256) NOT NULL,
   `selected_discount` varchar(128) NOT NULL,
-  `remarks` varchar(256) DEFAULT NULL
+  `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -252,7 +252,8 @@ CREATE TABLE `transaction` (
   `sub_total` double NOT NULL,
   `total` double NOT NULL,
   `discount` double NOT NULL,
-  `order_id` int(11) DEFAULT NULL
+  `order_id` int(11) DEFAULT NULL,
+  `receipt_reference` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

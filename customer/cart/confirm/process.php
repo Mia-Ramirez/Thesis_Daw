@@ -25,7 +25,7 @@
         print_r($ids);
         // customer_id 	date_ordered 	status 	reference_number 
         $reference_number = date('YmdHis')."-".$customer_id;
-        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number, selected_discount) VALUES ('$customer_id','processing','$reference_number', '$selected_discount')";
+        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number, selected_discount) VALUES ('$customer_id','submitted','$reference_number', '$selected_discount')";
         if(!mysqli_query($conn,$sqlInsertCustomerOrder)){
             die("Something went wrong");
         };

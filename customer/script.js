@@ -13,7 +13,7 @@ window.addEventListener("click", (event) => {
     }
 });
 
-function showYesNoModal(data) {
+function showYesNoModal(data, message) {
     if (data){
         let modal_data = data.split("-");
         var modal_input = document.getElementById("modal_value");
@@ -24,6 +24,11 @@ function showYesNoModal(data) {
         modal_input.value = modal_data[1];
         modal_input.name = modal_data[0];
     };
+
+    if (message){
+        var modal_message = document.getElementById("modal_message");
+        modal_message.innerText = message;
+    }
 
     var modal = document.getElementById("yesNoModal");
     modal.style.display = "block";

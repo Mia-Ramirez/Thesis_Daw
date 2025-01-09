@@ -56,7 +56,7 @@
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
                 <div class="card">
-                    <h2>Product List</h2>
+                    <h2>Medicine List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
                     </div>
@@ -64,7 +64,7 @@
                         <thead>
                             <tr>
                                 <th>Select</th>
-                                <th>Product</th>
+                                <th>Medicine</th>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -105,7 +105,7 @@
                                 <td><input type="number" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
                                 <td class="total">₱0</td>
                                 <td>
-                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>')" title="Remove"></i></a>
+                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>', 'Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>
                                 </td>
                             </tr>
                             <?php
