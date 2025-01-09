@@ -279,9 +279,27 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `password_length`, `is_active`) VALUES
 (1, 'admin', '', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 8, 1);
 
+-- --------------------------------------------------------
+
 --
--- Indexes for dumped tables
+-- Table structure for table `history`
 --
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `object_type` varchar(128) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `remarks` varchar(256) NOT NULL,
+  `date_recorded` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `recorded_by` (`user_id`);
 
 --
 -- Indexes for table `batch`
@@ -515,6 +533,12 @@ ALTER TABLE `transaction`
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
+--
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  
 --
 -- Constraints for dumped tables
 --

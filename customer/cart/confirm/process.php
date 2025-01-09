@@ -2,6 +2,8 @@
 <?php
     session_start();
     $customer_id = $_SESSION['customer_id'];
+    $user_id = $_SESSION['user_id'];
+
     $selected_discount = $_SESSION['selected_discount'];
     unset($_SESSION["selected_discount"]);
 
@@ -34,6 +36,11 @@
         $idsString = implode(',', $ids);
         $sqlTransferCartLinesToOrder = "UPDATE product_line SET cart_id = NULL, order_id = '$order_id', for_checkout=0, line_type='order' WHERE id IN ($idsString)";
         if(!mysqli_query($conn,$sqlTransferCartLinesToOrder)){
+            die("Something went wrong");
+        };
+
+        $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','submitted', '$user_id')";
+        if(!mysqli_query($conn,$sqlInsertOrderHistory)){
             die("Something went wrong");
         };
 

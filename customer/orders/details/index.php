@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="../../styles.css">
         <link rel="stylesheet" href="styles.css">
         
-        <!-- <script src="../../assets/scripts/common_fx.js"></script> -->
+        <script src="../../../assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
         <?php include '../../components/unauth_redirection.php'; ?>
@@ -146,7 +146,7 @@
                     <h2>Details</h2>
                     <div id="summary">
                         <p>Order Reference Number: <?php echo $row['reference_number']; ?></p>
-                        <p>Status: <?php echo ucwords($row['status']); ?></p>
+                        <p>Status: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
                         <?php
                         if (!is_null($row['remarks'])){
                         ?>
@@ -177,8 +177,8 @@
                     </div>
 
                     <form action="process.php" method="POST">
-                        <!-- <button class="action_button<?php if (!in_array($row['status'], ['cancelled', 'picked up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php if (!in_array($row['status'], ['cancelled', 'picked up'])){echo 'disabled';} ?>>Re-Order</button> -->
-                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <!-- <button class="action_button<?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
@@ -187,7 +187,11 @@
 
         <script src="../../script.js"></script>
         <script src="../script.js"></script>
-        <script src="script.js"></script>
-
+        <!-- <script src="script.js"></script> -->
+        <script>
+            window.onload = function() {
+                setActivePage("nav_menu");
+            };
+        </script>
     </body>
 </html>

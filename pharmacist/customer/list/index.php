@@ -89,8 +89,9 @@
                         <td><?php echo $data["contact_number"];?></td>
                         <td><?php echo $data["email"];?></td>
                         <td>
-                            <a href="../edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>">Edit</a>
-                            | <a href="../archive/index.php?customer_id=<?php echo $data["customer_id"]; ?>">Archive</a>
+                            <a href="../edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
+                            <a href="../archive/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-box-archive" title="Archive"></i></a>
+                            <a href="../../order/list/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-cubes" title="View Orders"></i></a>
                         </td>
                     </tr>
                     <?php
