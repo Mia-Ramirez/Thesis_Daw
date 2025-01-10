@@ -37,7 +37,7 @@
                 <h3>FOR PICKUP</h3>
                 <img class="pic" src="../../assets/images/pickup.png" alt="pickup">
             </div>
-            <div class="card new" onclick="redirectToPage('list', 'status=submitted')">
+            <div class="card new" onclick="redirectToPage('list', 'status=new_order')">
                 <h3>NEW ORDER</h3>
                 <img class="pic" src="../../assets/images/new.png" alt="new_order">
             </div>

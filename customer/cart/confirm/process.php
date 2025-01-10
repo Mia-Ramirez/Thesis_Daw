@@ -27,7 +27,7 @@
         print_r($ids);
         // customer_id 	date_ordered 	status 	reference_number 
         $reference_number = date('YmdHis')."-".$customer_id;
-        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number, selected_discount) VALUES ('$customer_id','submitted','$reference_number', '$selected_discount')";
+        $sqlInsertCustomerOrder = "INSERT INTO customer_order(customer_id , status , reference_number, selected_discount) VALUES ('$customer_id','placed','$reference_number', '$selected_discount')";
         if(!mysqli_query($conn,$sqlInsertCustomerOrder)){
             die("Something went wrong");
         };
@@ -39,7 +39,7 @@
             die("Something went wrong");
         };
 
-        $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','submitted', '$user_id')";
+        $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','Order Placed', '$user_id')";
         if(!mysqli_query($conn,$sqlInsertOrderHistory)){
             die("Something went wrong");
         };

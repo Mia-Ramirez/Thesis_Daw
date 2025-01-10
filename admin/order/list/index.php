@@ -57,10 +57,16 @@
 
             if (isset($_GET['status'])){
                 $status = $_GET['status'];
-                if (strpos($filter_str, "WHERE") != false){
-                    $filter_str .= " AND co.status='".$status."'";
+                if ($status == 'new_order'){
+                    $status = " IN ('placed','preparing')";
                 } else {
-                    $filter_str .= " WHERE co.status='".$status."'";
+                    $status = " IN ('".$status."')";
+                };
+
+                if (strpos($filter_str, "WHERE") != false){
+                    $filter_str .= " AND co.status".$status;
+                } else {
+                    $filter_str .= " WHERE co.status".$status;
                 };
             };
 

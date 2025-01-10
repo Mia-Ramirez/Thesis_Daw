@@ -7,7 +7,7 @@
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="../../styles.css">
-        <!-- <link rel="stylesheet" type="text/css" href="styles.css"> -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
         <title>
         Admin Dashboard
@@ -24,8 +24,83 @@
             include '../../components/top_nav.php';
         ?> 
 
-        <div class="main">
+<?php
+            include('../../../utils/connect.php');
+
+            $sqlGetOrderHistory = "SELECT
+                                oh.remarks AS history_remarks,
+                                oh.date_recorded,
+                                co.reference_number,
+                                u.username
+                            FROM history oh
+                            INNER JOIN customer_order co ON oh.object_id=co.id
+                            INNER JOIN user u ON oh.user_id=u.id
+                            WHERE oh.object_type='order'   
+            ";
+
+            $filter_str = "";
+            if (isset($_GET['order_id'])){
+                $order_id = $_GET['order_id'];
+                $filter_str = " AND co.id=".$order_id;
+            };
             
+            $offset = '0';
+            if (isset($_GET['page_no'])){
+                $offset = (int)$_GET['page_no'] * 10;
+            };
+
+            $sqlGetOrderHistory .= $filter_str ." ORDER BY oh.id DESC LIMIT ".$offset.", 10";
+            
+            $result = mysqli_query($conn,$sqlGetOrderHistory);
+        ?>
+
+        <div class="table">
+            <?php
+                if (isset($_SESSION["message_string"])) {
+                    ?>
+                        <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                            <?php 
+                            echo $_SESSION["message_string"];
+                            ?>
+                        </div>
+                    <?php
+                    unset($_SESSION["message_string"]);
+                    unset($_SESSION["message_class"]);
+                }
+            ?>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order Reference Number</th>
+                        <th>Date Recorded</th>
+                        <th>Recorded By</th>
+                        <th>Remarks</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php
+                    while($data = mysqli_fetch_array($result)){
+                        $date = new DateTime($data["date_recorded"]);
+
+                        // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+                        $formattedDate = $date->format('F j, Y h:i A');
+
+                        list($first_name, $last_name, $date_created) = explode("_", $data['username']);
+                    ?>
+                    <tr>
+                        
+                        <td><?php echo $data["reference_number"];?></td>
+                        <td><?php echo $formattedDate;?></td>
+                        <td><?php echo $first_name." ".$last_name;?></td>
+                        <td><?php echo $data['history_remarks']; ?></td>
+                    </tr>
+                    <?php
+                    }
+                    ?>
+                </tbody>
+
+            </table>
         </div>
 
         <script>

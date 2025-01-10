@@ -52,7 +52,8 @@
                 };
                 
                 if (!is_null($row["user_id"])){
-                    $sqlUpdateUser = "UPDATE user SET email='$email' WHERE id='$user_id'";
+                    $username = $first_name."_".$last_name."_".date('YmdHis');
+                    $sqlUpdateUser = "UPDATE user SET email='$email', username='$username' WHERE id='$user_id'";
                     if(!mysqli_query($conn,$sqlUpdateUser)){
                         die("Something went wrong");
                     };
