@@ -1,109 +1,225 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="nav.css">
-<link rel="stylesheet" href="POS.css">
-<title>
-Admin Dashboard
-</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy POS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="POS.css">
 </head>
-
-<body style="background-image: linear-gradient(white, light salmon);">
-
-<div class="sidenav">
-	<img id="logo" src="logo.png" alt="Logo">
-		<h2 style="text-align: center;"> Pharmanest Essential </h2>
-
-		<div class="menu">
-			<i class="fas fa-dashboard"></i>
-			<a href="adminpage.php">Dashboard</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-shopping-bag"></i>
-			<a href="shop.php">Shop</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-user"></i>
-			<a href="customerpage.php">Customer</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-cart-shopping"></i>
-			<a href="order.php">Order</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-cash-register"></i>
-			<a href="pos.php">Point of Sale</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-warehouse"></i>
-			<a href="inventory.php">Inventory</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-chart-line"></i>
-			<a href="salesReport.php">Sales Report</a>
-		</div>
-		<div class="menu">
-			<i class="fas fa-users"></i>
-			<a href="employee.php">Employee</a>
-		</div>
-</div>
-			
-	<div class="topnav">
-		<a href="logout.php">Logout(Logged in as Admin)</a>
-	</div>
-
-	<center>
-	<div class="head">
-		<h2> ADMIN DASHBOARD </h2>
-		<h4>Welcome, Admin!</h4>
-	</div>
-	</center>
-    <center>
-        <div class="shoulder">
-        <h2> POINT OF SALE </h2>
+<body>
+    <div class="sidenav">
+        <img id="logo" src="logo.png" alt="Logo">
+            <h2 style="text-align: center;"> Pharmanest Essential </h2>
+    
+            <div class="menu">
+                <i class="fas fa-dashboard"></i>
+                <a href="adminpage.php">Dashboard</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-shopping-bag"></i>
+                <a href="shop.php">Shop</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-user"></i>
+                <a href="customerpage.php">Customer</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-cart-shopping"></i>
+                <a href="order.php">Order</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-cash-register"></i>
+                <a href="pos.php">Point of Sale</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-warehouse"></i>
+                <a href="inventory.php">Inventory</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-chart-line"></i>
+                <a href="salesReport.php">Sales Report</a>
+            </div>
+            <div class="menu">
+                <i class="fas fa-users"></i>
+                <a href="employee.php">Employee</a>
+            </div>
+            <div class="time">
+                <i class="fas fa-clock"></i>
+                <span id="date-time"></span>
+            </div>
+    </div>
+                
+        <div class="head">
+        <center>
+            <h2> ADMIN DASHBOARD </h2>
+            <h4>Welcome, Admin!</h4>
+        </center>
+            <div class="topnav">
+                <a href="logout.php">Logout(Logged in as Admin)</a>
+            </div>
         </div>
+        
+    </center>
+    
+         <center>
+            <div class="shoulder">
+            <h2> POINT OF SALE </h2>
+            </div>
         </center>
 
         <div class="container">
-                <div class="search">
-                <form method="GET" action="">
-                    <input class="look" type="text" name="query" placeholder="Search anything..." required>
-                    <button class="btns" type="submit">Search</button>
-                </form>
-                </div>
-        </div>
-
-        <div class="one row" >
-			<form method="post">
-					<div class="column">
-					
-					<label for="mdname">Medicine Name:</label>
-					<input type="text" name="mdname" value="" readonly><br><br>
-
-                    <label for="mcat">Category:</label>
-					<input type="text" name="mcat" value="" readonly><br><br>
-                    
-                    <label for="mcqty">Quantity Required:</label>
-					<input type="number" name="mcqty">
-					
-					</div>
-					<div class="column">
-					
-					<label for="mloc">Location:</label>
-					<input type="text" name="mloc" value="" readonly><br><br>
-			
-					<label for="mprice">Price of One Unit:</label>
-					<input type="number" name="mprice" value="" readonly><br><br>
-					
-                      <label for="mqty">Quantity Available:</label>
-					<input type="number" name="mqty" value="" readonly><br><br>
-                </div>
-            <center>
-                <button class="btn" type="submit" name="submit">Submit</button>
-            </center>
+            <div class="products">
+                <h2>Products</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-list">
+                        <tr>
+                            <td>Aspirin 500mg</td>
+                            <td>₱5.00</td>
+                            <td><input type="number" min="1" value="1" class="qty"></td>
+                            <td><button class="btn" onclick="addToCart('Aspirin 500mg', 5.00, this)">Add</button></td>
+                        </tr>
+                        <tr>
+                            <td>Ibuprofen 200mg</td>
+                            <td>₱7.00</td>
+                            <td><input type="number" min="1" value="1" class="qty"></td>
+                            <td><button class="btn" onclick="addToCart('Ibuprofen 200mg', 7.00, this)">Add</button></td>
+                        </tr>
+                        <tr>
+                            <td>Paracetamol 250mg</td>
+                            <td>₱3.50</td>
+                            <td><input type="number" min="1" value="1" class="qty"></td>
+                            <td><button class="btn" onclick="addToCart('Paracetamol 250mg', 3.50, this)">Add</button></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-</body>
-</html>
+    
+            <div class="cart">
+                <h2>Your Cart</h2>
+                <table id="cart-list">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <div class="total">
+                    <strong>Grand Total: ₱<span id="grand-total">0.00</span></strong>
+                </div>
+                <button class="btn" onclick="generateReceipt()">Checkout</button>
+                <button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
+            </div>
+        </div>
+    
+        <div id="receipt-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Receipt</h2>
+                <div id="receipt-content"></div>
+                <button class="btn" onclick="printReceipt()">Print Receipt</button>
+            </div>
+        </div>
+    
+        <script>
+            let cart = [];
+    
+            function addToCart(product, price, btn) {
+                const qtyInput = btn.parentNode.parentNode.querySelector('.qty');
+                const quantity = parseInt(qtyInput.value);
+                if (quantity < 1) return;
+    
+                const existingProduct = cart.find(item => item.product === product);
+                if (existingProduct) {
+                    existingProduct.quantity += quantity;
+                    existingProduct.total = existingProduct.quantity * price;
+                } else {
+                    cart.push({ product, price, quantity, total: price * quantity });
+                }
+    
+                renderCart();
+            }
+    
+            function removeFromCart(index) {
+                cart.splice(index, 1);
+                renderCart();
+            }
+    
+            function clearCart() {
+                cart = [];
+                renderCart();
+            }
+    
+            function renderCart() {
+                const cartList = document.querySelector('#cart-list tbody');
+                cartList.innerHTML = '';
+    
+                let grandTotal = 0;
+                cart.forEach((item, index) => {
+                    grandTotal += item.total;
+                    cartList.innerHTML += `
+                        <tr>
+                            <td>${item.product}</td>
+                            <td>₱${item.price.toFixed(2)}</td>
+                            <td>${item.quantity}</td>
+                            <td>₱${item.total.toFixed(2)}</td>
+                            <td><button class="btn btn-danger" onclick="removeFromCart(${index})">Remove</button></td>
+                        </tr>
+                    `;
+                });
+    
+                document.getElementById('grand-total').innerText = grandTotal.toFixed(2);
+            }
+    
+            function generateReceipt() {
+                if (cart.length === 0) return alert('Cart is empty!');
+    
+                const receiptContent = document.getElementById('receipt-content');
+                receiptContent.innerHTML = '';
+    
+                cart.forEach(item => {
+                    receiptContent.innerHTML += `<p>${item.product} x${item.quantity} - ₱${item.total.toFixed(2)}</p>`;
+                });
+    
+                receiptContent.innerHTML += `<hr><strong>Total: ₱${document.getElementById('grand-total').innerText}</strong>`;
+    
+                document.getElementById('receipt-modal').style.display = 'block';
+            }
+    
+            function closeModal() {
+                document.getElementById('receipt-modal').style.display = 'none';
+            }
+    
+            function printReceipt() {
+                const receipt = document.getElementById('receipt-content').innerHTML;
+                const originalContent = document.body.innerHTML;
+    
+                document.body.innerHTML = `<div>${receipt}</div>`;
+                window.print();
+                document.body.innerHTML = originalContent;
+            }
+    
+            window.onclick = function(event) {
+                const modal = document.getElementById('receipt-modal');
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            }
+        </script>
+    </body>
+    </html>
+    
