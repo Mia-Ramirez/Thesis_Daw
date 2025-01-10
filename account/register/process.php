@@ -60,7 +60,7 @@
                 };
                 
                 $base_url = getBaseURL();
-                $link = $base_url . "/account/activate?key=$reference_key";
+                $link = $base_url . "account/activate?key=$reference_key";
             
                 if ($enable_logging == "1"){
                     error_log("This is a log message for debugging purposes: ".$link);

@@ -2,3 +2,4 @@ apps/*
 .DS_store
 assets/photos/*
 !assets/photos/init.txt
+!apps/init.txt
