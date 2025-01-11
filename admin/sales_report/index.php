@@ -23,7 +23,7 @@
         ?> 
         
         <div class="main">
-          <div class="card account-history">
+          <div class="card account-history" onclick="redirectToPage('history')">
               <h3>HISTORY</h3>
               <img class="pic" src="../../assets/images/history.png" alt="history">
           </div>
@@ -31,11 +31,11 @@
             <h3>CAPITAL & REVENUE</h3>
               <img class="pic" src="../../assets/images/capital.png" alt="capital_and_revenue">
           </div>
-          <div class="card slow-moving-meds">
+          <div class="card slow-moving-meds" onclick="redirectToPage('slow_moving')">
               <h3>SLOW MOVING MEDS</h3>
               <img class="pic" src="../../assets/images/slow.png" alt="slow_moving_meds">
           </div>
-          <div class="card slow-moving-meds">
+          <div class="card slow-moving-meds" onclick="redirectToPage('fast_moving')">
               <h3>FAST MOVING MEDS</h3>
               <img class="pic" src="../../assets/images/fast.png" alt="fast_moving_meds">
           </div>

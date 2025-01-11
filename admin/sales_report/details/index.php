@@ -5,60 +5,50 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="../../../assets/styles/bootstrap.css">
-        <link rel="stylesheet" href="../../styles.css">
-        <link rel="stylesheet" href="styles.css">
-        
-        <script src="../../../assets/scripts/common_fx.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../styles.css">
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
+        <?php include '../../components/title.php'; ?>
     </head>
-    <body class="body">
+
+    <body>
         <?php include '../../components/unauth_redirection.php'; ?>
-        
-        <?php include '../../components/navbar.php'; ?>
+
+        <?php include '../../components/side_nav.php'; ?>
 
         <?php
-            if (isset($_SESSION["message_string"])) {
-                ?>
-                    <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
-                        <?php 
-                        echo $_SESSION["message_string"];
-                        ?>
-                    </div>
-                <?php
-                unset($_SESSION["message_string"]);
-                unset($_SESSION["message_class"]);
-            }
-        ?>
+            $current_page_title = "sales details";
+            include '../../components/top_nav.php';
+        ?> 
 
         <?php
             include('../../../utils/connect.php');
-            if (isset($_GET['order_id'])) {
-                $order_id = $_GET['order_id'];
-                if (isset($_SESSION['customer_id']) == false){
-                    header("Location:../index.php");
-                };
-                $customer_id = $_SESSION['customer_id'];
+            if (isset($_GET['transaction_id'])) {
+                $transaction_id = $_GET['transaction_id'];
+                
+                $sqlGetTransaction = "SELECT
+                                        co.reference_number AS order_reference,
+                                        co.date_ordered,
+                                        t.transaction_date,
+                                        t.selected_discount,
+                                        e.first_name,
+                                        e.last_name,
+                                        t.receipt_reference,
+                                        t.reference_number,
+                                        co.id AS order_id
+                                    FROM transaction t
+                                    LEFT JOIN customer_order co ON t.order_id=co.id
+                                    INNER JOIN employee e ON t.employee_id=e.id
+                                    WHERE t.id=$transaction_id";
 
-                $sqlGetCustomerOrder = "SELECT
-                                        id AS order_id,
-                                        date_ordered,
-                                        status,
-                                        reference_number,
-                                        selected_discount,
-                                        remarks
-                                    FROM customer_order
-                                    WHERE id=$order_id AND customer_id=$customer_id";
-
-                $order_result = mysqli_query($conn,$sqlGetCustomerOrder);
-                if ($order_result->num_rows == 0){
+                $transaction_result = mysqli_query($conn,$sqlGetTransaction);
+                if ($transaction_result->num_rows == 0){
                     header("Location:../../../page/404.php");
                 };
 
-                $row = mysqli_fetch_array($order_result);
+                $row = mysqli_fetch_array($transaction_result);
 
                 $sqlGetProductLines = "SELECT 
                                         m.name AS medicine_name,
@@ -69,23 +59,23 @@
                                         qty
                                     FROM product_line pl
                                     INNER JOIN medicine m ON pl.medicine_id=m.id
-                                    WHERE pl.order_id=$order_id
+                                    WHERE pl.transaction_id=$transaction_id
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
                 $selected_discount = $row['selected_discount'];
                 
             } else {
-                header("Location:../index.php");
+                header("Location:../list/index.php");
             };
 
         ?>
 
-        <?php include '../cancelOrder_modal.php'; ?>
         
-        <div class="container">
+        
+        <div class="container" style="margin-left: 15%">
             <div class="cart-left" style="width: 50%;">
-                <div class="card">
+                <div class="card-order">
                     <h2>Medicine List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
@@ -142,25 +132,28 @@
 
             <!-- Details -->
             <div class="cart-right">
-                <div class="card">
+                <div class="card-order">
                     <h2>Details</h2>
                     <div id="summary">
-                        <p>Order Reference Number: <?php echo $row['reference_number']; ?></p>
-                        <p>Status: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
-                        <?php
-                        if ($row['status'] == 'cancelled'){
-                        ?>
-                        <p>Remarks: <?php echo $row['remarks']; ?></p>
-                        <?php
-                        }
-                        ?>
-                        <p>Date Ordered: <?php
-                            $date = new DateTime($row["date_ordered"]);
-
-                            // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+                        <p>Transaction Number: <?php echo $row['reference_number']; ?></p>
+                        <p>Receipt Number: <?php echo $row['receipt_reference']; ?></p>
+                        <p>Transaction Date: <?php
+                            $date = new DateTime($row["transaction_date"]);
                             $formattedDate = $date->format('F j, Y h:i A');
                             echo $formattedDate;
                         ?></p>
+                        <p>Transacted By: <?php echo $row['first_name']." ".$row['last_name']; ?></p>
+                        <?php
+                            if (!is_null($row['order_id'])){
+                                $date = new DateTime($row["date_ordered"]);
+
+                                // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+                                $formattedDate = $date->format('F j, Y h:i A');
+                                echo "<p>Order Reference Number: ".$row['order_reference']."</p>";
+                                echo "<p>Date Ordered: ".$formattedDate."</p>";
+                            }
+                        ?>
+                        
 
                         <p>Discount Type:
                             <?php
@@ -176,21 +169,17 @@
                         <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
                     </div>
 
-                    <form action="process.php" method="POST">
-                        <!-- <button class="action_button<?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
-                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
-                    </form>
+                    
                     
                 </div>
             </div>
-        </div>
 
-        <script src="../../script.js"></script>
-        <script src="../script.js"></script>
-        <!-- <script src="script.js"></script> -->
+        </div>
+        
+        <script src="script.js"></script>
         <script>
             window.onload = function() {
-                setActivePage("nav_menu");
+                setActivePage("nav_sales_report");
             };
         </script>
     </body>

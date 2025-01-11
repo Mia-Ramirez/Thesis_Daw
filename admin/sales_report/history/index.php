@@ -18,38 +18,33 @@
         <?php include '../../components/side_nav.php'; ?>
 
         <?php
-            $current_page_title = "stock history";
+            $current_page_title = "sales history";
             include '../../components/top_nav.php';
         ?> 
 
 <?php
             include('../../../utils/connect.php');
 
-            $sqlGetInventoryHistory = "SELECT
+            $sqlGetOrderHistory = "SELECT
                                 h.remarks AS history_remarks,
                                 h.date_recorded,
-                                m.name AS reference_name,
-                                u.username
+                                t.reference_number AS reference_name,
+                                u.username,
+                                t.id AS transaction_id
                             FROM history h
-                            INNER JOIN medicine m ON h.object_id=m.id
+                            INNER JOIN transaction t ON h.object_id=t.id
                             INNER JOIN user u ON h.user_id=u.id
-                            WHERE h.object_type IN ('medicine', 'transaction')   
+                            WHERE h.object_type='transaction'
             ";
 
-            $filter_str = "";
-            if (isset($_GET['medicine_id'])){
-                $medicine_id = $_GET['medicine_id'];
-                $filter_str = " AND m.id=".$medicine_id;
-            };
-            
             $offset = '0';
             if (isset($_GET['page_no'])){
                 $offset = (int)$_GET['page_no'] * 10;
             };
 
-            $sqlGetInventoryHistory .= $filter_str ." ORDER BY h.id DESC LIMIT ".$offset.", 10";
+            $sqlGetOrderHistory .= " ORDER BY h.id DESC LIMIT ".$offset.", 10";
             
-            $result = mysqli_query($conn,$sqlGetInventoryHistory);
+            $result = mysqli_query($conn,$sqlGetOrderHistory);
         ?>
 
         <div class="table">
@@ -69,7 +64,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Medicine</th>
+                        <th>Transaction Number</th>
                         <th>Date Recorded</th>
                         <th>Recorded By</th>
                         <th>Remarks</th>
@@ -94,7 +89,7 @@
                     ?>
                     <tr>
                         
-                        <td><?php echo $data["reference_name"];?></td>
+                        <td><a href="../details/index.php?transaction_id=<?php echo $data["transaction_id"]; ?>"><?php echo $data["reference_name"];?></a></td>
                         <td><?php echo $formattedDate;?></td>
                         <td><?php echo $first_name." ".$last_name;?></td>
                         <td><?php echo $data['history_remarks']; ?></td>
@@ -109,7 +104,7 @@
 
         <script>
             window.onload = function() {
-                setActivePage("nav_inventory");
+                setActivePage("nav_sales_report");
             };
         </script>
     </body>

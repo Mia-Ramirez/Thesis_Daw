@@ -29,7 +29,8 @@
                                 h.remarks AS history_remarks,
                                 h.date_recorded,
                                 co.reference_number AS reference_name,
-                                u.username
+                                u.username,
+                                co.id AS order_id
                             FROM history h
                             INNER JOIN customer_order co ON h.object_id=co.id
                             INNER JOIN user u ON h.user_id=u.id
@@ -94,7 +95,7 @@
                     ?>
                     <tr>
                         
-                        <td><?php echo $data["reference_name"];?></td>
+                        <td><a href="../details/index.php?order_id=<?php echo $data['order_id']; ?>"><?php echo $data["reference_name"];?></a></td>
                         <td><?php echo $formattedDate;?></td>
                         <td><?php echo $first_name." ".$last_name;?></td>
                         <td><?php echo $data['history_remarks']; ?></td>
