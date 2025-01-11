@@ -26,14 +26,14 @@
             include('../../../utils/connect.php');
 
             $sqlGetOrderHistory = "SELECT
-                                oh.remarks AS history_remarks,
-                                oh.date_recorded,
+                                h.remarks AS history_remarks,
+                                h.date_recorded,
                                 co.reference_number AS reference_name,
                                 u.username
-                            FROM history oh
-                            INNER JOIN customer_order co ON oh.object_id=co.id
-                            INNER JOIN user u ON oh.user_id=u.id
-                            WHERE oh.object_type='order'   
+                            FROM history h
+                            INNER JOIN customer_order co ON h.object_id=co.id
+                            INNER JOIN user u ON h.user_id=u.id
+                            WHERE h.object_type='order'   
             ";
 
             $filter_str = "";
@@ -47,7 +47,7 @@
                 $offset = (int)$_GET['page_no'] * 10;
             };
 
-            $sqlGetOrderHistory .= $filter_str ." ORDER BY oh.id DESC LIMIT ".$offset.", 10";
+            $sqlGetOrderHistory .= $filter_str ." ORDER BY h.id DESC LIMIT ".$offset.", 10";
             
             $result = mysqli_query($conn,$sqlGetOrderHistory);
         ?>

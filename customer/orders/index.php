@@ -48,6 +48,12 @@
                                     INNER JOIN customer c ON co.customer_id=c.id
                                     WHERE c.user_id=$user_id";
             
+            $offset = '0';
+            if (isset($_GET['page_no'])){
+                $offset = (int)$_GET['page_no'] * 10;
+            };
+            $sqlGetCustomerOrders .= " ORDER BY order_id DESC LIMIT ".$offset.", 10";
+            
             $orders = mysqli_query($conn,$sqlGetCustomerOrders);
             if ($orders->num_rows == 0){
                 $_SESSION["message_string"] = "You didn't order yet";

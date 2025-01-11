@@ -26,14 +26,14 @@
             include('../../../utils/connect.php');
 
             $sqlGetInventoryHistory = "SELECT
-                                oh.remarks AS history_remarks,
-                                oh.date_recorded,
+                                h.remarks AS history_remarks,
+                                h.date_recorded,
                                 m.name AS reference_name,
                                 u.username
-                            FROM history oh
-                            INNER JOIN medicine m ON oh.object_id=m.id
-                            INNER JOIN user u ON oh.user_id=u.id
-                            WHERE oh.object_type='medicine'   
+                            FROM history h
+                            INNER JOIN medicine m ON h.object_id=m.id
+                            INNER JOIN user u ON h.user_id=u.id
+                            WHERE h.object_type='medicine'   
             ";
 
             $filter_str = "";
@@ -47,7 +47,7 @@
                 $offset = (int)$_GET['page_no'] * 10;
             };
 
-            $sqlGetInventoryHistory .= $filter_str ." ORDER BY oh.id DESC LIMIT ".$offset.", 10";
+            $sqlGetInventoryHistory .= $filter_str ." ORDER BY h.id DESC LIMIT ".$offset.", 10";
             
             $result = mysqli_query($conn,$sqlGetInventoryHistory);
         ?>

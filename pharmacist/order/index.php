@@ -14,13 +14,13 @@
 
     <body>
         <?php include '../components/unauth_redirection.php'; ?>
-        
+
         <?php include '../components/side_nav.php'; ?>
-        
+
         <?php
             $current_page_title = "orders";
             include '../components/top_nav.php';
-        ?>
+        ?> 
 
         <div class="main">
             <div class="card history" onclick="redirectToPage('history', '')">
@@ -45,7 +45,7 @@
             window.onload = function() {
                 setActivePage("nav_order");
             };
-
+            
             function redirectToPage(page, param) {
                 if (param == ''){
                     window.location.href = './'+page+'/index.php';
