@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Pharmacist Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -25,7 +23,6 @@
             include '../../components/top_nav.php';
         ?>
 
-        <?php include '../../components/top_nav.php'; ?>  
 
         <?php
             include('../../../utils/connect.php');

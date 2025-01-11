@@ -4,9 +4,9 @@
     $order_id= mysqli_real_escape_string($conn, $_POST['order_id']);
     $remarks= mysqli_real_escape_string($conn, $_POST['remarks']);
 
-    $remarks = $remarks." (Cancelled by Customer)";
+    $order_remarks = $remarks." (Cancelled by Customer)";
 
-    $sqlCancelOrder = "UPDATE customer_order SET status='cancelled', remarks='$remarks' WHERE id=$order_id";
+    $sqlCancelOrder = "UPDATE customer_order SET status='cancelled', remarks='$order_remarks' WHERE id=$order_id";
     if(!mysqli_query($conn,$sqlCancelOrder)){
         die("Something went wrong");
     };

@@ -6,12 +6,11 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -23,20 +22,6 @@
             $current_page_title = "order details";
             include '../../components/top_nav.php';
         ?> 
-
-<?php
-            if (isset($_SESSION["message_string"])) {
-                ?>
-                    <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
-                        <?php 
-                        echo $_SESSION["message_string"];
-                        ?>
-                    </div>
-                <?php
-                unset($_SESSION["message_string"]);
-                unset($_SESSION["message_class"]);
-            }
-        ?>
 
         <?php
             include('../../../utils/connect.php');
@@ -170,12 +155,25 @@
             <!-- Details -->
             <div class="cart-right">
                 <div class="card-order">
+                    <?php
+                        if (isset($_SESSION["message_string"])) {
+                            ?>
+                                <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                                    <?php 
+                                    echo $_SESSION["message_string"];
+                                    ?>
+                                </div>
+                            <?php
+                            unset($_SESSION["message_string"]);
+                            unset($_SESSION["message_class"]);
+                        }
+                    ?>
                     <h2>Details</h2>
                     <div id="summary">
                         <p>Order Reference Number: <?php echo $row['reference_number']; ?></p>
                         <p>Status: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
                         <?php
-                        if (!is_null($row['remarks'])){
+                        if ($row['status'] == 'cancelled'){
                         ?>
                         <p>Remarks: <?php echo $row['remarks']; ?></p>
                         <?php
@@ -224,6 +222,7 @@
                     
                 </div>
             </div>
+
         </div>
         
         <script src="script.js"></script>

@@ -75,9 +75,14 @@
             <?php
                 include('../../utils/connect.php');
                 
-                $sqlGetMedicines = "SELECT m.id AS medicine_id, name AS medicine_name, price, photo
-                                        FROM medicine_categories mc
-                                        JOIN medicine m ON mc.medicine_id = m.id
+                $sqlGetMedicines = "SELECT
+                                        m.id AS medicine_id,
+                                        name AS medicine_name,
+                                        price,
+                                        current_quantity,
+                                        photo
+                                    FROM medicine_categories mc
+                                    JOIN medicine m ON mc.medicine_id = m.id
                                     ";
 
                 if ($category_id){
@@ -109,10 +114,19 @@
                 </center>
                 <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <p><?php echo $data['medicine_name']; ?></p>
-                <center>
-                    <a href="process.php?action=buy_now&medicine_id=<?php echo $data["medicine_id"]; ?>"><button class="btn">Buy Now</button></a>
-                    <a href="process.php?action=add_to_cart&medicine_id=<?php echo $data["medicine_id"]; ?>"><button class="btn">Add to Cart</button></a>
-                </center>
+                <?php
+                    if ($data['current_quantity'] == '0'){
+                        echo "<p style='color: red;'>Out of Stock</p>";
+                    } else {
+                        ?>
+                        <center>
+                        <a href="process.php?action=buy_now&medicine_id=<?php echo $data["medicine_id"]; ?>"><button class="btn">Buy Now</button></a>
+                        <a href="process.php?action=add_to_cart&medicine_id=<?php echo $data["medicine_id"]; ?>"><button class="btn">Add to Cart</button></a>
+                        </center>
+                    <?php
+                    }
+                ?>
+            
             </div>
             <?php
                 };

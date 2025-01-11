@@ -18,28 +18,28 @@
         <?php include '../../components/side_nav.php'; ?>
 
         <?php
-            $current_page_title = "order history";
+            $current_page_title = "stock history";
             include '../../components/top_nav.php';
         ?> 
 
 <?php
             include('../../../utils/connect.php');
 
-            $sqlGetOrderHistory = "SELECT
+            $sqlGetInventoryHistory = "SELECT
                                 oh.remarks AS history_remarks,
                                 oh.date_recorded,
-                                co.reference_number AS reference_name,
+                                m.name AS reference_name,
                                 u.username
                             FROM history oh
-                            INNER JOIN customer_order co ON oh.object_id=co.id
+                            INNER JOIN medicine m ON oh.object_id=m.id
                             INNER JOIN user u ON oh.user_id=u.id
-                            WHERE oh.object_type='order'   
+                            WHERE oh.object_type='medicine'   
             ";
 
             $filter_str = "";
-            if (isset($_GET['order_id'])){
-                $order_id = $_GET['order_id'];
-                $filter_str = " AND co.id=".$order_id;
+            if (isset($_GET['medicine_id'])){
+                $medicine_id = $_GET['medicine_id'];
+                $filter_str = " AND m.id=".$medicine_id;
             };
             
             $offset = '0';
@@ -47,9 +47,9 @@
                 $offset = (int)$_GET['page_no'] * 10;
             };
 
-            $sqlGetOrderHistory .= $filter_str ." ORDER BY oh.id DESC LIMIT ".$offset.", 10";
+            $sqlGetInventoryHistory .= $filter_str ." ORDER BY oh.id DESC LIMIT ".$offset.", 10";
             
-            $result = mysqli_query($conn,$sqlGetOrderHistory);
+            $result = mysqli_query($conn,$sqlGetInventoryHistory);
         ?>
 
         <div class="table">
@@ -69,7 +69,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Order Reference Number</th>
+                        <th>Medicine</th>
                         <th>Date Recorded</th>
                         <th>Recorded By</th>
                         <th>Remarks</th>
@@ -109,7 +109,7 @@
 
         <script>
             window.onload = function() {
-                setActivePage("nav_order");
+                setActivePage("nav_inventory");
             };
         </script>
     </body>

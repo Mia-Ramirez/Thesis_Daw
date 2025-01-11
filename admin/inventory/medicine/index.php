@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -88,7 +86,7 @@
                             <a href="./edit/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
                             <a href="../stock/movement/in/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a>
                             <a href="../stock/movement/out/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-minus" title="Stock Out"></i></a>
-                            <a href="../stock/history/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
+                            <a href="../history/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
                         </td>
                     </tr>
                     <?php
