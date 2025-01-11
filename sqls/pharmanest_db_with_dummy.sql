@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 11, 2025 at 05:22 AM
+-- Generation Time: Jan 11, 2025 at 07:48 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,17 +35,19 @@ CREATE TABLE `batch` (
   `supplier_id` int(11) NOT NULL,
   `medicine_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `date_disposed` date DEFAULT NULL
+  `received_quantity` int(11) NOT NULL,
+  `date_disposed` date DEFAULT NULL,
+  `disposed_quantity` int(11) DEFAULT NULL,
+  `batch_srp` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `medicine_id`, `employee_id`, `quantity`, `date_disposed`) VALUES
-(1, 'B20250110S001', '2025-01-10', '2027-01-10', 1, 1, 1, 100, NULL),
-(2, 'B20250110S002', '2025-01-10', '2027-01-08', 1, 2, 1, 50, NULL);
+INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `medicine_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_srp`) VALUES
+(1, 'B20250110S001', '2025-01-10', '2027-01-10', 1, 1, 1, 100, NULL, NULL, 4),
+(2, 'B20250110S002', '2025-01-10', '2027-01-08', 1, 2, 1, 50, NULL, NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -136,8 +138,8 @@ CREATE TABLE `customer_order` (
 INSERT INTO `customer_order` (`id`, `customer_id`, `date_ordered`, `status`, `reference_number`, `selected_discount`, `remarks`) VALUES
 (1, 1, '2025-01-11 11:41:54', 'cancelled', '20250111044154-1', '', 'wrong quantity (Cancelled by Customer)'),
 (2, 1, '2025-01-11 11:42:18', 'for_pickup', '20250111044218-1', '', NULL),
-(3, 1, '2025-01-11 11:42:41', 'for_pickup', '20250111044241-1', '', NULL),
-(4, 1, '2025-01-11 11:55:15', 'for_pickup', '20250111045515-1', 'Person With Disabilities', NULL);
+(3, 1, '2025-01-11 11:42:41', 'picked_up', '20250111044241-1', '', NULL),
+(4, 1, '2025-01-11 11:55:15', 'picked_up', '20250111045515-1', 'Person With Disabilities', NULL);
 
 -- --------------------------------------------------------
 
@@ -209,11 +211,16 @@ INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_record
 (9, 'order', 4, 'Order Placed', '2025-01-11 03:55:15', 2),
 (10, 'order', 4, 'Moved to \"Preparing\"', '2025-01-11 03:55:56', 3),
 (11, 'order', 4, 'Moved to \"For Pickup\"', '2025-01-11 03:55:57', 3),
-(12, 'transaction', 1, 'Transacted: 20250111-001', '2025-01-11 04:01:00', 4),
-(13, 'transaction', 2, 'Transacted: 20250111-002', '2025-01-11 04:09:23', 3),
-(14, 'transaction', 3, 'Transacted: 20250111-003', '2025-01-11 04:09:58', 3),
+(12, 'transaction', 1, 'Transacted: 20 quantity 20250111-001', '2025-01-11 05:48:05', 4),
+(13, 'transaction', 2, 'Transacted: 2 quantity 20250111-002', '2025-01-11 05:48:29', 3),
+(14, 'transaction', 3, 'Transacted: 1 quantity 20250111-003', '2025-01-11 05:48:43', 3),
 (15, 'medicine', 1, 'Add Stock: 100 quantity B20250110S001', '2025-01-11 04:14:02', 3),
-(16, 'medicine', 2, 'Add Stock: 50 quantity B20250110S001', '2025-01-11 04:15:28', 3);
+(16, 'medicine', 2, 'Add Stock: 50 quantity B20250110S001', '2025-01-11 04:15:28', 3),
+(17, 'order', 3, 'Moved to \"Picked-up\"', '2025-01-11 04:49:01', 3),
+(18, 'order', 4, 'Moved to \"Picked-up\"', '2025-01-11 04:49:31', 3),
+(19, 'medicine', 1, 'Sold: 20 quantity 20250111-001', '2025-01-11 05:55:58', 4),
+(20, 'medicine', 2, 'Sold: 2 quantity 20250111-002', '2025-01-11 05:56:13', 1),
+(21, 'medicine', 2, 'Sold: 1 quantity 20250111-003', '2025-01-11 05:56:24', 3);
 
 -- --------------------------------------------------------
 
@@ -230,16 +237,17 @@ CREATE TABLE `medicine` (
   `prescription_is_required` tinyint(1) NOT NULL,
   `photo` text NOT NULL,
   `rack_location` text NOT NULL,
-  `maintaining_quantity` int(11) NOT NULL
+  `maintaining_quantity` int(11) NOT NULL,
+  `srp` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `medicine`
 --
 
-INSERT INTO `medicine` (`id`, `name`, `price`, `current_quantity`, `applicable_discounts`, `prescription_is_required`, `photo`, `rack_location`, `maintaining_quantity`) VALUES
-(1, 'Biogesic', 5, 80, 'None', 0, 'http://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50),
-(2, 'Loperamide', 10, 47, 'Both', 0, 'http://localhost/pharmanest/assets/photos/loperamide.png', 'Location 2', 50);
+INSERT INTO `medicine` (`id`, `name`, `price`, `current_quantity`, `applicable_discounts`, `prescription_is_required`, `photo`, `rack_location`, `maintaining_quantity`, `srp`) VALUES
+(1, 'Biogesic', 5, 80, 'None', 0, 'http://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50, 4),
+(2, 'Loperamide', 10, 47, 'Both', 0, 'http://localhost/pharmanest/assets/photos/loperamide.png', 'Location 2', 50, 8);
 
 -- --------------------------------------------------------
 
@@ -302,19 +310,20 @@ CREATE TABLE `product_line` (
   `qty` int(11) NOT NULL,
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
-  `line_type` varchar(128) NOT NULL
+  `line_type` varchar(128) NOT NULL,
+  `line_srp` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_line`
 --
 
-INSERT INTO `product_line` (`id`, `medicine_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`) VALUES
-(1, 1, NULL, 1, 1, 0, NULL, 'order'),
-(2, 1, NULL, 2, 2, 0, NULL, 'order'),
-(3, 1, NULL, 3, 20, 0, 1, 'transaction'),
-(4, 2, NULL, 4, 2, 0, 2, 'transaction'),
-(5, 2, NULL, NULL, 1, NULL, 3, 'transaction');
+INSERT INTO `product_line` (`id`, `medicine_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_srp`) VALUES
+(1, 1, NULL, 1, 1, 0, NULL, 'order', NULL),
+(2, 1, NULL, 2, 2, 0, NULL, 'order', NULL),
+(3, 1, NULL, 3, 20, 0, 1, 'transaction', 4),
+(4, 2, NULL, 4, 2, 0, 2, 'transaction', 8),
+(5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 8);
 
 -- --------------------------------------------------------
 
@@ -609,7 +618,7 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `medicine`

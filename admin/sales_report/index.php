@@ -27,7 +27,7 @@
               <h3>HISTORY</h3>
               <img class="pic" src="../../assets/images/history.png" alt="history">
           </div>
-          <div class="card capital-and-revenue">
+          <div class="card capital-and-revenue" onclick="redirectToPage('capital_and_revenue')">
             <h3>CAPITAL & REVENUE</h3>
               <img class="pic" src="../../assets/images/capital.png" alt="capital_and_revenue">
           </div>

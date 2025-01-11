@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 08, 2025 at 12:24 AM
+-- Generation Time: Jan 11, 2025 at 07:35 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -35,10 +35,11 @@ CREATE TABLE `batch` (
   `supplier_id` int(11) NOT NULL,
   `medicine_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `date_disposed` date NOT NULL
+  `received_quantity` int(11) NOT NULL,
+  `date_disposed` date DEFAULT NULL,
+  `disposed_quantity` int(11) DEFAULT NULL,
+  `batch_srp` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -126,7 +127,20 @@ CREATE TABLE `employee` (
   `employment_date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+-- --------------------------------------------------------
 
+--
+-- Table structure for table `history`
+--
+
+CREATE TABLE `history` (
+  `id` int(11) NOT NULL,
+  `object_type` varchar(128) NOT NULL,
+  `object_id` int(11) NOT NULL,
+  `remarks` varchar(256) NOT NULL,
+  `date_recorded` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `user_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
 
 --
@@ -142,7 +156,8 @@ CREATE TABLE `medicine` (
   `prescription_is_required` tinyint(1) NOT NULL,
   `photo` text NOT NULL,
   `rack_location` text NOT NULL,
-  `maintaining_quantity` int(11) NOT NULL
+  `maintaining_quantity` int(11) NOT NULL,
+  `srp` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
@@ -193,7 +208,8 @@ CREATE TABLE `product_line` (
   `qty` int(11) NOT NULL,
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
-  `line_type` varchar(128) NOT NULL
+  `line_type` varchar(128) NOT NULL,
+  `line_srp` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -220,10 +236,7 @@ CREATE TABLE `stock_movements` (
 
 CREATE TABLE `supplier` (
   `id` int(11) NOT NULL,
-  `name` varchar(256) NOT NULL,
-  `contact_number` varchar(128) NOT NULL,
-  `email` varchar(256) NOT NULL,
-  `address` text NOT NULL
+  `name` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -249,11 +262,10 @@ CREATE TABLE `transaction` (
   `id` int(11) NOT NULL,
   `transaction_date` datetime NOT NULL DEFAULT current_timestamp(),
   `employee_id` int(11) NOT NULL,
-  `sub_total` double NOT NULL,
-  `total` double NOT NULL,
-  `discount` double NOT NULL,
   `order_id` int(11) DEFAULT NULL,
-  `receipt_reference` text NOT NULL
+  `receipt_reference` text NOT NULL,
+  `selected_discount` varchar(128) NOT NULL,
+  `reference_number` varchar(128) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -279,27 +291,9 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `password_length`, `is_active`) VALUES
 (1, 'admin', 'pharmanest123@gmail.com', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 15, 1);
 
--- --------------------------------------------------------
-
 --
--- Table structure for table `history`
+-- Indexes for dumped tables
 --
-
-CREATE TABLE `history` (
-  `id` int(11) NOT NULL,
-  `object_type` varchar(128) NOT NULL,
-  `object_id` int(11) NOT NULL,
-  `remarks` varchar(256) NOT NULL,
-  `date_recorded` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Indexes for table `history`
---
-ALTER TABLE `history`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `recorded_by` (`user_id`);
 
 --
 -- Indexes for table `batch`
@@ -350,6 +344,13 @@ ALTER TABLE `customer_prescription`
 ALTER TABLE `employee`
   ADD PRIMARY KEY (`id`),
   ADD KEY `employee_login` (`user_id`);
+
+--
+-- Indexes for table `history`
+--
+ALTER TABLE `history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `recorded_by` (`user_id`);
 
 --
 -- Indexes for table `medicine`
@@ -474,6 +475,12 @@ ALTER TABLE `employee`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `history`
+--
+ALTER TABLE `history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `medicine`
 --
 ALTER TABLE `medicine`
@@ -533,12 +540,6 @@ ALTER TABLE `transaction`
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT for table `history`
---
-ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-  
 --
 -- Constraints for dumped tables
 --
@@ -624,7 +625,6 @@ ALTER TABLE `stock_movements`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
-  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

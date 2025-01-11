@@ -33,7 +33,7 @@
                             FROM history h
                             INNER JOIN medicine m ON h.object_id=m.id
                             INNER JOIN user u ON h.user_id=u.id
-                            WHERE h.object_type IN ('medicine', 'transaction')   
+                            WHERE h.object_type='medicine'
             ";
 
             $filter_str = "";
