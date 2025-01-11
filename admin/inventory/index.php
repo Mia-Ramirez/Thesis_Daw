@@ -9,9 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../components/title.php'; ?>
     </head>
 
     <body>
@@ -25,7 +23,7 @@
         ?>
 
         <div class="main" style="margin-left: 135px; margin-right: 0%">
-            <div class="card history">
+            <div class="card history" onclick="redirectToPage('history')">
                 <h3>HISTORY</h3>
                 <img class="pic" src="../../assets/images/history.png" alt="history">
             </div>

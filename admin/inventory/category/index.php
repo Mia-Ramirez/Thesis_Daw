@@ -15,9 +15,7 @@
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
         <script src="../../../assets/scripts/common_fx.js"></script>
 
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
 
     </head>
 

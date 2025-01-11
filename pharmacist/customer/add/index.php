@@ -10,13 +10,11 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Pharmacist Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
-        <?php include '../components/unauth_redirection.php'; ?>
+        <?php include '../../components/unauth_redirection.php'; ?>
 
         <?php include '../../components/side_nav.php'; ?>
         

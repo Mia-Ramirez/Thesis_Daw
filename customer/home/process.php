@@ -33,11 +33,14 @@
     $result = mysqli_query($conn,$sqlGetCustomerCartID);
     $row = mysqli_fetch_array($result);
     $customer_id = $row['customer_id'];
+    if (isset($_SESSION['customer_id']) == false){
+        $_SESSION['customer_id'] = $customer_id;
+    };
     
     if ($row['customer_cart_id']){
         $customer_cart_id = $row['customer_cart_id'];
     } else {
-        $sqlInsertCustomerCart = "INSERT INTO customer_cart(customer_id, product_lines) VALUES ('$customer_id', NULL)";
+        $sqlInsertCustomerCart = "INSERT INTO customer_cart(customer_id) VALUES ('$customer_id')";
         if(!mysqli_query($conn,$sqlInsertCustomerCart)){
             die("Something went wrong");
         };

@@ -9,9 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../components/title.php'; ?>
     </head>
 
     <body>
@@ -23,6 +21,8 @@
             $current_page_title = "dashboard";
             include '../components/top_nav.php';
         ?>
+
+
 
         <div class="pot">
 	        <div class="main">

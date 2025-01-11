@@ -50,8 +50,8 @@
 
                 $password_len = strlen($password);
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-                $sqlUpdateUser = "UPDATE user SET email='$email', password_length = $password_len, password = '$hashed_password' WHERE id=$user_id";
+                $username = $first_name."_".$last_name."_".date('YmdHis');
+                $sqlUpdateUser = "UPDATE user SET username='$username', email='$email', password_length = $password_len, password = '$hashed_password' WHERE id=$user_id";
                 if(!mysqli_query($conn,$sqlUpdateUser)){
                     die("Something went wrong");
                 };

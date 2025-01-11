@@ -2,3 +2,6 @@ apps/*
 .DS_store
 assets/photos/*
 !assets/photos/init.txt
+!assets/photos/biogesic.png
+!assets/photos/loperamide.png
+!apps/init.txt

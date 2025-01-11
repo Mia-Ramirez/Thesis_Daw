@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -69,7 +67,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Rack Location</th>
-                        <th>Current Number of Quantity</th>
+                        <th>Current Number of Stock</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -85,9 +83,10 @@
                         <td><?php echo $data["rack_location"];?></td>
                         <td><?php echo $data["current_quantity"];?></td>
                         <td>
-                            <a href="./edit/index.php?medicine_id=<?php echo $data["id"]; ?>">Edit</a>
-                            | <a href="../stock/movement/index.php?type=in&medicine_id=<?php echo $data["id"]; ?>">Stock In</a>
-                            | <a href="../stock/movement/index.php?type=out&medicine_id=<?php echo $data["id"]; ?>">Stock Out</a>
+                            <a href="./edit/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
+                            <a href="../stock/movement/in/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a>
+                            <a href="../stock/movement/out/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-minus" title="Stock Out"></i></a>
+                            <a href="../history/index.php?medicine_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
                         </td>
                     </tr>
                     <?php

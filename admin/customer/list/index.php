@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -91,7 +89,7 @@
                         <td>
                             <a href="../edit/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
                             <a href="../archive/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-box-archive" title="Archive"></i></a>
-                            <a href="../../order/history/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-cubes" title="View Orders"></i></a>
+                            <a href="../../order/list/index.php?customer_id=<?php echo $data["customer_id"]; ?>"><i class="button-icon fas fa-cubes" title="View Orders"></i></a>
                         </td>
                     </tr>
                     <?php

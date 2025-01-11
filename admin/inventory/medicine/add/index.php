@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../../components/title.php'; ?>
     </head>
 
     <body>

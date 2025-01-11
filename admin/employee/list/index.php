@@ -10,9 +10,7 @@
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../../components/title.php'; ?>
     </head>
 
     <body>
@@ -89,8 +87,8 @@
                         <td><?php echo $data["contact_number"];?></td>
                         <td><?php echo $data["email"];?></td>
                         <td>
-                            <a href="../edit/index.php?employee_id=<?php echo $data["employee_id"]; ?>">Edit</a>
-                            <?php if ($data["user_id"] != $_SESSION["user_id"]){ echo "| <a href='../archive/index.php?employee_id=".$data["employee_id"]."'>Archive</a>";}?>
+                            <a href="../edit/index.php?employee_id=<?php echo $data["employee_id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
+                            <?php if ($data["user_id"] != $_SESSION["user_id"]){ echo "<a href='../archive/index.php?employee_id=".$data["employee_id"]."'><i class='button-icon fas fa-box-archive' title='Archive'></i></a>";}?>
                         </td>
                     </tr>
                     <?php

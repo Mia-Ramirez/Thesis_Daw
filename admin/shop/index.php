@@ -9,9 +9,7 @@
         <link rel="stylesheet" type="text/css" href="../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="../../assets/scripts/common_fx.js"></script>
-        <title>
-        Admin Dashboard
-        </title>
+        <?php include '../components/title.php'; ?>
     </head>
 
     <body style="background: linear-gradient(to bottom right, lightsalmon, white); background-repeat: no-repeat; background-attachment: fixed;">
@@ -67,7 +65,7 @@
             <?php
                 include('../../utils/connect.php');
                 
-                $sqlGetMedicines = "SELECT m.id AS medicine_id, name AS medicine_name, price, photo
+                $sqlGetMedicines = "SELECT m.id AS medicine_id, name AS medicine_name, price, photo, current_quantity
                                         FROM medicine_categories mc
                                         JOIN medicine m ON mc.medicine_id = m.id
                                     ";
@@ -101,6 +99,11 @@
                 </center>
                 <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <p><?php echo $data['medicine_name']; ?></p>
+                <?php
+                    if ($data['current_quantity'] == '0'){
+                        echo "<p style='color: red;'>Out of Stock</p>";
+                    };
+                ?>
             </div>
             <?php
                 };
