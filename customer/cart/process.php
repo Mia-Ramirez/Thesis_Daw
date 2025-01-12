@@ -69,20 +69,20 @@
                 die("Something went wrong");
             };
 
-            $sqlGetMedicine = "SELECT medicine_id, prescription_is_required FROM product_line pl INNER JOIN medicine m ON pl.medicine_id=m.id WHERE pl.cart_id=$customer_cart_id AND pl.id=$line_id AND line_type='cart'";
-            $medicine_result = mysqli_query($conn,$sqlGetMedicine);
-            $medicine_row = mysqli_fetch_array($medicine_result);
+            $sqlGetProduct = "SELECT product_id, prescription_is_required FROM product_line pl INNER JOIN product p ON pl.product_id=p.id WHERE pl.cart_id=$customer_cart_id AND pl.id=$line_id AND line_type='cart'";
+            $product_result = mysqli_query($conn,$sqlGetProduct);
+            $product_row = mysqli_fetch_array($product_result);
             
-            $medicine_id = $medicine_row['medicine_id'];
-            $medicine_prescription_is_required = $medicine_row['prescription_is_required'];
-            if ($medicine_prescription_is_required == '1'){
+            $product_id = $product_row['product_id'];
+            $product_prescription_is_required = $product_row['prescription_is_required'];
+            if ($product_prescription_is_required == '1'){
                 $prescription_is_required = true;
             
-                $sqlGetMedicinePrescription = "SELECT id FROM medicine_prescription WHERE cart_id=$customer_cart_id AND medicine_id=$medicine_id";
-                $prescription_result = mysqli_query($conn,$sqlGetMedicinePrescription);
+                $sqlGetProductPrescription = "SELECT id FROM product_prescription WHERE cart_id=$customer_cart_id AND product_id=$product_id";
+                $prescription_result = mysqli_query($conn,$sqlGetProductPrescription);
                 if ($prescription_result->num_rows == 0){
-                    $sqlInsertMedicinePrescription = "INSERT INTO medicine_prescription(cart_id , medicine_id) VALUES ('$customer_cart_id','$medicine_id')";
-                    if(!mysqli_query($conn,$sqlInsertMedicinePrescription)){
+                    $sqlInsertProductPrescription = "INSERT INTO product_prescription(cart_id , product_id) VALUES ('$customer_cart_id','$product_id')";
+                    if(!mysqli_query($conn,$sqlInsertProductPrescription)){
                         die("Something went wrong");
                     };
                 };

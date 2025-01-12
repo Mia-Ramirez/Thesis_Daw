@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="../../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
         <?php include '../../components/title.php'; ?>
     </head>
 
@@ -28,18 +28,18 @@
             $sqlGetInventoryHistory = "SELECT
                                 h.remarks AS history_remarks,
                                 h.date_recorded,
-                                m.name AS reference_name,
+                                p.name AS reference_name,
                                 u.username
                             FROM history h
-                            INNER JOIN medicine m ON h.object_id=m.id
+                            INNER JOIN product p ON h.object_id=p.id
                             INNER JOIN user u ON h.user_id=u.id
-                            WHERE h.object_type='medicine'
+                            WHERE h.object_type='product'
             ";
 
             $filter_str = "";
-            if (isset($_GET['medicine_id'])){
-                $medicine_id = $_GET['medicine_id'];
-                $filter_str = " AND m.id=".$medicine_id;
+            if (isset($_GET['product_id'])){
+                $product_id = $_GET['product_id'];
+                $filter_str = " AND p.id=".$product_id;
             };
             
             $offset = '0';
@@ -69,7 +69,7 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Medicine</th>
+                        <th>Product</th>
                         <th>Date Recorded</th>
                         <th>Recorded By</th>
                         <th>Remarks</th>

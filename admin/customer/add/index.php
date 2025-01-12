@@ -68,6 +68,7 @@
                         </div>
                     
                     </div>
+
                     <div class="column">
                         <p>
                             <label for="contact_number">Contact Number: </label><br>
@@ -85,7 +86,6 @@
                         </p>
                     </div>
                     
-                
                     <button name="action" value="add_customer">Add</button>
                 </form>
             </div>

@@ -4,7 +4,7 @@
 //     return option ? option.getAttribute('data-index') : null;
 // }
 
-function showPrescriptionModal(prescription_id, medicine_name, selected_option) {
+function showPrescriptionModal(prescription_id, product_name, selected_option) {
     
     var selectedOption = document.getElementById('prescription-option')
 
@@ -15,7 +15,7 @@ function showPrescriptionModal(prescription_id, medicine_name, selected_option) 
     var line_id = document.getElementById("line_id");
     
     line_id.value = prescription_id;
-    modal_header.innerText = 'Upload Prescription for ' + medicine_name;
+    modal_header.innerText = 'Upload Prescription for ' + product_name;
 
     var modal = document.getElementById("prescriptionModal");
     modal.style.display = "block";

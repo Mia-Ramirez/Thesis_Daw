@@ -10,8 +10,8 @@
         <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
-        <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="../../styles.css">
+        <link rel="stylesheet" href="styles.css">
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
@@ -35,24 +35,24 @@
 
             $_SESSION['customer_id'] = $customer_id;
             
-            $sqlGetPrescribedMedicines = "SELECT
+            $sqlGetPrescribedProducts = "SELECT
                                             mp.id AS line_id,
-                                            m.name AS medicine_name,
+                                            p.name AS product_name,
                                             photo,
                                             prescription_id,
                                             cp.reference_name AS prescription_name,
                                             cp.prescription_photo AS prescription_photo,
                                             pl.id AS product_line_id,
                                             mp.cart_id AS cart_id
-                                        FROM medicine_prescription mp
+                                        FROM product_prescription mp
                                         INNER JOIN customer_cart cc ON mp.cart_id=cc.id
-                                        INNER JOIN medicine m ON mp.medicine_id=m.id
-                                        INNER JOIN product_line pl ON mp.medicine_id=pl.medicine_id
+                                        INNER JOIN product p ON mp.product_id=p.id
+                                        INNER JOIN product_line pl ON mp.product_id=pl.product_id
                                         LEFT JOIN customer_prescription cp ON mp.prescription_id=cp.id
                                         WHERE for_checkout=1 AND cc.customer_id=$customer_id AND line_type='cart'
             ";
 
-            $prescribed_meds = mysqli_query($conn,$sqlGetPrescribedMedicines);
+            $prescribed_meds = mysqli_query($conn,$sqlGetPrescribedProducts);
             if ($prescribed_meds->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
                 $_SESSION["message_class"] = "danger";
@@ -140,14 +140,14 @@
 
         <div class="card">
             <h2>
-                Medicine(s) that requires Prescription
+                Product(s) that requires Prescription
                 <button id="proceed_button" type="button" class="modal-button yes-button" onclick="redirectToOrderPage()" style="margin-left: 45%">Proceed</button>
             </h2>
 
             <table id="productTable">
                 <thead>
                     <tr>
-                        <th>Medicine</th>
+                        <th>Product</th>
                         <th>Prescription</th>
                         <th>Actions</th>
                     </tr>
@@ -165,7 +165,7 @@
                         <tr>
                             <td>
                                 <img src="<?php echo $data['photo'];?>" style="width:100px; height:100px"><br/>
-                                <?php echo $data['medicine_name'];?>
+                                <?php echo $data['product_name'];?>
                             </td>
                             <td>
                                 <?php
@@ -177,9 +177,9 @@
                             <td>
                                 <?php
                                     if (!is_null($data['prescription_name'])){
-                                        echo '<u class="action_modal" onclick="showPrescriptionModal(\''.$data['line_id'].'\', \''.$data['medicine_name'].'\', \''.$data['prescription_id'].'\')">Change</u>';   
+                                        echo '<u class="action_modal" onclick="showPrescriptionModal(\''.$data['line_id'].'\', \''.$data['product_name'].'\', \''.$data['prescription_id'].'\')">Change</u>';   
                                     } else {
-                                        echo '<u class="action_modal" onclick="showPrescriptionModal(\''.$data['line_id'].'\', \''.$data['medicine_name'].'\', \'\')">Add</u>';   
+                                        echo '<u class="action_modal" onclick="showPrescriptionModal(\''.$data['line_id'].'\', \''.$data['product_name'].'\', \'\')">Add</u>';   
                                     };
                                 ?>
                                 | <a href="process.php?action=remove&cart_id=<?php echo $data['cart_id']; ?>&product_line_id=<?php echo $data['product_line_id'];?>">Remove</a>

@@ -8,9 +8,13 @@ function previewImage(event, method) {
         const reader = new FileReader();
         reader.onload = function(e) {
             if (method === 'add'){
+                let img = document.getElementById('img');
+                if (img){ img.remove(); };
+
                 // Create an image element and set the source to the file
-                const img = document.createElement('img');
+                img = document.createElement('img');
                 img.src = e.target.result;
+                img.id = "img";
 
                 // Clear the container and add the image
                 const span = document.getElementById('span_image_text');

@@ -114,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Checkout button functionality
     checkoutButton.addEventListener('click', () => {
         if (prescription_is_required === true){
-            alert(`Medicine(s) with required Prescription detected, please check and select the respective Prescription`);
+            alert(`Product(s) with required Prescription detected, please check and select the respective Prescription`);
         } else {
             alert(`Checkout Successful! Please review your order and confirm on the next page`);
         };

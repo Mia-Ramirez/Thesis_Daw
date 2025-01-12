@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 11, 2025 at 07:35 AM
+-- Generation Time: Jan 12, 2025 at 05:27 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -30,16 +30,17 @@ SET time_zone = "+00:00";
 CREATE TABLE `batch` (
   `id` int(11) NOT NULL,
   `reference_number` varchar(256) NOT NULL,
-  `date_received` date NOT NULL,
+  `date_received` date NOT NULL DEFAULT current_timestamp(),
   `expiration_date` date NOT NULL,
   `supplier_id` int(11) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
-  `batch_srp` double NOT NULL
+  `batch_cost` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 -- --------------------------------------------------------
 
 --
@@ -144,10 +145,24 @@ CREATE TABLE `history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `medicine`
+-- Table structure for table `prescription_history`
 --
 
-CREATE TABLE `medicine` (
+CREATE TABLE `prescription_history` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `prescription_id` int(11) NOT NULL,
+  `qty` int(11) NOT NULL,
+  `transaction_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product`
+--
+
+CREATE TABLE `product` (
   `id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL,
   `price` double NOT NULL,
@@ -157,42 +172,21 @@ CREATE TABLE `medicine` (
   `photo` text NOT NULL,
   `rack_location` text NOT NULL,
   `maintaining_quantity` int(11) NOT NULL,
-  `srp` double NOT NULL
+  `cost` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
 
-CREATE TABLE `medicine_categories` (
+--
+-- Table structure for table `product_categories`
+--
+
+CREATE TABLE `product_categories` (
   `id` int(11) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `category_ids` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- --------------------------------------------------------
-
---
--- Table structure for table `medicine_prescription`
---
-
-CREATE TABLE `medicine_prescription` (
-  `id` int(11) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
-  `prescription_id` int(11) DEFAULT NULL,
-  `cart_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `prescription_history`
---
-
-CREATE TABLE `prescription_history` (
-  `id` int(11) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
-  `prescription_id` int(11) NOT NULL,
-  `qty` int(11) NOT NULL,
-  `transaction_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -202,30 +196,27 @@ CREATE TABLE `prescription_history` (
 
 CREATE TABLE `product_line` (
   `id` int(11) NOT NULL,
-  `medicine_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
   `cart_id` int(11) DEFAULT NULL,
   `order_id` int(11) DEFAULT NULL,
   `qty` int(11) NOT NULL,
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
-  `line_srp` double DEFAULT NULL
+  `line_cost` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_movements`
+-- Table structure for table `product_prescription`
 --
 
-CREATE TABLE `stock_movements` (
+CREATE TABLE `product_prescription` (
   `id` int(11) NOT NULL,
-  `date` datetime NOT NULL DEFAULT current_timestamp(),
-  `medicine_id` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
-  `movement_type` varchar(25) NOT NULL,
-  `reference` text NOT NULL,
-  `employee_id` int(11) NOT NULL
+  `product_id` int(11) NOT NULL,
+  `prescription_id` int(11) DEFAULT NULL,
+  `cart_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -300,8 +291,8 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `password_len
 --
 ALTER TABLE `batch`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine_supplier` (`supplier_id`) USING BTREE,
-  ADD KEY `medicine` (`medicine_id`),
+  ADD KEY `product_supplier` (`supplier_id`) USING BTREE,
+  ADD KEY `product` (`product_id`),
   ADD KEY `recorded_by` (`employee_id`);
 
 --
@@ -353,54 +344,46 @@ ALTER TABLE `history`
   ADD KEY `recorded_by` (`user_id`);
 
 --
--- Indexes for table `medicine`
---
-ALTER TABLE `medicine`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `medicine_categories`
---
-ALTER TABLE `medicine_categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine` (`medicine_id`),
-  ADD KEY `category` (`category_ids`(768));
-
---
--- Indexes for table `medicine_prescription`
---
-ALTER TABLE `medicine_prescription`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine` (`medicine_id`),
-  ADD KEY `prescription` (`prescription_id`),
-  ADD KEY `cart` (`cart_id`);
-
---
 -- Indexes for table `prescription_history`
 --
 ALTER TABLE `prescription_history`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `prescribed_medicine` (`medicine_id`),
+  ADD KEY `prescribed_product` (`product_id`),
   ADD KEY `prescription` (`prescription_id`),
   ADD KEY `transaction` (`transaction_id`);
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `product_categories`
+--
+ALTER TABLE `product_categories`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product` (`product_id`),
+  ADD KEY `category` (`category_ids`(768));
 
 --
 -- Indexes for table `product_line`
 --
 ALTER TABLE `product_line`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine` (`medicine_id`),
+  ADD KEY `product` (`product_id`),
   ADD KEY `cart` (`cart_id`),
   ADD KEY `order` (`order_id`),
   ADD KEY `transaction` (`transaction_id`);
 
 --
--- Indexes for table `stock_movements`
+-- Indexes for table `product_prescription`
 --
-ALTER TABLE `stock_movements`
+ALTER TABLE `product_prescription`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `medicine` (`medicine_id`),
-  ADD KEY `moved_by` (`employee_id`);
+  ADD KEY `product` (`product_id`),
+  ADD KEY `prescription` (`prescription_id`),
+  ADD KEY `cart` (`cart_id`);
 
 --
 -- Indexes for table `supplier`
@@ -481,27 +464,21 @@ ALTER TABLE `history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `medicine`
---
-ALTER TABLE `medicine`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `medicine_categories`
---
-ALTER TABLE `medicine_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `medicine_prescription`
---
-ALTER TABLE `medicine_prescription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `prescription_history`
 --
 ALTER TABLE `prescription_history`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `product_categories`
+--
+ALTER TABLE `product_categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -511,9 +488,9 @@ ALTER TABLE `product_line`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `stock_movements`
+-- AUTO_INCREMENT for table `product_prescription`
 --
-ALTER TABLE `stock_movements`
+ALTER TABLE `product_prescription`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -549,7 +526,7 @@ ALTER TABLE `user`
 --
 ALTER TABLE `batch`
   ADD CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`),
-  ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`),
+  ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
   ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
 
 --
@@ -583,48 +560,42 @@ ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `medicine_categories`
---
-ALTER TABLE `medicine_categories`
-  ADD CONSTRAINT `medicine_categories_ibfk_1` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `medicine_prescription`
---
-ALTER TABLE `medicine_prescription`
-  ADD CONSTRAINT `medicine_prescription_ibfk_1` FOREIGN KEY (`prescription_id`) REFERENCES `customer_prescription` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `medicine_prescription_ibfk_2` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `medicine_prescription_ibfk_3` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE CASCADE;
-
---
 -- Constraints for table `prescription_history`
 --
 ALTER TABLE `prescription_history`
-  ADD CONSTRAINT `prescription_history_ibfk_1` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `prescription_history_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `prescription_history_ibfk_3` FOREIGN KEY (`prescription_id`) REFERENCES `customer_prescription` (`id`) ON DELETE NO ACTION,
   ADD CONSTRAINT `prescription_history_ibfk_4` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_categories`
+--
+ALTER TABLE `product_categories`
+  ADD CONSTRAINT `product_categories_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `product_line`
 --
 ALTER TABLE `product_line`
   ADD CONSTRAINT `product_line_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE SET NULL,
-  ADD CONSTRAINT `product_line_ibfk_2` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_line_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_line_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `customer_order` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_4` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`) ON DELETE SET NULL;
 
 --
--- Constraints for table `stock_movements`
+-- Constraints for table `product_prescription`
 --
-ALTER TABLE `stock_movements`
-  ADD CONSTRAINT `stock_movements_ibfk_1` FOREIGN KEY (`medicine_id`) REFERENCES `medicine` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `stock_movements_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
+ALTER TABLE `product_prescription`
+  ADD CONSTRAINT `product_prescription_ibfk_1` FOREIGN KEY (`prescription_id`) REFERENCES `customer_prescription` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_prescription_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_prescription_ibfk_3` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
+  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

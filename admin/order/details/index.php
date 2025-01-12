@@ -45,14 +45,14 @@
                 $row = mysqli_fetch_array($order_result);
 
                 $sqlGetProductLines = "SELECT 
-                                        m.name AS medicine_name,
+                                        p.name AS product_name,
                                         price,
                                         applicable_discounts,
                                         prescription_is_required,
                                         photo,
                                         qty
                                     FROM product_line pl
-                                    INNER JOIN medicine m ON pl.medicine_id=m.id
+                                    INNER JOIN product p ON pl.product_id=p.id
                                     WHERE pl.order_id=$order_id
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
@@ -84,7 +84,7 @@
         <div class="container" style="margin-left: 15%">
             <div class="cart-left" style="width: 50%;">
                 <div class="card-order">
-                    <h2>Medicine List</h2>
+                    <h2>Product List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
                     </div>
@@ -98,7 +98,7 @@
                                 <?php
                                     }
                                 ?>
-                                <th>Medicine</th>
+                                <th>Product</th>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -135,7 +135,7 @@
                                 ?>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
-                                    <?php echo $data['medicine_name'];?>
+                                    <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>
@@ -203,21 +203,16 @@
 
                     <form action="process.php" method="POST">
                         <input id="order_id" type="hidden" name="order_id" value="<?php echo $order_id; ?>">
-                        <?php
-                            if ($row['status'] == 'placed'){
-                        ?>
-                            <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
-                        <?php
-                            }
-                        ?>
-                        <?php
-                            if ($row['status'] == 'preparing'){
-                        ?>
-                            <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
-                        <?php
-                            }
-                        ?>
-                            <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <?php if ($row['status'] == 'placed'){ ?>
+                        <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
+                        <?php }?>
+                        <?php if ($row['status'] == 'preparing'){ ?>
+                        <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
+                        <?php } ?>
+                        <?php if ($row['status'] == 'for_pickup'){ ?>
+                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>
+                        <?php } ?>
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
@@ -226,10 +221,16 @@
         </div>
         
         <script src="script.js"></script>
+
         <script>
             window.onload = function() {
                 setActivePage("nav_order");
             };
+
+            function redirectToPOSPage() {
+                window.location.href = '../../pos/index.php?order_id=' + <?php echo $order_id; ?>;
+            };
+
         </script>
     </body>
 </html>
