@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
         <?php include '../components/title.php'; ?>
     </head>
 
@@ -32,12 +32,12 @@
                 <img class="pic" src="../../assets/images/stock.png" alt="stock">
             </div>
             <div class="card category" onclick="redirectToPage('category')">
-                <h3>MEDS CATEGORIES</h3>
+                <h3>CATEGORIES</h3>
                 <img class="pic" src="../../assets/images/categories.png" alt="category">
             </div>
-            <div class="card medicine" onclick="redirectToPage('medicine')">
-                <h3>MEDICINE</h3>
-                <img class="pic" src="../../assets/images/meds.png" alt="medicine">
+            <div class="card product" onclick="redirectToPage('product')">
+                <h3>PRODUCTS</h3>
+                <img class="pic" src="../../assets/images/meds.png" alt="product">
             </div>
         </div>
 

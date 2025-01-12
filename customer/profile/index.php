@@ -9,10 +9,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../styles.css">
-        <link rel="stylesheet" type="text/css" href="../../assets/styles/bootstrap.css">
-        <script src="../../assets/scripts/common_fx.js"></script>
+        <link rel="stylesheet" href="styles.css">
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
         <?php include '../components/unauth_redirection.php'; ?>

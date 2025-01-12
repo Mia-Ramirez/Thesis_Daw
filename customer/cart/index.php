@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="../styles.css">
-        <script src="../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
         <?php include '../components/unauth_redirection.php'; ?>
@@ -25,18 +25,18 @@
 
             $sqlGetProductLines = "SELECT 
                                         pl.id AS line_id,
-                                        m.name AS medicine_name,
+                                        p.name AS product_name,
                                         price,
                                         applicable_discounts,
                                         prescription_is_required,
                                         photo,
                                         qty,
-                                        m.id AS medicine_id,
-                                        m.current_quantity AS max_quantity,
+                                        p.id AS product_id,
+                                        p.current_quantity AS max_quantity,
                                         for_checkout
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
-                                    INNER JOIN medicine m ON pl.medicine_id=m.id
+                                    INNER JOIN product p ON pl.product_id=p.id
                                     INNER JOIN customer c ON cc.customer_id=c.id
                                     WHERE c.user_id=$user_id AND line_type='cart'
             ";
@@ -57,7 +57,7 @@
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
                 <div class="card">
-                    <h2>Medicine List</h2>
+                    <h2>Product List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
                     </div>
@@ -65,7 +65,7 @@
                         <thead>
                             <tr>
                                 <th>Select</th>
-                                <th>Medicine</th>
+                                <th>Product</th>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -98,7 +98,7 @@
                                 <td><input type="checkbox" class="product-checkbox" data-index="<?php echo $data['line_id']; ?>" <?php if ($is_selected == 'true'){echo 'checked';};?>></td>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
-                                    <?php echo $data['medicine_name'];?>
+                                    <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>

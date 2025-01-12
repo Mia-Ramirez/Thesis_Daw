@@ -6,20 +6,41 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../../styles.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="../../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="../../../../../assets/scripts/common_fx.js"></script>
-        <?php include '../../../../components/title.php'; ?>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
+        <?php include '../../../components/title.php'; ?>
     </head>
 
     <body>
-        <?php include '../../../../components/unauth_redirection.php'; ?>
+        <?php include '../../../components/unauth_redirection.php'; ?>
         
-        <?php include '../../../../components/side_nav.php'; ?>
+        <?php include '../../../components/side_nav.php'; ?>
+        
+        <?php
+            $current_page_title = "add product";
+            include '../../../components/top_nav.php';
+        ?>
 
         <?php
-            $current_page_title = "stock in";
-            include '../../../../components/top_nav.php';
+            include('../../../../utils/connect.php');
+            $sqlGetCategories = "SELECT name FROM category ORDER BY id";
+        
+            $result = mysqli_query($conn,$sqlGetCategories);
+            $category_names = array();
+            
+            if ($result){
+                while ($row = mysqli_fetch_assoc($result)){
+                    $category_names[] = $row['name'];
+                };
+            };
+
+            echo "
+                <script>
+                    let validCategories = ".json_encode($category_names).";
+                </script>";
+
         ?>
 
         <div class="main">
@@ -38,32 +59,38 @@
                         unset($_SESSION["message_class"]);
                     }
                 ?>
-                <form action="" method="POST">
+                <form action="process.php" method="POST" enctype="multipart/form-data">
                     <div class="column">
                         <div class="row">
                             <p class="column">
-                                Medicine:
+                                <label for="product_name">Name:</label><br>
+                                <input type="text" id="product_name" name="product_name" required value="<?php if(isset($_SESSION["product_name"])){echo $_SESSION["product_name"];unset($_SESSION["product_name"]);}?>">
                             </p>
 
                             <p class="column">
-                                <label for="reference_number">Reference Number:</label><br>
-                                <input type="text" id="reference_number" name="reference_number" required>
+                                <label for="price">Price:</label><br>
+                                <input type="number" step="0.01" min="1" id="price" name="price" required value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
                             </p>
                         </div>
                         
                         <div class="row">
                             <p class="column">
-                                <label for="date_received">Date Received:</label><br>
-                                <input type="date" name="date_received" required>
+                                <label for="valid_discounts">Discounts: </label><br>
+                                <select id="valid_discounts" name="valid_discounts" required>
+                                    <option value="">Select</option>
+                                    <option>None</option>
+                                    <option>Person With Disabilities</option>
+                                    <option>Senior Citizen</option>
+                                    <option>Both</option>
+                                </select>
                             </p>
                             
                             <p class="column">
-                                <label for="sex">Sex: </label><br>
-                                <select id="sex" name="sex" required>
+                                <label for="required_prescription">Required Prescription?: </label><br>
+                                <select id="required_prescription" name="required_prescription" required>
                                     <option value="">Select</option>
-                                    <option>Female</option>
-                                    <option>Male</option>
-                                    <option>Others</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
                                 </select>
                             </p>
                             
@@ -102,16 +129,19 @@
                         </div>
                     </div>
                     
-                    <button name="action" value="add_medicine">Add</button>
+                    <button name="action" value="add_product">Add</button>
                 </form>
             </div>
         </div>
+                
+        <script src="../scripts.js"></script>
 
         <script>
-            // function redirectToPage(page) {
-            //     window.location.href = './'+page+'/index.php';
-            // };
-            
+            // Array to track already selected categories
+            const selectedCategories = [];            
+        </script>
+
+        <script>
             window.onload = function() {
                 setActivePage("nav_inventory");
             };

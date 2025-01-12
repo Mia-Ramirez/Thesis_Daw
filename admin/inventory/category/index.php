@@ -8,12 +8,12 @@
 
         <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../assets/styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
 
         <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script> -->
-        <script src="../../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
 
         <?php include '../../components/title.php'; ?>
 

@@ -91,12 +91,12 @@
 
             };
             
-            $sqlUpdateMedicinePrescription = "UPDATE medicine_prescription SET prescription_id='$prescription_id' WHERE id=$line_id";
-            if(!mysqli_query($conn,$sqlUpdateMedicinePrescription)){
+            $sqlUpdateProductPrescription = "UPDATE product_prescription SET prescription_id='$prescription_id' WHERE id=$line_id";
+            if(!mysqli_query($conn,$sqlUpdateProductPrescription)){
                 die("Something went wrong");
             };
 
-            $_SESSION["message_string"] = "Medicine Prescription attached successfully!";
+            $_SESSION["message_string"] = "Product Prescription attached successfully!";
             $_SESSION["message_class"] = "info";
             
         };
@@ -110,7 +110,7 @@
                 if(!mysqli_query($conn,$sqlUpdateCartLineStatus)){
                     die("Something went wrong");
                 };
-                $_SESSION["message_string"] = "Medicine removed successfully!";
+                $_SESSION["message_string"] = "Product removed successfully!";
                 $_SESSION["message_class"] = "info";
             };
         };

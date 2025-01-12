@@ -25,7 +25,7 @@
             $customer_id = $_SESSION['customer_id'];
 
             $sqlGetProductLines = "SELECT 
-                                        m.name AS medicine_name,
+                                        p.name AS product_name,
                                         price,
                                         applicable_discounts,
                                         prescription_is_required,
@@ -35,8 +35,8 @@
                                         prescription_id
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
-                                    INNER JOIN medicine m ON pl.medicine_id=m.id
-                                    LEFT JOIN medicine_prescription mp ON pl.medicine_id=mp.medicine_id
+                                    INNER JOIN product p ON pl.product_id=p.id
+                                    LEFT JOIN product_prescription mp ON pl.product_id=mp.product_id
                                     WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
             ";
             
@@ -55,14 +55,14 @@
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
                 <div class="card">
-                    <h2>Medicine List</h2>
+                    <h2>Product List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
                     </div>
                     <table id="productTable">
                         <thead>
                             <tr>
-                                <th>Medicine</th>
+                                <th>Product</th>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -99,7 +99,7 @@
                                 <tr>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
-                                    <?php echo $data['medicine_name'];?>
+                                    <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>

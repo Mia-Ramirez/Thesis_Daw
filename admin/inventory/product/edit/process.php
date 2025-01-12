@@ -4,24 +4,26 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
+        if (!isset($_SESSION["product_id"])){
+            header("Location:../index.php");
+            exit;
+        };
+
         if (isset($_POST["action"])) {
             include('../../../../utils/connect.php');
             include('../../../../utils/common_fx_and_const.php'); // getBaseURL
-            if ($_POST['action'] === 'add_medicine') {
+            if ($_POST['action'] === 'update_product') {
+                $product_id = $_SESSION['product_id'];
+                
                 $category_names = mysqli_real_escape_string($conn, $_POST["category_names"]);
-                $medicine_name = mysqli_real_escape_string($conn, $_POST["medicine_name"]);
+                $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
                 $price = mysqli_real_escape_string($conn, $_POST["price"]);
                 $valid_discounts = mysqli_real_escape_string($conn, $_POST["valid_discounts"]);
                 $required_prescription = mysqli_real_escape_string($conn, $_POST["required_prescription"]);
                 $rack_location = mysqli_real_escape_string($conn, $_POST["rack_location"]);
                 $maintaining_quantity = mysqli_real_escape_string($conn, $_POST["maintaining_quantity"]);
-                
-                $imagePath = '';
-                
-                $_SESSION["medicine_name"] = $medicine_name;
-                $_SESSION["price"] = $price;
-                $_SESSION["rack_location"] = $rack_location;
-                $_SESSION["maintaining_quantity"] = $maintaining_quantity;
+
+                $imagePath = $_SESSION['photo_url'];
                 
                 $category_names = str_replace(", ", ",", $category_names);
                 $category_names = "'".str_replace(",", "','", $category_names)."'";
@@ -43,17 +45,18 @@
                 };
 
                 // Input Validation for Name
-                $checkMedicine="SELECT id FROM medicine WHERE name='$medicine_name'";
-                $medicine_result=$conn->query($checkMedicine);
+                $checkProduct="SELECT id FROM product WHERE name='$product_name' AND id!=$product_id";
+                $product_result=$conn->query($checkProduct);
 
-                if ($medicine_result->num_rows != 0){
-                    $_SESSION["message_string"] = "This Medicine Name already exists !";
+                if ($product_result->num_rows != 0){
+                    $_SESSION["message_string"] = "This Product Name already exists !";
                     $_SESSION["message_class"] = "danger";
-                    header("Location:index.php");
+                    header("Location:index.php?product_id=".$product_id);
                     exit;
                 };
 
                 // Input Validation for Photo
+
                 if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
                     // Get image details
                     $imageTmpName = $_FILES['image']['tmp_name'];
@@ -68,7 +71,7 @@
                     if ($imageSize > $maxFileSize) {
                         $_SESSION["message_string"] = "File size exceeds the maximum limit of 5MB.";
                         $_SESSION["message_class"] = "danger";
-                        header("Location:index.php");
+                        header("Location:index.php?product_id=".$product_id);
                         exit;
                     };
                     
@@ -83,50 +86,54 @@
                         };
 
                         $imagePath = getBaseURL() . str_replace("../", "", $uploadDir) . $newImageName;
+                        $old_file_path = str_replace(getBaseURL(), "../../../../", $_SESSION['photo_url']);
                         
-                        // Move the uploaded file to the desired location
-                        if (!move_uploaded_file($imageTmpName, $uploadDir . $newImageName)) {
-                            $_SESSION["message_string"] = "Error uploading image.";
-                            $_SESSION["message_class"] = "danger";
-                            header("Location:index.php");
-                            exit;
+                        if ($_SESSION['photo_url'] != $imagePath) {
+                            if (file_exists($old_file_path)) {
+                                // Delete the old file
+                                if (unlink($old_file_path)) {
+                                    error_log("File (".$old_file_path.") deleted.");
+                                } else {
+                                    error_log("Failed to delete the file.");
+                                };
+                                
+                                // Move the uploaded file to the desired location
+                                if (!move_uploaded_file($imageTmpName, $uploadDir . $newImageName)) {
+                                    $_SESSION["message_string"] = "Error uploading image.";
+                                    $_SESSION["message_class"] = "danger";
+                                    header("Location:index.php?product_id=".$product_id);
+                                    exit;
+                                };
+
+                            } else {
+                                error_log("File (".$old_file_path.") does not exist.");
+                            };
                         };
 
                     } else {
                         $_SESSION["message_string"] = "Invalid image type. Only JPG, and PNG are allowed.";
                         $_SESSION["message_class"] = "danger";
-                        header("Location:index.php");
+                        header("Location:index.php?product_id=".$product_id);
                         exit;
                     };
 
-                } else {
-                    $_SESSION["message_string"] = "No file uploaded or error uploading file.";
-                    $_SESSION["message_class"] = "danger";
-                    header("Location:index.php");
-                    exit;
                 };
                 
-                $sqlInsertMedicine = "INSERT INTO medicine(name , price , applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$medicine_name','$price', '$valid_discounts', '$required_prescription', '$imagePath', '$rack_location', '$maintaining_quantity')";
-                if(!mysqli_query($conn,$sqlInsertMedicine)){
+                $sqlUpdateProduct = "UPDATE product SET name='$product_name', price='$price', applicable_discounts='$valid_discounts', prescription_is_required='$required_prescription', photo='$imagePath', rack_location='$rack_location', maintaining_quantity='$maintaining_quantity' WHERE id=$product_id";
+                if(!mysqli_query($conn,$sqlUpdateProduct)){
                     die("Something went wrong");
                 };
-                $medicine_id = mysqli_insert_id($conn);
-
-                $sqlInsertMedicineCategory = "INSERT INTO medicine_categories(medicine_id , category_ids) VALUES ('$medicine_id','$category_ids')";
-                if(!mysqli_query($conn,$sqlInsertMedicineCategory)){
+                
+                $sqlUpdateProductCategory = "UPDATE product_categories SET category_ids='$category_ids' WHERE product_id=$product_id";
+                if(!mysqli_query($conn,$sqlUpdateProductCategory)){
                     die("Something went wrong");
                 };
 
-                $_SESSION["message_string"] = "Medicine added successfully!";
-                $_SESSION["message_class"] = "success";
-
-                unset($_SESSION["medicine_name"]);
-                unset($_SESSION["price"]);
-
-                header("Location:index.php");
+                $_SESSION["message_string"] = "Product details updated successfully!";
+                $_SESSION["message_class"] = "info";
+                header("Location:index.php?product_id=".$product_id);
                 exit;
             };
-
         };
     };
 ?>

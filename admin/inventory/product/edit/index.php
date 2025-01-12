@@ -6,10 +6,10 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" type="text/css" href="../../../../assets/styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="../../../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
-        <script src="../../../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
         <?php include '../../../components/title.php'; ?>
     </head>
 
@@ -19,35 +19,35 @@
         <?php include '../../../components/side_nav.php'; ?>
 
         <?php
-            $current_page_title = "update medicine details";
+            $current_page_title = "update product details";
             include '../../../components/top_nav.php';
         ?> 
 
         <?php
             include('../../../../utils/connect.php');
-            if (isset($_GET['medicine_id'])) {
-                $medicine_id = $_GET['medicine_id'];
-                $_SESSION["medicine_id"] = $medicine_id;
-                $sqlGetMedicine = "SELECT
+            if (isset($_GET['product_id'])) {
+                $product_id = $_GET['product_id'];
+                $_SESSION["product_id"] = $product_id;
+                $sqlGetProduct = "SELECT
                                     name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity,
-                                    (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ', ') AS category_names FROM medicine_categories mc
+                                    (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ', ') AS category_names FROM product_categories mc
                                         JOIN category c ON FIND_IN_SET(c.id, mc.category_ids) > 0
-                                        WHERE mc.medicine_id=$medicine_id
-                                    ) as category_names FROM medicine
-                                    WHERE id=$medicine_id";
+                                        WHERE mc.product_id=$product_id
+                                    ) as category_names FROM product
+                                    WHERE id=$product_id";
 
-                $medicine_result = mysqli_query($conn,$sqlGetMedicine);
-                if ($medicine_result->num_rows == 0){
+                $product_result = mysqli_query($conn,$sqlGetProduct);
+                if ($product_result->num_rows == 0){
                     header("Location:../../../../page/404.php");
                 }
 
-                $row = mysqli_fetch_array($medicine_result);
+                $row = mysqli_fetch_array($product_result);
                 $_SESSION['photo_url'] = $row['photo'];
 
                 // Split the string by commas
-                $medicineCategoriesJSON = json_encode(array());
+                $productCategoriesJSON = json_encode(array());
                 if ($row['category_names'] != ''){
-                    $medicineCategoriesJSON = json_encode(explode(",", $row["category_names"]));
+                    $productCategoriesJSON = json_encode(explode(",", $row["category_names"]));
                 };
 
                 $sqlGetCategories = "SELECT name FROM category ORDER BY id";
@@ -91,8 +91,8 @@
                     <div class="column">
                         <div class="row">
                             <p class="column">
-                                <label for="medicine_name">Name:</label><br>
-                                <input type="text" id="medicine_name" name="medicine_name" value="<?php echo $row["name"];?>">
+                                <label for="product_name">Name:</label><br>
+                                <input type="text" id="product_name" name="product_name" value="<?php echo $row["name"];?>">
                             </p>
 
                             <p class="column">
@@ -157,7 +157,7 @@
                         </div>
                     </div>
 
-                    <button name="action" value="update_medicine">Update</button>
+                    <button name="action" value="update_product">Update</button>
                 </form>
             </div>
         </div>
@@ -167,8 +167,8 @@
         <script>
             // Array to track already selected categories
             const selectedCategories = [];
-            var medicineCategories = <?php echo $medicineCategoriesJSON; ?>;
-            medicineCategories.forEach(categoryValue => {
+            var productCategories = <?php echo $productCategoriesJSON; ?>;
+            productCategories.forEach(categoryValue => {
                 addCategory(categoryValue.trim());
                 selectedCategories.push(categoryValue.trim())
             });

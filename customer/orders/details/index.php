@@ -9,11 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="../../../assets/styles/bootstrap.css">
+        <<link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../../styles.css">
         <link rel="stylesheet" href="styles.css">
         
-        <script src="../../../assets/scripts/common_fx.js"></script>
+        <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
         <?php include '../../components/unauth_redirection.php'; ?>
@@ -61,14 +61,14 @@
                 $row = mysqli_fetch_array($order_result);
 
                 $sqlGetProductLines = "SELECT 
-                                        m.name AS medicine_name,
+                                        p.name AS product_name,
                                         price,
                                         applicable_discounts,
                                         prescription_is_required,
                                         photo,
                                         qty
                                     FROM product_line pl
-                                    INNER JOIN medicine m ON pl.medicine_id=m.id
+                                    INNER JOIN product p ON pl.product_id=p.id
                                     WHERE pl.order_id=$order_id
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
@@ -81,19 +81,19 @@
 
         ?>
 
-        <?php include '../cancelOrder_modal.php'; ?>
+        <?php include '../utils/cancelOrderModal.php'; ?>
         
         <div class="container">
             <div class="cart-left" style="width: 50%;">
                 <div class="card">
-                    <h2>Medicine List</h2>
+                    <h2>Product List</h2>
                     <div class="legends">
                         <span> <i class='fas fa-prescription' style='color: red;'></i> - Requires Prescription</span>
                     </div>
                     <table id="productTable">
                         <thead>
                             <tr>
-                                <th>Medicine</th>
+                                <th>Product</th>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -123,7 +123,7 @@
                                 <tr>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
-                                    <?php echo $data['medicine_name'];?>
+                                    <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $data['price'];?></td>
