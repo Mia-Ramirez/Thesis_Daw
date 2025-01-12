@@ -45,7 +45,12 @@
 
             $offset = '0';
             if (isset($_GET['page_no'])){
-                $offset = (int)$_GET['page_no'] * 10;
+                $page_no = $_GET['page_no'];
+                if ($page_no == 1){
+                    $offset = 0;
+                } else {
+                    $offset = (int)$_GET['page_no'] * 10;
+                };
             };
 
             $sqlGetProductBatches .= $filter_str ." ORDER BY expiration_date ASC LIMIT ".$offset.", 10";

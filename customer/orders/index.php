@@ -50,8 +50,14 @@
             
             $offset = '0';
             if (isset($_GET['page_no'])){
-                $offset = (int)$_GET['page_no'] * 10;
+                $page_no = $_GET['page_no'];
+                if ($page_no == 1){
+                    $offset = 0;
+                } else {
+                    $offset = (int)$_GET['page_no'] * 10;
+                };
             };
+            
             $sqlGetCustomerOrders .= " ORDER BY order_id DESC LIMIT ".$offset.", 10";
             
             $orders = mysqli_query($conn,$sqlGetCustomerOrders);
@@ -97,7 +103,7 @@
                         <td><?php echo ucwords(str_replace("_", " ", $data['status'])); ?></td>
                         <td>
                             <u class="u_action" onclick="redirectToOrderDetailsPage(<?php echo $data['order_id']; ?>)">View Details</u>
-                            <?php if ($data['status'] != 'cancelled'){echo "| <u class='u_action' onclick=\"showCancelOrderModal(".$data['order_id'].", '".$data['reference_number']."')\">Cancel Order</u>";} ?>
+                            <?php if (!in_array($data['status'], ['cancelled', 'picked_up'])){echo "| <u class='u_action' onclick=\"showCancelOrderModal(".$data['order_id'].", '".$data['reference_number']."')\">Cancel Order</u>";} ?>
                         </td>
                     </tr>
                 <?php

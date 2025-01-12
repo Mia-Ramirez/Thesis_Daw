@@ -86,7 +86,7 @@
                                     $line_subtotal = $data['price'] * $data['qty'];
 
                                     $discount_rate = 0;
-                                    if ($data['selected_discount'] && ($data['selected_discount'] == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
+                                    if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
                                     };
 

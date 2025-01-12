@@ -53,7 +53,7 @@
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    WHERE pl.order_id=$order_id
+                                    WHERE pl.order_id=$order_id AND pl.line_type='order'
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
@@ -203,21 +203,16 @@
 
                     <form action="process.php" method="POST">
                         <input id="order_id" type="hidden" name="order_id" value="<?php echo $order_id; ?>">
-                        <?php
-                            if ($row['status'] == 'placed'){
-                        ?>
-                            <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
-                        <?php
-                            }
-                        ?>
-                        <?php
-                            if ($row['status'] == 'preparing'){
-                        ?>
-                            <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
-                        <?php
-                            }
-                        ?>
-                            <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <?php if ($row['status'] == 'placed'){ ?>
+                        <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
+                        <?php }?>
+                        <?php if ($row['status'] == 'preparing'){ ?>
+                        <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
+                        <?php } ?>
+                        <?php if ($row['status'] == 'for_pickup'){ ?>
+                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open to POS</button>
+                        <?php } ?>
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
@@ -226,10 +221,16 @@
         </div>
         
         <script src="script.js"></script>
+        
         <script>
             window.onload = function() {
                 setActivePage("nav_order");
             };
+
+            function redirectToPOSPage() {
+                window.location.href = '../../pos/index.php?order_id=' + <?php echo $order_id; ?>;
+            };
+
         </script>
     </body>
 </html>
