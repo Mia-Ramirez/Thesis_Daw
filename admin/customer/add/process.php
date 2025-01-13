@@ -34,7 +34,7 @@
                 };
 
                 if ($email && $email != ""){
-                    $checkUser="SELECT * FROM user WHERE email='$email'";
+                    $checkUser="SELECT id FROM user WHERE email='$email'";
                     $user_result=$conn->query($checkUser);
                     if ($user_result->num_rows > 0){
                         $_SESSION["message_string"] = "Email Address already used !";
@@ -44,7 +44,7 @@
                     };
                     
                     $username = $first_name."_".$last_name."_".date('YmdHis');
-                    $sqlInsertUser = "INSERT INTO user(username , email , role) VALUES ('$username','$email', 'customer')";
+                    $sqlInsertUser = "INSERT INTO user(username, email, role) VALUES ('$username','$email','customer')";
                     if(!mysqli_query($conn,$sqlInsertUser)){
                         die("Something went wrong");
                     };
@@ -53,9 +53,9 @@
                 };
                 
                 if ($user_id){
-                    $sqlInsertCustomer = "INSERT INTO customer(first_name , last_name , contact_number , address, user_id, date_of_birth, sex) VALUES ('$first_name','$last_name','$contact_number', '$address', '$user_id', '$date_of_birth', '$sex')";
+                    $sqlInsertCustomer = "INSERT INTO customer(first_name, last_name, contact_number, address, user_id, date_of_birth, sex) VALUES ('$first_name','$last_name','$contact_number','$address','$user_id','$date_of_birth','$sex')";
                 } else {
-                    $sqlInsertCustomer = "INSERT INTO customer(first_name , last_name , contact_number , address, date_of_birth, sex) VALUES ('$first_name','$last_name','$contact_number', '$address', '$date_of_birth', '$sex')";
+                    $sqlInsertCustomer = "INSERT INTO customer(first_name, last_name, contact_number, address, date_of_birth, sex) VALUES ('$first_name','$last_name','$contact_number','$address','$date_of_birth','$sex')";
                 };
                 
                 if(!mysqli_query($conn,$sqlInsertCustomer)){

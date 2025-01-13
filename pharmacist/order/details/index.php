@@ -53,7 +53,7 @@
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    WHERE pl.order_id=$order_id AND pl.line_type='order'
+                                    WHERE pl.order_id=$order_id AND pl.line_type IN ('order', 'transaction')
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
@@ -210,9 +210,9 @@
                         <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
                         <?php } ?>
                         <?php if ($row['status'] == 'for_pickup'){ ?>
-                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open to POS</button>
+                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>
                         <?php } ?>
-                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
@@ -221,7 +221,7 @@
         </div>
         
         <script src="script.js"></script>
-        
+
         <script>
             window.onload = function() {
                 setActivePage("nav_order");

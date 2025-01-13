@@ -84,7 +84,7 @@
                     <tr>
                         <td><?php echo $data["category_name"];?></td>
                         <td>
-                            <a href="#" onclick="<?php echo "openModal('edit', '".$data['category_id']."', '".$data['category_name']."')"; ?>">Edit</a>
+                            <a href="#" onclick="<?php echo "openModal('edit','".$data['category_id']."','".$data['category_name']."')"; ?>">Edit</a>
                         </td>
                     </tr>
                     <?php

@@ -1,0 +1,17 @@
+/* Optional: Add some basic styling */
+#printArea {
+    width: 80%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+}
+#printButton, #printCustomerCopyButton {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

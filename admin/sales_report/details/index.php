@@ -33,6 +33,7 @@
                                         co.date_ordered,
                                         t.transaction_date,
                                         t.selected_discount,
+                                        t.amount_paid,
                                         e.first_name,
                                         e.last_name,
                                         t.receipt_reference,
@@ -167,6 +168,7 @@
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
                         <p>Discount: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
                         <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
+                        <p>Amount Paid: ₱<span><?php echo $row["amount_paid"]; ?></span> | Change: ₱<span><?php echo $row["amount_paid"] - $total; ?></span></p>
                     </div>
 
                     

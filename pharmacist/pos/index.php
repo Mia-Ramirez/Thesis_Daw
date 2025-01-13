@@ -23,7 +23,7 @@
             include '../components/top_nav.php';
         ?> 
 
-        <!-- <div class="custom-modal" id="yesNoModal">
+        <div class="custom-modal" id="yesNoModal">
             <div class="modal-content">
                 <p id="modal_message">Do you want to proceed?</p>
                 <form action="process.php" method="POST">
@@ -32,7 +32,7 @@
                     <button type="button" class="modal-button no-button" onclick="onNo('yesNoModal')">No</button>
                 </form>
             </div>
-        </div> -->
+        </div>
 
         <?php
             include('../../utils/connect.php');
@@ -160,7 +160,7 @@
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
                                 <th>Subtotal</th>
-                                <!-- <th>Actions</th> -->
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -196,9 +196,15 @@
                                 <td class="discounted-price">₱<?php echo $data['price'];?></td>
                                 <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
                                 <td class="total">₱0</td>
-                                <!-- <td>
-                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php //echo $data['line_id']; ?>', 'Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>
-                                </td> -->
+                                <td>
+                                    <?php
+                                        if ($data['line_type'] == 'pos'){
+                                    ?>
+                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>','Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>
+                                    <?php
+                                        }
+                                    ?>
+                                </td>
                             </tr>
                             <?php
                                 };

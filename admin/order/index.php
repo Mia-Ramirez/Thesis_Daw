@@ -23,19 +23,19 @@
         ?> 
 
         <div class="main">
-            <div class="card history" onclick="redirectToPage('history', '')">
+            <div class="card history" onclick="redirectToPage('history','')">
                 <h3>HISTORY</h3>
                 <img class="pic" src="../../assets/images/history.png" alt="history">
             </div>
-            <div class="card cancel" onclick="redirectToPage('list', 'status=cancelled')">
+            <div class="card cancel" onclick="redirectToPage('list','status=cancelled')">
                 <h3>CANCELLED</h3>
                 <img class="pic" src="../../assets/images/cancel.png" alt="cancelled">
             </div>
-            <div class="card pickup" onclick="redirectToPage('list', 'status=for_pickup')">
+            <div class="card pickup" onclick="redirectToPage('list','status=for_pickup')">
                 <h3>FOR PICKUP</h3>
                 <img class="pic" src="../../assets/images/pickup.png" alt="pickup">
             </div>
-            <div class="card new" onclick="redirectToPage('list', 'status=new_order')">
+            <div class="card new" onclick="redirectToPage('list','status=new_order')">
                 <h3>NEW ORDER</h3>
                 <img class="pic" src="../../assets/images/new.png" alt="new_order">
             </div>

@@ -60,7 +60,7 @@
 
                 } elseif (is_null($row["user_id"]) && $email != "") {
                     $username = $first_name."_".$last_name."_".date('YmdHis');
-                    $sqlInsertUser = "INSERT INTO user(username , email , role) VALUES ('$username','$email', 'customer')";
+                    $sqlInsertUser = "INSERT INTO user(username, email, role) VALUES ('$username','$email','customer')";
                     if(!mysqli_query($conn,$sqlInsertUser)){
                         die("Something went wrong");
                     };

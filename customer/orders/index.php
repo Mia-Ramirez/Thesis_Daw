@@ -103,7 +103,7 @@
                         <td><?php echo ucwords(str_replace("_", " ", $data['status'])); ?></td>
                         <td>
                             <u class="u_action" onclick="redirectToOrderDetailsPage(<?php echo $data['order_id']; ?>)">View Details</u>
-                            <?php if (!in_array($data['status'], ['cancelled', 'picked_up'])){echo "| <u class='u_action' onclick=\"showCancelOrderModal(".$data['order_id'].", '".$data['reference_number']."')\">Cancel Order</u>";} ?>
+                            <?php if (!in_array($data['status'], ['cancelled','picked_up'])){echo "| <u class='u_action' onclick=\"showCancelOrderModal(".$data['order_id'].", '".$data['reference_number']."')\">Cancel Order</u>";} ?>
                         </td>
                     </tr>
                 <?php

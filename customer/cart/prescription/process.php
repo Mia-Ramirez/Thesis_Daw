@@ -39,7 +39,7 @@
                     $imageType = $_FILES['image']['type'];
             
                     // Define allowed image types (optional)
-                    $allowedTypes = ['image/jpeg', 'image/png'];
+                    $allowedTypes = ['image/jpeg','image/png'];
                     
                     // Validate image type
                     if ($imageSize > $maxFileSize) {
@@ -83,7 +83,7 @@
                     exit;
                 };
 
-                $sqlInsertCustomerPrescription = "INSERT INTO customer_prescription(reference_name , customer_id , prescription_photo) VALUES ('$prescription_name','$customer_id', '$imagePath')";
+                $sqlInsertCustomerPrescription = "INSERT INTO customer_prescription(reference_name, customer_id, prescription_photo) VALUES ('$prescription_name','$customer_id','$imagePath')";
                 if(!mysqli_query($conn,$sqlInsertCustomerPrescription)){
                     die("Something went wrong");
                 };

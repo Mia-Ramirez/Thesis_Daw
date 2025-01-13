@@ -25,17 +25,15 @@
 
         <?php
             include('../../../utils/connect.php');
+            $sqlGetProducts = "SELECT * FROM product";
+            $filter_str = "";
+            $query = NULL;
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $sqlGetProducts = "SELECT * FROM product
-                            WHERE name LIKE '%$query%'
-                            ORDER BY id DESC";
-            } else {
-                $query = NULL;
-                $sqlGetProducts = "SELECT * FROM product
-                            ORDER BY id DESC";
-            }
-            
+                $filter_str .= " WHERE name LIKE '%$query%'";
+            };
+
+            $sqlGetProducts .= $filter_str." ORDER BY id DESC";
             $result = mysqli_query($conn,$sqlGetProducts);
         ?>
 

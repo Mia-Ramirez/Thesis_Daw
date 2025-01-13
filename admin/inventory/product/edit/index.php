@@ -30,7 +30,7 @@
                 $_SESSION["product_id"] = $product_id;
                 $sqlGetProduct = "SELECT
                                     name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity,
-                                    (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ', ') AS category_names FROM product_categories mc
+                                    (SELECT GROUP_CONCAT(c.name ORDER BY c.name SEPARATOR ',') AS category_names FROM product_categories mc
                                         JOIN category c ON FIND_IN_SET(c.id, mc.category_ids) > 0
                                         WHERE mc.product_id=$product_id
                                     ) as category_names FROM product

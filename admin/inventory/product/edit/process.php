@@ -65,7 +65,7 @@
                     $imageType = $_FILES['image']['type'];
             
                     // Define allowed image types (optional)
-                    $allowedTypes = ['image/jpeg', 'image/png'];
+                    $allowedTypes = ['image/jpeg','image/png'];
                     
                     // Validate image type
                     if ($imageSize > $maxFileSize) {

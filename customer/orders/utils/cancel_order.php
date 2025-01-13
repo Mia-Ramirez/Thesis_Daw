@@ -12,7 +12,7 @@
     };
 
     $history_remarks = "Cancelled by Customer: ".$remarks;
-    $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','$history_remarks', '$user_id')";
+    $sqlInsertOrderHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('order','$order_id','$history_remarks','$user_id')";
     if(!mysqli_query($conn,$sqlInsertOrderHistory)){
         die("Something went wrong");
     };

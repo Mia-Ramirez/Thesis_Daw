@@ -177,8 +177,8 @@
                     </div>
 
                     <form action="process.php" method="POST">
-                        <!-- <button class="action_button<?php //if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php //if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
-                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <!-- <button class="action_button<?php //if (!in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php //if (!in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>

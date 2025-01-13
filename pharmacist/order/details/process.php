@@ -24,7 +24,7 @@
         };
 
         $history_remarks = "Cancelled by ".$user_role.": ".$remarks;
-        $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','$history_remarks', '$user_id')";
+        $sqlInsertOrderHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('order','$order_id','$history_remarks','$user_id')";
         if(!mysqli_query($conn,$sqlInsertOrderHistory)){
             die("Something went wrong");
         };
@@ -32,7 +32,7 @@
         $_SESSION["message_string"] = "Order successfully cancelled!";
         $_SESSION["message_class"] = "info";
 
-    } else if (in_array($_POST['action'], ['preparing', 'for_pickup'])){
+    } else if (in_array($_POST['action'], ['preparing','for_pickup'])){
         $action = $_POST['action'];
         $sqlPrepareOrder = "UPDATE customer_order SET status='$action' WHERE id=$order_id";
         if(!mysqli_query($conn,$sqlPrepareOrder)){
@@ -40,7 +40,7 @@
         };
     
         $history_remarks = "Moved to \"".ucwords(str_replace("_", " ", $action))."\"";
-        $sqlInsertOrderHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('order','$order_id','$history_remarks', '$user_id')";
+        $sqlInsertOrderHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('order','$order_id','$history_remarks','$user_id')";
         
         if(!mysqli_query($conn,$sqlInsertOrderHistory)){
             die("Something went wrong");
