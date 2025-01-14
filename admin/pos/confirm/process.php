@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
     session_start();
+    $doc_root = $_SESSION["DOC_ROOT"];
     if (!isset($_SESSION['cart_id'])){
         header("Location: index.php");
         exit;
@@ -23,7 +24,7 @@
         if ($_POST['action'] == 'confirm_transaction'){
             $user_id = $_SESSION['user_id'];
 
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
             $amount= mysqli_real_escape_string($conn, $_POST['amount']);
 

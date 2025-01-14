@@ -4,14 +4,15 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
+        $doc_root = $_SESSION["DOC_ROOT"];
         if (!isset($_SESSION["product_id"])){
             header("Location:../index.php");
             exit;
         };
 
         if (isset($_POST["action"])) {
-            include('../../../../utils/connect.php');
-            include('../../../../utils/common_fx_and_const.php'); // getBaseURL
+            include($doc_root.'/utils/connect.php');
+            include($doc_root.'/utils/common_fx_and_const.php'); // getBaseURL
             if ($_POST['action'] === 'update_product') {
                 $product_id = $_SESSION['product_id'];
                 

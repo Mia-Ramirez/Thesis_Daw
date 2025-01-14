@@ -3,8 +3,9 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
+        $doc_root = $_SESSION["DOC_ROOT"];
         $categoryName = $_POST['category_name'];
-        include('../../../utils/connect.php');
+        include($doc_root.'/utils/connect.php');
         if (isset($_POST['id']) && !empty($_POST['id'])) {
             $id = $_POST['id'];
 

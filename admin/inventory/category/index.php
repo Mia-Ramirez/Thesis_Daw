@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,7 +31,7 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
                 $sqlGetCategories = "SELECT id AS category_id, name AS category_name FROM category

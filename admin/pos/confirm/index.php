@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,7 +40,7 @@
                 $selected_discount = NULL;
             };
 
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
             $sqlGetProductLines = "SELECT 
                                         p.name AS product_name,

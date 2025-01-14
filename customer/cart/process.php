@@ -6,7 +6,8 @@
     };
 
     session_start();
-    include('../../utils/connect.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
 
     if ($_POST['action'] == 'remove_line'){
         $line_id= mysqli_real_escape_string($conn, $_POST['remove_line']);

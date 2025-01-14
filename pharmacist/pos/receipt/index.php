@@ -5,6 +5,7 @@
     };
 
     session_start();
+    $doc_root = $_SESSION["DOC_ROOT"];
     if (!isset($_SESSION['receipt_displayed_from'])){
         header("Location:../../index.php");
         exit;
@@ -14,7 +15,7 @@
     // PHP can dynamically generate content, if needed.
     $content = "<center><h1>Pharmanest</h1></center>";
 
-    include('../../../utils/connect.php');
+    include($doc_root.'/utils/connect.php');
     $transaction_id = $_GET['transaction_id'];
     $sqlGetTransaction = "SELECT
                             co.reference_number AS order_reference,

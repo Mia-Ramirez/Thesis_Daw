@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -22,7 +23,7 @@
         <?php
             $user_id = $_SESSION['user_id'];
             
-            include('../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
             $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, u.password_length, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id

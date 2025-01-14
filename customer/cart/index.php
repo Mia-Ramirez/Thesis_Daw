@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,7 @@
         <?php include '../components/navbar.php'; ?>
 
         <?php
-            include('../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             
             $user_id = $_SESSION['user_id'];
 

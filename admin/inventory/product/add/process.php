@@ -4,9 +4,10 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
+        $doc_root = $_SESSION["DOC_ROOT"];
         if (isset($_POST["action"])) {
-            include('../../../../utils/connect.php');
-            include('../../../../utils/common_fx_and_const.php'); // getBaseURL
+            include($doc_root.'/utils/connect.php');
+            include($doc_root.'/utils/common_fx_and_const.php'); // getBaseURL
             if ($_POST['action'] === 'add_product') {
                 $category_names = mysqli_real_escape_string($conn, $_POST["category_names"]);
                 $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);

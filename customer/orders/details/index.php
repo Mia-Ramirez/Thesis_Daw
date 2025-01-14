@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,7 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['order_id'])) {
                 $order_id = $_GET['order_id'];
                 if (isset($_SESSION['customer_id']) == false){

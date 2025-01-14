@@ -6,11 +6,11 @@
     };
 
     session_start();
-    
+    $doc_root = $_SESSION["DOC_ROOT"];
     $customer_id = $_GET['customer_id'];
     $action = $_GET['action'];
 
-    include('../../../utils/connect.php');
+    include($doc_root.'/utils/connect.php');
     $sqlGetCustomer = "SELECT user_id FROM customer WHERE id=$customer_id";
 
     $customer_result = mysqli_query($conn,$sqlGetCustomer);

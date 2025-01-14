@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <?php
     session_start();
+    $doc_root = $_SESSION["DOC_ROOT"];
     $customer_id = $_SESSION['customer_id'];
     $user_id = $_SESSION['user_id'];
 
     $selected_discount = $_SESSION['selected_discount'];
     unset($_SESSION["selected_discount"]);
 
-    include('../../../utils/connect.php');
+    include($doc_root.'/utils/connect.php');
 
     $sqlGetProductLines = "SELECT pl.id AS product_line_id
                                     FROM product_line pl

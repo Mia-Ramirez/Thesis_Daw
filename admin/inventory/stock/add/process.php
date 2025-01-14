@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <?php
     session_start();
-    
-    include('../../../../utils/connect.php');
-    include('../../../../utils/common_fx_and_const.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
+    include($doc_root.'/utils/common_fx_and_const.php');
 
     $product_id = $_SESSION['product_id'];
 

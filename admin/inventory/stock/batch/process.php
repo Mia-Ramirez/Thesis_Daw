@@ -6,7 +6,8 @@
     };
 
     session_start();
-    include('../../../../utils/connect.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
 
     if ($_POST['action'] == 'dispose_stock'){
         include './utils/dispose_stock.php';

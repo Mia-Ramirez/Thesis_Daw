@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,7 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['employee_id'])) {
                 $employee_id = $_GET['employee_id'];
                 $_SESSION["employee_id"] = $employee_id;

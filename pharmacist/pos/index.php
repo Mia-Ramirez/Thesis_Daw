@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,7 @@
         </div>
 
         <?php
-            include('../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
             if (isset($_SESSION['receipt_displayed_from'])){
                 unset($_SESSION['receipt_displayed_from']);

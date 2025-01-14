@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,7 +58,7 @@
 
         <div class="categories"> <!-- show different types of meds for faster and easier navigation -->
             <?php
-                include('../../utils/connect.php');
+                include($doc_root.'/utils/connect.php');
                 
                 $sqlGetCategories = "SELECT id AS category_id, name AS category_name FROM category
                                 ORDER BY id DESC";
@@ -73,8 +74,6 @@
 
         <div class="details">
             <?php
-                include('../../utils/connect.php');
-                
                 $sqlGetProducts = "SELECT
                                         p.id AS product_id,
                                         name AS product_name,
