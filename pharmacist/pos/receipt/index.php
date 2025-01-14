@@ -1,13 +1,20 @@
 <?php
-    // PHP can dynamically generate content, if needed.
-    $content = "<center><h1>Pharmanest</h1></center>";
-
-    include('../../../utils/connect.php');
     if (!isset($_GET['transaction_id'])) {
         header("Location:../../../page/404.php");
         exit;
     };
 
+    session_start();
+    if (!isset($_SESSION['receipt_displayed_from'])){
+        header("Location:../../index.php");
+        exit;
+    };
+
+    $receipt_displayed_from = $_SESSION['receipt_displayed_from'];
+    // PHP can dynamically generate content, if needed.
+    $content = "<center><h1>Pharmanest</h1></center>";
+
+    include('../../../utils/connect.php');
     $transaction_id = $_GET['transaction_id'];
     $sqlGetTransaction = "SELECT
                             co.reference_number AS order_reference,
@@ -87,9 +94,11 @@
     $content .= "--------------------------------------------------------------------------------<br/>";
     $total = $subtotal - $total_discount;
     $content .= "No. of Item(s): ".$product_lines->num_rows."<br/>";
-    $content .= "Subtotal: ₱".$subtotal."<br/>";
-    $content .= "Discount: ₱".$total_discount."<br/>";
-    $content .= "Total: ₱".$total."<br/>";
+    $content .= "Subtotal: ₱".number_format($subtotal, 2)."<br/>";
+    $content .= "Discount: ₱".number_format($total_discount, 2)."<br/>";
+    $content .= "Total: ₱".number_format($total, 2)."<br/>";
+    $content .= "Amount Paid: ₱".number_format($row['amount_paid'], 2)."<br/>";
+    $content .= "Change: ₱".number_format(($row['amount_paid'] - $total), 2)."<br/>";
 
     if (!is_null($row['order_id'])){
         $date = new DateTime($row["date_ordered"]);
@@ -125,8 +134,14 @@
         </div>
     </div>
 
+    <?php
+        if ($receipt_displayed_from == 'pos'){
+    ?>
     <button class="receipt_button" id="printButton">Print</button>
     <button class="receipt_button" id="printCustomerCopyButton">Print Customer's Copy</button>
+    <?php
+        };
+    ?>
     <button class="receipt_button" id="closeButton">Close</button>
 
     <script src="script.js"></script>

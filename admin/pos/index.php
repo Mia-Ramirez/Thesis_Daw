@@ -38,6 +38,9 @@
             include('../../utils/connect.php');
 
             $user_id = $_SESSION['user_id'];
+            if (isset($_SESSION['receipt_displayed_from'])){
+                unset($_SESSION['receipt_displayed_from']);
+            };
 
             $sqlGetUserCartID = "SELECT id AS user_cart_id FROM pos_cart WHERE  user_id=$user_id";    
             $result = mysqli_query($conn,$sqlGetUserCartID);

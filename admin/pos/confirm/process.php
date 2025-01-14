@@ -39,6 +39,8 @@
 
             $sqlGetProductLines = "SELECT
                                         pl.id AS product_line_id,
+                                        pl.qty,
+                                        pl.product_id,
                                         p.cost AS line_cost
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id";
@@ -66,7 +68,6 @@
         
 
             $sqlGetProductLines .= $filter_str;
-            error_log("HERE: sqlGetProductLines ".$sqlGetProductLines);
             $product_lines = mysqli_query($conn,$sqlGetProductLines);
             if ($product_lines->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
@@ -95,13 +96,20 @@
             while($data = mysqli_fetch_array($product_lines)){
                 $line_id = $data['product_line_id'];
                 $line_cost = $data['line_cost'];
+                $product_id = $data['product_id'];
+
                 if ($order_id){
                     $sqlTransferLineToTransaction = "UPDATE product_line SET line_cost='$line_cost', cart_id=NULL, order_id='$order_id', for_checkout=0, transaction_id=$transaction_id, line_type='transaction' WHERE id=$line_id";
                 } else {
                     $sqlTransferLineToTransaction = "UPDATE product_line SET line_cost='$line_cost', cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction' WHERE id=$line_id";
                 };
-                
                 if(!mysqli_query($conn,$sqlTransferLineToTransaction)){
+                    die("Something went wrong");
+                };
+
+                $history_remarks = "Sold: ".$data['qty']." quantity ".$or_number;
+                $sqlInsertProductHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('product','$product_id','$history_remarks','$user_id')";
+                if(!mysqli_query($conn,$sqlInsertProductHistory)){
                     die("Something went wrong");
                 };
             };
@@ -124,8 +132,9 @@
                 if(!mysqli_query($conn,$sqlInsertOrderHistory)){
                     die("Something went wrong");
                 };
-            }
+            };
             
+            $_SESSION['receipt_displayed_from'] = 'pos';
             header("Location:../receipt/index.php?transaction_id=".$transaction_id);
             exit;
         };

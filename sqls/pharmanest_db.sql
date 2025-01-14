@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 13, 2025 at 05:05 PM
+-- Generation Time: Jan 14, 2025 at 02:15 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -603,7 +603,6 @@ ALTER TABLE `product_categories`
 -- Constraints for table `product_line`
 --
 ALTER TABLE `product_line`
-  ADD CONSTRAINT `product_line_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_line_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `customer_order` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_4` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`) ON DELETE SET NULL;

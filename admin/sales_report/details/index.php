@@ -65,6 +65,9 @@
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
                 $selected_discount = $row['selected_discount'];
+                if ($selected_discount == "No Discount"){
+                    $selected_discount = NULL;
+                };
                 
             } else {
                 header("Location:../list/index.php");

@@ -35,6 +35,9 @@
                 exit;
             };
             $selected_discount = $_SESSION['selected_discount'];
+            if ($selected_discount == "No Discount"){
+                $selected_discount = NULL;
+            };
 
             include('../../../utils/connect.php');
 

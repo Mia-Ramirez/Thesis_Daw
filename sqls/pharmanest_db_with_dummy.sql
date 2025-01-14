@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 13, 2025 at 05:05 PM
+-- Generation Time: Jan 14, 2025 at 02:15 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -226,7 +226,10 @@ INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_record
 (22, 'product', 2, 'Add Stock: 15 quantity B1', '2025-01-13 15:38:57', 1),
 (23, 'product', 2, 'Add Stock: 10 quantity B2', '2025-01-13 15:39:33', 1),
 (24, 'product', 2, 'Disposed Stock: 15 quantity B1', '2025-01-13 15:46:05', 1),
-(25, 'transaction', 4, 'Transacted: 1 item(s) TR#20250113-164702', '2025-01-13 15:47:02', 3);
+(25, 'transaction', 4, 'Transacted: 1 item(s) TR#20250113-164702', '2025-01-13 15:47:02', 3),
+(26, 'order', 2, 'Moved to \"Picked-up\"', '2025-01-13 15:47:02', 3),
+(27, 'transaction', 5, 'Transacted: 2 item(s) TR#20250114-014938', '2025-01-14 00:49:38', 3),
+(28, 'transaction', 6, 'Transacted: 2 item(s) TR#20250114-140712', '2025-01-14 13:07:12', 3);
 
 -- --------------------------------------------------------
 
@@ -246,7 +249,8 @@ CREATE TABLE `pos_cart` (
 
 INSERT INTO `pos_cart` (`id`, `user_id`, `selected_discount`) VALUES
 (1, 3, NULL),
-(2, 1, NULL);
+(2, 1, NULL),
+(3, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -337,8 +341,11 @@ INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `f
 (3, 1, NULL, 3, 20, 0, 1, 'transaction', 4),
 (4, 2, NULL, 4, 2, 0, 2, 'transaction', 8),
 (5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 8),
-(6, 1, 1, NULL, 1, 0, NULL, 'pos', NULL),
-(7, 2, 1, NULL, 1, 0, NULL, 'pos', NULL);
+(6, 1, NULL, NULL, 1, 0, 5, 'transaction', 4),
+(7, 2, NULL, NULL, 1, 0, 5, 'transaction', 8),
+(8, 2, NULL, NULL, 1, 0, 6, 'transaction', 8),
+(9, 1, NULL, NULL, 1, 0, 6, 'transaction', 4),
+(11, 2, 3, NULL, 1, 1, NULL, 'pos', NULL);
 
 -- --------------------------------------------------------
 
@@ -409,7 +416,9 @@ INSERT INTO `transaction` (`id`, `transaction_date`, `employee_id`, `order_id`, 
 (1, '2025-01-11 11:59:48', 2, 3, 'SR#000001', '', 'TR#20250111-115901', 100),
 (2, '2025-01-11 12:04:07', 1, 4, 'SR#000002', 'Person With Disabilities', 'TR#20250111-120301', 16),
 (3, '2025-01-11 12:07:51', 1, NULL, 'SR#000003', 'Senior Citizen', 'TR#20250111-120701', 10),
-(4, '2025-01-13 23:47:02', 1, 2, 'SR#000004', 'No Discount', 'TR#20250113-164702', 10);
+(4, '2025-01-13 23:47:02', 1, 2, 'SR#000004', 'No Discount', 'TR#20250113-164702', 10),
+(5, '2025-01-14 08:49:38', 1, NULL, 'SR#000005', 'Person With Disabilities', 'TR#20250114-014938', 15),
+(6, '2025-01-14 21:07:12', 1, NULL, 'SR#000006', 'No Discount', 'TR#20250114-140712', 20);
 
 -- --------------------------------------------------------
 
@@ -623,13 +632,13 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `pos_cart`
 --
 ALTER TABLE `pos_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `prescription_history`
@@ -653,7 +662,7 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `product_line`
 --
 ALTER TABLE `product_line`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `product_prescription`
@@ -677,7 +686,7 @@ ALTER TABLE `temporary_record`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -745,7 +754,6 @@ ALTER TABLE `product_categories`
 -- Constraints for table `product_line`
 --
 ALTER TABLE `product_line`
-  ADD CONSTRAINT `product_line_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_line_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `customer_order` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_4` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`) ON DELETE SET NULL;
