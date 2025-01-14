@@ -6,12 +6,20 @@
     background-color: #f4f4f4;
     border: 1px solid #ccc;
 }
-#printButton, #printCustomerCopyButton {
+
+.receipt_button {
     display: block;
     margin: 20px auto;
     padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
     border: none;
+    color: white;
     cursor: pointer;
+}
+
+#closeButton {
+    background-color: lightcoral;
+}
+
+#printButton, #printCustomerCopyButton {
+    background-color: #4CAF50;
 }

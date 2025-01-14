@@ -56,8 +56,50 @@
     Sales Receipt: ".$row['receipt_reference']."<br/>
     Transaction Number: ".$row['reference_number']."<br/>
     Transaction Date: ".$formattedDate."<br/>
-    Transaction By: ".$row['first_name']." ".$row['last_name']."<br/>
+    Transacted By: ".$row['first_name']." ".$row['last_name']."<br/>
     ";
+
+    $content .= "--------------------------------------------------------------------------------<br/>";
+    $content .= "<table><thead><tr><th>QTY</th><th>PRODUCT</th><th>PRICE</th><th>SUBTOTAL</th></tr></thead>";
+    $content .= "<tbody>";
+    
+    $subtotal = 0;
+    $total_discount = 0;
+    while($data = mysqli_fetch_array($product_lines)){
+        $content .= "<tr>";
+        $line_subtotal = $data['price'] * $data['qty'];
+
+        $discount_rate = 0;
+        if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
+            $discount_rate = 0.2;
+        };
+
+        $line_discount = $data['price'] * (1 - $discount_rate);
+        
+        $subtotal += $line_subtotal;
+        $total_discount += ($line_subtotal - ($line_discount * $data['qty']));
+        $content .= "<td>".$data['qty']."</td><td>".$data['product_name']."</td><td>₱".$data['price']."</td><td>₱".$line_subtotal."</td></tr>";
+        
+    };
+    $content .= "</tbody>";
+    $content .= "</table>";
+
+    $content .= "--------------------------------------------------------------------------------<br/>";
+    $total = $subtotal - $total_discount;
+    $content .= "No. of Item(s): ".$product_lines->num_rows."<br/>";
+    $content .= "Subtotal: ₱".$subtotal."<br/>";
+    $content .= "Discount: ₱".$total_discount."<br/>";
+    $content .= "Total: ₱".$total."<br/>";
+
+    if (!is_null($row['order_id'])){
+        $date = new DateTime($row["date_ordered"]);
+
+        // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
+        $formattedDate = $date->format('F j, Y h:i A');
+        $content .= "--------------------------------------------------------------------------------<br/>";
+        $content .= "Order Reference Number: ".$row['order_reference']."<br/>";
+        $content .= "Date Ordered: ".$formattedDate."<br/>";
+    };
 
 ?>
 
@@ -66,21 +108,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Print Specific Division</title>
+    <title>Pharmanest Sales Receipt</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
     <div id="content">
-        <h1>Printable Content</h1>
         <div id="printArea">
             <!-- This is the specific div that will be printed -->
             <p><?php echo $content; ?></p>
         </div>
+        <div id="printCustomerArea" style="display: none">
+            <!-- This is the specific div that will be printed -->
+            <p><?php echo $content; ?></p>
+            <span>------------------- CUSTOMER's COPY -------------------</span><br/>
+        </div>
     </div>
 
-    <button id="printButton">Print</button>
-    <button id="printCustomerCopyButton">Print Customer's Copy</button>
+    <button class="receipt_button" id="printButton">Print</button>
+    <button class="receipt_button" id="printCustomerCopyButton">Print Customer's Copy</button>
+    <button class="receipt_button" id="closeButton">Close</button>
 
     <script src="script.js"></script>
 

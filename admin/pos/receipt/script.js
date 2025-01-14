@@ -1,10 +1,9 @@
+document.getElementById('closeButton').addEventListener('click', function () {
+    window.location.href = '../index.php';
+});
+
 // JavaScript function to print a specific div using an iframe
 document.getElementById('printButton').addEventListener('click', function () {
-    var customerSpan = document.getElementById('customer_copy_span');
-    if (customerSpan){
-        customerSpan.remove();
-    };
-    
     var printContent = document.getElementById('printArea').innerHTML; // Get the content of the specific div
     
     // Create a temporary iframe to load the content
@@ -12,18 +11,8 @@ document.getElementById('printButton').addEventListener('click', function () {
 });
 
 document.getElementById('printCustomerCopyButton').addEventListener('click', function () {
-    var printContentElement = document.getElementById('printArea'); // Get the content of the specific div
+    var printContent = document.getElementById('printCustomerArea').innerHTML; // Get the content of the specific div
     
-    let customerSpan = document.getElementById('customer_copy_span');
-    if (!customerSpan){
-        customerSpan = document.createElement('span');
-        customerSpan.id = "customer_copy_span";
-        customerSpan.innerHTML = "------------------- CUSTOMER's COPY -------------------<br/>";
-        printContentElement.appendChild(customerSpan);
-    };
-    
-    var printContent = printContentElement.innerHTML;
-   
     // Create a temporary iframe to load the content
     printReceiptContent(printContent);
 });
