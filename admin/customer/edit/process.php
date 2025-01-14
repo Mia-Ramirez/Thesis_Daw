@@ -41,7 +41,7 @@
                 $user_id = $row['user_id'];
                 
                 if ($email && !is_null($user_id)){
-                    $checkUser="SELECT * FROM user WHERE email='$email' AND id!=$user_id";
+                    $checkUser="SELECT id FROM user WHERE email='$email' AND id!=$user_id";
                     $user_result=$conn->query($checkUser);
                     if ($user_result->num_rows > 0){
                         $_SESSION["message_string"] = "Email Address already used !";
@@ -60,7 +60,7 @@
 
                 } elseif (is_null($row["user_id"]) && $email != "") {
                     $username = $first_name."_".$last_name."_".date('YmdHis');
-                    $sqlInsertUser = "INSERT INTO user(username , email , role) VALUES ('$username','$email', 'customer')";
+                    $sqlInsertUser = "INSERT INTO user(username, email, role) VALUES ('$username','$email','customer')";
                     if(!mysqli_query($conn,$sqlInsertUser)){
                         die("Something went wrong");
                     };

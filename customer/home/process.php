@@ -69,7 +69,7 @@
         };
 
     } else {
-        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id', '$product_id', '1', '$for_checkout', 'cart')";
+        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id','$product_id','1','$for_checkout','cart')";
         if(!mysqli_query($conn,$sqlInsertProductLine)){
             die("Something went wrong");
         };

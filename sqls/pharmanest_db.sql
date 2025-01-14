@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 12, 2025 at 05:27 AM
+-- Generation Time: Jan 14, 2025 at 02:15 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,7 @@ CREATE TABLE `batch` (
   `expiration_date` date NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
@@ -145,6 +145,18 @@ CREATE TABLE `history` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pos_cart`
+--
+
+CREATE TABLE `pos_cart` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `selected_discount` varchar(128) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `prescription_history`
 --
 
@@ -172,7 +184,7 @@ CREATE TABLE `product` (
   `photo` text NOT NULL,
   `rack_location` text NOT NULL,
   `maintaining_quantity` int(11) NOT NULL,
-  `cost` double NOT NULL
+  `cost` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -256,7 +268,8 @@ CREATE TABLE `transaction` (
   `order_id` int(11) DEFAULT NULL,
   `receipt_reference` text NOT NULL,
   `selected_discount` varchar(128) NOT NULL,
-  `reference_number` varchar(128) NOT NULL
+  `reference_number` varchar(128) NOT NULL,
+  `amount_paid` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -293,7 +306,7 @@ ALTER TABLE `batch`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_supplier` (`supplier_id`) USING BTREE,
   ADD KEY `product` (`product_id`),
-  ADD KEY `recorded_by` (`employee_id`);
+  ADD KEY `recorded_by` (`user_id`);
 
 --
 -- Indexes for table `category`
@@ -342,6 +355,13 @@ ALTER TABLE `employee`
 ALTER TABLE `history`
   ADD PRIMARY KEY (`id`),
   ADD KEY `recorded_by` (`user_id`);
+
+--
+-- Indexes for table `pos_cart`
+--
+ALTER TABLE `pos_cart`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_cart` (`user_id`);
 
 --
 -- Indexes for table `prescription_history`
@@ -464,6 +484,12 @@ ALTER TABLE `history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `pos_cart`
+--
+ALTER TABLE `pos_cart`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `prescription_history`
 --
 ALTER TABLE `prescription_history`
@@ -527,7 +553,7 @@ ALTER TABLE `user`
 ALTER TABLE `batch`
   ADD CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`),
   ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
+  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `customer`
@@ -577,7 +603,6 @@ ALTER TABLE `product_categories`
 -- Constraints for table `product_line`
 --
 ALTER TABLE `product_line`
-  ADD CONSTRAINT `product_line_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_line_ibfk_3` FOREIGN KEY (`order_id`) REFERENCES `customer_order` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_line_ibfk_4` FOREIGN KEY (`transaction_id`) REFERENCES `transaction` (`id`) ON DELETE SET NULL;

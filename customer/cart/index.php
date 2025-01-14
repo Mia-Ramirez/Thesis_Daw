@@ -106,7 +106,7 @@
                                 <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
                                 <td class="total">₱0</td>
                                 <td>
-                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>', 'Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>
+                                    <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>','Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>
                                 </td>
                             </tr>
                             <?php

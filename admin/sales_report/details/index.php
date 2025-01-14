@@ -33,6 +33,7 @@
                                         co.date_ordered,
                                         t.transaction_date,
                                         t.selected_discount,
+                                        t.amount_paid,
                                         e.first_name,
                                         e.last_name,
                                         t.receipt_reference,
@@ -64,6 +65,9 @@
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
                 $selected_discount = $row['selected_discount'];
+                if ($selected_discount == "No Discount"){
+                    $selected_discount = NULL;
+                };
                 
             } else {
                 header("Location:../list/index.php");
@@ -167,6 +171,7 @@
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
                         <p>Discount: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
                         <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
+                        <p>Amount Paid: ₱<span><?php echo $row["amount_paid"]; ?></span> | Change: ₱<span><?php echo $row["amount_paid"] - $total; ?></span></p>
                     </div>
 
                     

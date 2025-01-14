@@ -38,7 +38,7 @@
                 $customer_id = $row['id'];
 
                 if ($email){
-                    $checkUser="SELECT * FROM user WHERE email='$email' AND id!=$user_id";
+                    $checkUser="SELECT id FROM user WHERE email='$email' AND id!=$user_id";
                     $user_result=$conn->query($checkUser);
                     if ($user_result->num_rows > 0){
                         $_SESSION["message_string"] = "Email Address already used !";

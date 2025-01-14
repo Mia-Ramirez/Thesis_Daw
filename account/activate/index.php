@@ -54,7 +54,7 @@
             };
             
             if ($user_id == NULL){
-                $sqlInsertUser = "INSERT INTO user(username , email , password , role, password_length) VALUES ('$username','$email','$password', '$role', '$password_length')";
+                $sqlInsertUser = "INSERT INTO user(username, email, password, role, password_length) VALUES ('$username','$email','$password','$role','$password_length')";
                 if(!mysqli_query($conn,$sqlInsertUser)){
                     die("Something went wrong");
                 };
@@ -62,7 +62,7 @@
             };
 
             if ($customer_result->num_rows == 0){
-                $sqlInsertCustomer = "INSERT INTO customer(first_name , last_name , contact_number , address, user_id) VALUES ('$first_name','$last_name','$contact', '$address', '$user_id')";
+                $sqlInsertCustomer = "INSERT INTO customer(first_name, last_name, contact_number, address, user_id) VALUES ('$first_name','$last_name','$contact','$address','$user_id')";
                 if(!mysqli_query($conn,$sqlInsertCustomer)){
                     die("Something went wrong");
                 };

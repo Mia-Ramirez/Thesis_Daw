@@ -36,7 +36,7 @@
                 };
 
                 if ($email && $email != ""){
-                    $checkUser="SELECT * FROM user WHERE email='$email'";
+                    $checkUser="SELECT id FROM user WHERE email='$email'";
                     $user_result=$conn->query($checkUser);
                     if ($user_result->num_rows > 0){
                         $_SESSION["message_string"] = "Email Address already used !";
@@ -50,7 +50,7 @@
                     if ($job_title == 'Manager'){ $role = "admin";}
                     else { $role = "pharmacist";};
 
-                    $sqlInsertUser = "INSERT INTO user(username , email , role) VALUES ('$username','$email', '$role')";
+                    $sqlInsertUser = "INSERT INTO user(username, email, role) VALUES ('$username','$email','$role')";
                     if(!mysqli_query($conn,$sqlInsertUser)){
                         die("Something went wrong");
                     };
@@ -58,7 +58,7 @@
                     $user_id = mysqli_insert_id($conn);
                 };
                 
-                $sqlInsertEmployee = "INSERT INTO employee(first_name , last_name , contact_number , address, user_id, date_of_birth, job_title, employment_date) VALUES ('$first_name','$last_name','$contact_number', '$address', '$user_id', '$date_of_birth', '$job_title', '$employment_date')";
+                $sqlInsertEmployee = "INSERT INTO employee(first_name, last_name, contact_number, address, user_id, date_of_birth, job_title, employment_date) VALUES ('$first_name','$last_name','$contact_number','$address','$user_id','$date_of_birth','$job_title','$employment_date')";
                 
                 if(!mysqli_query($conn,$sqlInsertEmployee)){
                     die("Something went wrong");

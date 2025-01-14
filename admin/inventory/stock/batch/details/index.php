@@ -36,15 +36,14 @@
                                     received_quantity,
                                     expiration_date,
                                     s.name AS supplier_name,
-                                    e.first_name,
-                                    e.last_name,
+                                    u.username,
                                     date_disposed,
                                     disposed_quantity,
                                     batch_cost
                                 FROM batch b
                                 INNER JOIN product p ON b.product_id=p.id
                                 INNER JOIN supplier s ON b.supplier_id=s.id
-                                INNER JOIN employee e ON b.employee_id=e.id
+                                INNER JOIN user u ON b.user_id=u.id
                                 WHERE b.id=$batch_id";
 
                 $batch_result = mysqli_query($conn,$sqlGetBatch);
@@ -132,7 +131,15 @@
                         ?></b>
                     </p>
                     <p>
-                        Added By: <b><?php echo $row['first_name']." ".$row['last_name']; ?></b>
+                        Added By: <b><?php
+                            if (strpos($row['username'], "_") !== false){
+                                list($first_name, $last_name, $date_created) = explode("_", $row['username']);
+                            } else {
+                                $first_name = "Super";
+                                $last_name = "Admin";
+                            };
+                            echo $first_name." ".$last_name;
+                        ?></b>
                     </p>
                 </div>
                 

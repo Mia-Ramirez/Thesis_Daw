@@ -39,7 +39,12 @@
 
             $offset = '0';
             if (isset($_GET['page_no'])){
-                $offset = (int)$_GET['page_no'] * 10;
+                $page_no = $_GET['page_no'];
+                if ($page_no == 1){
+                    $offset = 0;
+                } else {
+                    $offset = (int)$_GET['page_no'] * 10;
+                };
             };
 
             $sqlGetOrderHistory .= " ORDER BY h.id DESC LIMIT ".$offset.", 10";

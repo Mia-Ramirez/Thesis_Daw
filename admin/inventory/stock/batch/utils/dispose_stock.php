@@ -27,7 +27,7 @@
     };
 
     $history_remarks = "Disposed Stock: ".$disposed_quantity." quantity ".$batch_reference_name;
-    $sqlInsertProductHistory = "INSERT INTO history(object_type , object_id , remarks, user_id) VALUES ('product','$product_id','$history_remarks', '$user_id')";
+    $sqlInsertProductHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('product','$product_id','$history_remarks','$user_id')";
     if(!mysqli_query($conn,$sqlInsertProductHistory)){
         die("Something went wrong");
     };

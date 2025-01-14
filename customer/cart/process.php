@@ -81,7 +81,7 @@
                 $sqlGetProductPrescription = "SELECT id FROM product_prescription WHERE cart_id=$customer_cart_id AND product_id=$product_id";
                 $prescription_result = mysqli_query($conn,$sqlGetProductPrescription);
                 if ($prescription_result->num_rows == 0){
-                    $sqlInsertProductPrescription = "INSERT INTO product_prescription(cart_id , product_id) VALUES ('$customer_cart_id','$product_id')";
+                    $sqlInsertProductPrescription = "INSERT INTO product_prescription(cart_id, product_id) VALUES ('$customer_cart_id','$product_id')";
                     if(!mysqli_query($conn,$sqlInsertProductPrescription)){
                         die("Something went wrong");
                     };

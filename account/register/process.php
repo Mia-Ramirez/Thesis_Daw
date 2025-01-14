@@ -20,10 +20,10 @@
 
             $password_len = strlen($password);
 
-            $checkUser="SELECT * FROM user WHERE email='$email'";
+            $checkUser="SELECT id FROM user WHERE email='$email'";
             $user_result=$conn->query($checkUser);
 
-            $checkTemporaryRecord="SELECT * FROM temporary_record WHERE JSON_UNQUOTE(JSON_EXTRACT(data, '$.email'))='$email'";
+            $checkTemporaryRecord="SELECT id FROM temporary_record WHERE JSON_UNQUOTE(JSON_EXTRACT(data, '$.email'))='$email'";
             $temp_record_result=$conn->query($checkTemporaryRecord);
 
             if ($user_result->num_rows > 0){
@@ -67,7 +67,7 @@
                 };
                 
                 // Insert data to Database
-                $sqlInsert = "INSERT INTO temporary_record(reference_key, data, deletion_date) VALUES ('$reference_key', '$jsonData', '$deletionDate')";
+                $sqlInsert = "INSERT INTO temporary_record(reference_key, data, deletion_date) VALUES ('$reference_key','$jsonData','$deletionDate')";
                 if(!mysqli_query($conn,$sqlInsert)){
                     die("Something went wrong");
                 };

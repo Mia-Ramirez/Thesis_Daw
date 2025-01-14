@@ -62,7 +62,7 @@
                     $imageType = $_FILES['image']['type'];
             
                     // Define allowed image types (optional)
-                    $allowedTypes = ['image/jpeg', 'image/png'];
+                    $allowedTypes = ['image/jpeg','image/png'];
                     
                     // Validate image type
                     if ($imageSize > $maxFileSize) {
@@ -106,13 +106,13 @@
                     exit;
                 };
                 
-                $sqlInsertProduct = "INSERT INTO product(name , price , applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$product_name','$price', '$valid_discounts', '$required_prescription', '$imagePath', '$rack_location', '$maintaining_quantity')";
+                $sqlInsertProduct = "INSERT INTO product(name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$product_name','$price','$valid_discounts','$required_prescription','$imagePath','$rack_location','$maintaining_quantity')";
                 if(!mysqli_query($conn,$sqlInsertProduct)){
                     die("Something went wrong");
                 };
                 $product_id = mysqli_insert_id($conn);
 
-                $sqlInsertProductCategory = "INSERT INTO product_categories(product_id , category_ids) VALUES ('$product_id','$category_ids')";
+                $sqlInsertProductCategory = "INSERT INTO product_categories(product_id, category_ids) VALUES ('$product_id','$category_ids')";
                 if(!mysqli_query($conn,$sqlInsertProductCategory)){
                     die("Something went wrong");
                 };

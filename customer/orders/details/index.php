@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>PHARMANEST ESSENTIAL</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <<link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../../styles.css">
         <link rel="stylesheet" href="styles.css">
         
@@ -69,7 +69,7 @@
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    WHERE pl.order_id=$order_id
+                                    WHERE pl.order_id=$order_id AND pl.line_type='order'
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
@@ -177,8 +177,8 @@
                     </div>
 
                     <form action="process.php" method="POST">
-                        <!-- <button class="action_button<?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php if (!in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
-                        <button class="action_button<?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled', 'picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
+                        <!-- <button class="action_button<?php //if (!in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="submit" name="action" value="re_order" id="re_order" <?php //if (!in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?>>Re-Order</button> -->
+                        <button class="action_button<?php if (in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$row['order_id'].'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
                     
                 </div>
