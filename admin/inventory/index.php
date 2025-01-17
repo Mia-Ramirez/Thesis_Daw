@@ -44,7 +44,11 @@
 
         <script>
             function redirectToPage(page) {
-                window.location.href = './'+page+'/index.php';
+                if (page == 'stock'){
+                    window.location.href = './'+page+'/index.php?is_low=true';
+                } else {    
+                    window.location.href = './'+page+'/index.php';
+                };
             };
             
             window.onload = function() {

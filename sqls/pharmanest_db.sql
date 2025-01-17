@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 14, 2025 at 02:15 PM
+-- Generation Time: Jan 15, 2025 at 11:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,7 @@ CREATE TABLE `batch` (
   `expiration_date` date NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
@@ -128,6 +128,14 @@ CREATE TABLE `employee` (
   `employment_date` date NOT NULL,
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `employee`
+--
+
+INSERT INTO `employee` (`id`, `first_name`, `last_name`, `contact_number`, `address`, `date_of_birth`, `job_title`, `employment_date`, `user_id`) VALUES
+(1, 'Super', 'Admin', 'Not Applicable', 'Not Applicable', '2025-01-16', 'Not Applicable', '2025-01-16', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -215,7 +223,7 @@ CREATE TABLE `product_line` (
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
-  `line_cost` double DEFAULT NULL
+  `line_price` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -306,7 +314,7 @@ ALTER TABLE `batch`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_supplier` (`supplier_id`) USING BTREE,
   ADD KEY `product` (`product_id`),
-  ADD KEY `recorded_by` (`user_id`);
+  ADD KEY `recorded_by` (`employee_id`) USING BTREE;
 
 --
 -- Indexes for table `category`
@@ -553,7 +561,7 @@ ALTER TABLE `user`
 ALTER TABLE `batch`
   ADD CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`),
   ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `customer`

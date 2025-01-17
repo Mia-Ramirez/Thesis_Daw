@@ -68,15 +68,15 @@
         } elseif ($_POST['action'] == 'add_stock') {
             $user_id = $_SESSION['user_id'];
 
-            // $sqlGetEmployee = "SELECT id FROM employee WHERE user_id=".$user_id;
-            // $employee_result = mysqli_query($conn,$sqlGetEmployee);
-            // $row = mysqli_fetch_array($employee_result);
-            // $employee_id = $row['id'];
+            $sqlGetEmployee = "SELECT id FROM employee WHERE user_id=".$user_id;
+            $employee_result = mysqli_query($conn,$sqlGetEmployee);
+            $row = mysqli_fetch_array($employee_result);
+            $employee_id = $row['id'];
 
             // BATCH
             $sqlInsertBatch = "INSERT INTO
-                                    batch(reference_number, expiration_date, supplier_id, product_id, user_id, received_quantity, batch_cost)
-                                    VALUES ('$reference_number','$expiration_date','$supplier_id','$product_id','$user_id','$quantity','$cost')";
+                                    batch(reference_number, expiration_date, supplier_id, product_id, employee_id, received_quantity, batch_cost)
+                                    VALUES ('$reference_number','$expiration_date','$supplier_id','$product_id','$employee_id','$quantity','$cost')";
 
             if(!mysqli_query($conn,$sqlInsertBatch)){
                 die("Something went wrong");
@@ -105,6 +105,13 @@
 
             $_SESSION["message_string"] = "Stock successfully added!";
             $_SESSION["message_class"] = "success";
+
+            unset($_SESSION['reference_number']);
+            unset($_SESSION['expiration_date']);
+            unset($_SESSION['cost']);
+            unset($_SESSION['quantity']);
+            unset($_SESSION['supplier_name']);
+
             header("Location:../index.php");
             exit;
         };

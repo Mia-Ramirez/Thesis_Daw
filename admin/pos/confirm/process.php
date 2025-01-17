@@ -42,7 +42,8 @@
                                         pl.id AS product_line_id,
                                         pl.qty,
                                         pl.product_id,
-                                        p.cost AS line_cost
+                                        -- p.cost AS line_cost,
+                                        p.price AS line_price
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id";
 
@@ -83,10 +84,18 @@
             $or_number = "SR#".$row['next_number'];
             $tr_number = "TR#".date('Ymd-His');
 
+            if ($selected_discount == 'No Discount'){
+                $selected_discount = NULL;
+            };
+
             if ($order_id){
-                $sqlInsertTransaction = "INSERT INTO transaction(employee_id, order_id, receipt_reference, selected_discount, reference_number, amount_paid) VALUES ('$employee_id','$order_id','$or_number','$selected_discount','$tr_number','$amount')";
+                $sqlInsertTransaction = "INSERT INTO
+                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid, order_id)
+                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount', '$order_id')";
             } else {
-                $sqlInsertTransaction = "INSERT INTO transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid) VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount')";
+                $sqlInsertTransaction = "INSERT INTO
+                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid)
+                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount')";
             };
 
             if(!mysqli_query($conn,$sqlInsertTransaction)){
@@ -96,13 +105,14 @@
 
             while($data = mysqli_fetch_array($product_lines)){
                 $line_id = $data['product_line_id'];
-                $line_cost = $data['line_cost'];
+                // $line_cost = $data['line_cost'];
+                $line_price = $data['line_price'];
                 $product_id = $data['product_id'];
 
                 if ($order_id){
-                    $sqlTransferLineToTransaction = "UPDATE product_line SET line_cost='$line_cost', cart_id=NULL, order_id='$order_id', for_checkout=0, transaction_id=$transaction_id, line_type='transaction' WHERE id=$line_id";
+                    $sqlTransferLineToTransaction = "UPDATE product_line SET cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price', order_id='$order_id' WHERE id=$line_id";
                 } else {
-                    $sqlTransferLineToTransaction = "UPDATE product_line SET line_cost='$line_cost', cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction' WHERE id=$line_id";
+                    $sqlTransferLineToTransaction = "UPDATE product_line SET cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price' WHERE id=$line_id";
                 };
                 if(!mysqli_query($conn,$sqlTransferLineToTransaction)){
                     die("Something went wrong");
@@ -135,6 +145,8 @@
                 };
             };
             
+            unset($_SESSION['selected_discount']);
+
             $_SESSION['receipt_displayed_from'] = 'pos';
             header("Location:../receipt/index.php?transaction_id=".$transaction_id);
             exit;

@@ -44,11 +44,10 @@
         $selected_qtys = explode(",", $selected_qtys);
         
         if ($selected_discount == 'No Discount'){
-            $sqlUpdateCart = "UPDATE customer_cart SET selected_discount=NULL WHERE id=$customer_cart_id";
-        } else {
-            $sqlUpdateCart = "UPDATE customer_cart SET selected_discount='$selected_discount' WHERE id=$customer_cart_id";
+            $selected_discount = NULL;
         };
-        
+
+        $sqlUpdateCart = "UPDATE customer_cart SET selected_discount='$selected_discount' WHERE id=$customer_cart_id";    
         if(!mysqli_query($conn,$sqlUpdateCart)){
             die("Something went wrong");
         };

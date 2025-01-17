@@ -29,7 +29,8 @@
                 $_SESSION["message_string"] = "Customer archived successfully!";
                 $_SESSION["message_class"] = "info";
             };
-
+            unset($_SESSION['customer_id']);
+            unset($_SESSION['customer_user_id']);
             header("Location:../list/index.php");
             exit;
         };

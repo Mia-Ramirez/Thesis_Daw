@@ -26,19 +26,27 @@
 
         <?php
             include($doc_root.'/utils/connect.php');
+            $sqlGetEmployees = "SELECT
+                                e.first_name,
+                                e.last_name,
+                                e.job_title,
+                                e.contact_number,
+                                u.email,
+                                e.id AS employee_id,
+                                e.user_id
+                            FROM employee e
+                            INNER JOIN user u ON e.user_id=u.id
+                            WHERE u.is_active=1 AND e.job_title!='Not Applicable'";
+            
+            $filter_str = "";
+            
+            $query = NULL;
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.job_title, e.contact_number, u.email, e.id AS employee_id, e.user_id FROM employee e
-                            LEFT JOIN user u ON e.user_id=u.id
-                            WHERE u.is_active=1 AND CONCAT(e.first_name, e.last_name, e.job_title, e.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
-                            ORDER BY e.id DESC";
-            } else {
-                $query = NULL;
-                $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.job_title, e.contact_number, u.email, e.id AS employee_id, e.user_id FROM employee e
-                            LEFT JOIN user u ON e.user_id=u.id
-                            WHERE u.is_active=1
-                            ORDER BY e.id DESC";
-            }
+                $filter_str = " AND CONCAT(e.first_name, e.last_name, e.job_title, e.contact_number, COALESCE(u.email, '')) LIKE '%$query%'";
+            };
+
+            $sqlGetEmployees .= $filter_str." ORDER BY e.id DESC";
             
             $result = mysqli_query($conn,$sqlGetEmployees);
         ?>

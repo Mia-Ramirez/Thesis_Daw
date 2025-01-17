@@ -33,6 +33,7 @@
                                         photo,
                                         qty,
                                         selected_discount,
+                                        pl.line_price,
                                         prescription_id
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
@@ -90,8 +91,11 @@
                                     if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
                                     };
-
-                                    $line_discount = $data['price'] * (1 - $discount_rate);
+                                    $price = $data['line_price'];
+                                    if (is_null($price)){
+                                        $price = $data['price'];
+                                    };
+                                    $line_discount = $price * (1 - $discount_rate);
                                     
                                     $subtotal += $line_subtotal;
                                     $total_discount += ($line_subtotal - ($line_discount * $data['qty']));
@@ -103,7 +107,7 @@
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
-                                <td class="price">₱<?php echo $data['price'];?></td>
+                                <td class="price">₱<?php echo $price; ?></td>
                                 <td class="discounted-price">₱<?php echo $line_discount;?></td>
                                 <td><?php echo $data['qty'];?></td>
                                 <td class="total">₱<?php echo $line_subtotal;?></td>

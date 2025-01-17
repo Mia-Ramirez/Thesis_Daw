@@ -136,6 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         selectedIDs.value = selected_ids;
         selectedQty.value = selected_qty;
+        
 
         checkoutButton.disabled = checkout_is_disabled;
         if (checkout_is_disabled === false){

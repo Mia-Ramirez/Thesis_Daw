@@ -44,7 +44,8 @@
                                 FROM batch b
                                 INNER JOIN product p ON b.product_id=p.id
                                 INNER JOIN supplier s ON b.supplier_id=s.id
-                                INNER JOIN user u ON b.user_id=u.id
+                                INNER JOIN employee e ON b.employee_id=e.id
+                                INNER JOIN user u ON e.user_id=u.id
                                 WHERE b.id=$batch_id";
 
                 $batch_result = mysqli_query($conn,$sqlGetBatch);

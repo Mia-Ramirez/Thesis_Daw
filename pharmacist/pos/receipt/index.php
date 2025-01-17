@@ -43,6 +43,7 @@
     $sqlGetProductLines = "SELECT 
                             p.name AS product_name,
                             price,
+                            pl.line_price,
                             applicable_discounts,
                             prescription_is_required,
                             photo,
@@ -81,8 +82,11 @@
         if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
             $discount_rate = 0.2;
         };
-
-        $line_discount = $data['price'] * (1 - $discount_rate);
+        $price = $data['line_price'];
+        if (is_null($price)){
+            $price = $data['price'];
+        };
+        $line_discount = $price * (1 - $discount_rate);
         
         $subtotal += $line_subtotal;
         $total_discount += ($line_subtotal - ($line_discount * $data['qty']));

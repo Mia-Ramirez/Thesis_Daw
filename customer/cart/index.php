@@ -34,6 +34,7 @@
                                         qty,
                                         p.id AS product_id,
                                         p.current_quantity AS max_quantity,
+                                        pl.line_price,
                                         for_checkout
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
@@ -82,11 +83,14 @@
                                     } else {
                                         $is_selected = 'false';
                                     };
-
+                                    $price = $data['line_price'];
+                                    if (is_null($price)){
+                                        $price = $data['price'];
+                                    };
                                     $dictionary = [
                                         "lineID" => $data['line_id'],
-                                        "price" => $data['price'],
-                                        "discountedPrice" => $data['price'],
+                                        "price" => $price,
+                                        "discountedPrice" => $price,
                                         "quantity" => $data['qty'],
                                         "selected" => $is_selected,
                                         "applicableDiscounts" => $data['applicable_discounts'],
@@ -102,7 +106,7 @@
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
-                                <td class="price">₱<?php echo $data['price'];?></td>
+                                <td class="price">₱<?php echo $price;?></td>
                                 <td class="discounted-price">₱<?php echo $data['price'];?></td>
                                 <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
                                 <td class="total">₱0</td>

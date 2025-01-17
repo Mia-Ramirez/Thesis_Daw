@@ -26,6 +26,7 @@
                 $_SESSION["message_class"] = "info";
             };
 
+            unset($_SESSION['employee_id']);
             header("Location:../list/index.php");
             exit;
         };

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 14, 2025 at 02:15 PM
+-- Generation Time: Jan 15, 2025 at 11:44 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -34,7 +34,7 @@ CREATE TABLE `batch` (
   `expiration_date` date NOT NULL,
   `supplier_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `employee_id` int(11) NOT NULL,
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
@@ -45,11 +45,11 @@ CREATE TABLE `batch` (
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `user_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`) VALUES
-(1, 'B20250110S001', '2025-01-10', '2027-01-10', 1, 1, 1, 100, NULL, NULL, 4),
-(2, 'B20250110S002', '2025-01-10', '2027-01-08', 1, 2, 1, 50, NULL, NULL, 8),
-(3, 'B1', '2025-01-13', '2025-01-15', 1, 2, 1, 15, '2025-01-13', 15, 8),
-(4, 'B2', '2025-01-13', '2026-01-15', 1, 2, 1, 10, NULL, NULL, 8);
+INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`) VALUES
+(1, 'B20250110S001', '2025-01-10', '2027-01-10', 1, 1, 2, 100, NULL, NULL, 4),
+(2, 'B20250110S002', '2025-01-10', '2027-01-08', 1, 2, 2, 50, NULL, NULL, 8),
+(3, 'B1', '2025-01-13', '2025-01-15', 1, 2, 2, 15, '2025-01-13', 15, 8),
+(4, 'B2', '2025-01-13', '2026-01-15', 1, 2, 2, 10, NULL, NULL, 8);
 
 -- --------------------------------------------------------
 
@@ -180,7 +180,8 @@ CREATE TABLE `employee` (
 
 INSERT INTO `employee` (`id`, `first_name`, `last_name`, `contact_number`, `address`, `date_of_birth`, `job_title`, `employment_date`, `user_id`) VALUES
 (1, 'Pharmacist A', 'Last Name A', '09133136217', 'Address A', '1990-01-11', 'Pharmacist', '2002-01-08', 3),
-(2, 'Manager A', 'Last Name A', '09133136213', 'Address A', '1986-01-11', 'Manager', '2000-02-06', 4);
+(2, 'Manager A', 'Last Name A', '09133136213', 'Address A', '1986-01-11', 'Manager', '2000-02-06', 4),
+(3, 'Super', 'Admin', 'Not Applicable', 'Not Applicable', '2025-01-16', 'Not Applicable', '2025-01-16', 1);
 
 -- --------------------------------------------------------
 
@@ -328,23 +329,23 @@ CREATE TABLE `product_line` (
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
-  `line_cost` double DEFAULT NULL
+  `line_price` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_line`
 --
 
-INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_cost`) VALUES
+INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`) VALUES
 (1, 1, NULL, 1, 1, 0, NULL, 'order', NULL),
-(2, 1, NULL, 2, 2, 0, 4, 'transaction', 4),
-(3, 1, NULL, 3, 20, 0, 1, 'transaction', 4),
-(4, 2, NULL, 4, 2, 0, 2, 'transaction', 8),
-(5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 8),
-(6, 1, NULL, NULL, 1, 0, 5, 'transaction', 4),
-(7, 2, NULL, NULL, 1, 0, 5, 'transaction', 8),
-(8, 2, NULL, NULL, 1, 0, 6, 'transaction', 8),
-(9, 1, NULL, NULL, 1, 0, 6, 'transaction', 4),
+(2, 1, NULL, 2, 2, 0, 4, 'transaction', 5),
+(3, 1, NULL, 3, 20, 0, 1, 'transaction', 5),
+(4, 2, NULL, 4, 2, 0, 2, 'transaction', 10),
+(5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 10),
+(6, 1, NULL, NULL, 1, 0, 5, 'transaction', 5),
+(7, 2, NULL, NULL, 1, 0, 5, 'transaction', 10),
+(8, 2, NULL, NULL, 1, 0, 6, 'transaction', 10),
+(9, 1, NULL, NULL, 1, 0, 6, 'transaction', 5),
 (11, 2, 3, NULL, 1, 1, NULL, 'pos', NULL);
 
 -- --------------------------------------------------------
@@ -416,9 +417,9 @@ INSERT INTO `transaction` (`id`, `transaction_date`, `employee_id`, `order_id`, 
 (1, '2025-01-11 11:59:48', 2, 3, 'SR#000001', '', 'TR#20250111-115901', 100),
 (2, '2025-01-11 12:04:07', 1, 4, 'SR#000002', 'Person With Disabilities', 'TR#20250111-120301', 16),
 (3, '2025-01-11 12:07:51', 1, NULL, 'SR#000003', 'Senior Citizen', 'TR#20250111-120701', 10),
-(4, '2025-01-13 23:47:02', 1, 2, 'SR#000004', 'No Discount', 'TR#20250113-164702', 10),
+(4, '2025-01-13 23:47:02', 1, 2, 'SR#000004', '', 'TR#20250113-164702', 10),
 (5, '2025-01-14 08:49:38', 1, NULL, 'SR#000005', 'Person With Disabilities', 'TR#20250114-014938', 15),
-(6, '2025-01-14 21:07:12', 1, NULL, 'SR#000006', 'No Discount', 'TR#20250114-140712', 20);
+(6, '2025-01-14 21:07:12', 1, NULL, 'SR#000006', '', 'TR#20250114-140712', 20);
 
 -- --------------------------------------------------------
 
@@ -457,7 +458,7 @@ ALTER TABLE `batch`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product_supplier` (`supplier_id`) USING BTREE,
   ADD KEY `product` (`product_id`),
-  ADD KEY `recorded_by` (`user_id`);
+  ADD KEY `recorded_by` (`employee_id`) USING BTREE;
 
 --
 -- Indexes for table `category`
@@ -626,13 +627,13 @@ ALTER TABLE `customer_prescription`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `pos_cart`
@@ -662,7 +663,7 @@ ALTER TABLE `product_categories`
 -- AUTO_INCREMENT for table `product_line`
 --
 ALTER TABLE `product_line`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `product_prescription`
@@ -686,7 +687,7 @@ ALTER TABLE `temporary_record`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -704,7 +705,7 @@ ALTER TABLE `user`
 ALTER TABLE `batch`
   ADD CONSTRAINT `batch_ibfk_1` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`),
   ADD CONSTRAINT `batch_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `batch_ibfk_3` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `customer`
