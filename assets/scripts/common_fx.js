@@ -36,3 +36,17 @@ function openFullscreen(imgElement) {
         imgElement.msRequestFullscreen();
     }
 };
+
+function adjustInputValue(input) {
+    let maxValue = parseInt(input.max);
+    let currentValue = parseInt(input.value);
+    
+    // Handle non-numeric input (e.g., clearing the field)
+    if (isNaN(currentValue)) {
+        input.value = '';
+    }
+    // If the value exceeds the max, reset it to the max value
+    else if (currentValue > maxValue) {
+        input.value = maxValue;
+    }
+};

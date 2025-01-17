@@ -10,6 +10,11 @@
         exit;
     };
 
+    $qty = 1;
+    if (isset($_GET['qty'])){
+        $qty = $_GET['qty'];
+    };
+
     session_start();
     $doc_root = $_SESSION["DOC_ROOT"];
     include($doc_root.'/utils/connect.php');
@@ -18,7 +23,7 @@
 
     $user_id = $_SESSION['user_id'];
 
-    $sqlCheckProduct = "SELECT name FROM product WHERE id=$product_id"; 
+    $sqlCheckProduct = "SELECT current_quantity FROM product WHERE id=$product_id"; 
     $result = mysqli_query($conn, $sqlCheckProduct);
     
     if ($result->num_rows < 1){
@@ -28,6 +33,8 @@
         header("Location:index.php");
         exit;
     };
+    $row = mysqli_fetch_array($result);
+    $max_quantity = $row['current_quantity'];
 
     $sqlGetCustomerCartID = "SELECT cc.id AS customer_cart_id, c.id AS customer_id FROM customer_cart cc RIGHT JOIN customer c ON cc.customer_id=c.id WHERE c.user_id=$user_id";
                 
@@ -62,15 +69,29 @@
     $result = mysqli_query($conn,$sqlGetProductLine);
     if ($result->num_rows != 0){
         $row = mysqli_fetch_array($result);
-        $qty = $row['qty'] + 1;
+        $line_qty = $row['qty'] + $qty;
+        if (intval($line_qty) > intval($max_quantity)){
+            $_SESSION["message_string"] = "Quantity exceeded!";
+            $_SESSION["message_class"] = "danger";
+            header("Location:index.php");
+            exit;
+        };
+
         $line_id = $row['id'];
-        $sqlUpdateProductLine = "UPDATE product_line SET qty='$qty', for_checkout='$for_checkout' WHERE id=$line_id";
+        $sqlUpdateProductLine = "UPDATE product_line SET qty='$line_qty', for_checkout='$for_checkout' WHERE id=$line_id";
         if(!mysqli_query($conn,$sqlUpdateProductLine)){
             die("Something went wrong");
         };
 
     } else {
-        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id','$product_id','1','$for_checkout','cart')";
+        $line_qty = $qty;
+        if (intval($line_qty) > intval($max_quantity)){
+            $_SESSION["message_string"] = "Quantity exceeded!";
+            $_SESSION["message_class"] = "danger";
+            header("Location:index.php");
+            exit;
+        };
+        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id','$product_id','$line_qty','$for_checkout','cart')";
         if(!mysqli_query($conn,$sqlInsertProductLine)){
             die("Something went wrong");
         };

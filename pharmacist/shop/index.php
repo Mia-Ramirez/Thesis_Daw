@@ -101,6 +101,8 @@
                 <?php
                     if ($data['current_quantity'] == '0'){
                         echo "<p style='color: red;'>Out of Stock</p>";
+                    } else {
+                        echo '<p>Stock: '.$data["current_quantity"].'</p>';
                     };
                 ?>
             </div>

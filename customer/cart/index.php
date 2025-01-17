@@ -108,7 +108,7 @@
                                 </td>
                                 <td class="price">₱<?php echo $price;?></td>
                                 <td class="discounted-price">₱<?php echo $data['price'];?></td>
-                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
+                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1" oninput="adjustInputValue(this)"></td>
                                 <td class="total">₱0</td>
                                 <td>
                                     <a><i class="button-icon fas fa-trash" onclick="showYesNoModal('remove_line-<?php echo $data['line_id']; ?>','Are you sure you want to remove this product in your Cart?')" title="Remove"></i></a>

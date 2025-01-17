@@ -204,7 +204,7 @@
                                 </td>
                                 <td class="price">₱<?php echo $price; ?></td>
                                 <td class="discounted-price">₱<?php echo $price;?></td>
-                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
+                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1" oninput="adjustInputValue(this)"></td>
                                 <td class="total">₱0</td>
                                 <td>
                                     <?php
