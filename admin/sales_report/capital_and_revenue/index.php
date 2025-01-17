@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,18 +24,44 @@
         ?> 
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
+            $sqlGetDates="SELECT DISTINCT line_dates, DATE_FORMAT(line_dates, '%M %d, %Y') AS formatted_date
+                    FROM (
+                        SELECT DATE_FORMAT(date_received, '%Y-%m-%d') AS line_dates
+                        FROM batch
+                        GROUP BY DATE_FORMAT(date_received, '%Y-%m-%d')
+
+                        UNION
+
+                        SELECT DATE_FORMAT(transaction_date, '%Y-%m-%d') AS line_dates
+                        FROM transaction
+                        GROUP BY DATE_FORMAT(transaction_date, '%Y-%m-%d')
+                    ) AS combined_dates";
+
+            $filter_date_str="";
             $query = NULL;
+        
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
+                $filter_date_str=" HAVING formatted_date LIKE '%$query%'";
             };
+
+            $sqlGetDates .= $filter_date_str." ORDER BY line_dates DESC";
+
+            $date_results = mysqli_query($conn,$sqlGetDates);
+
+            $results = array();
+
+            // while($data = mysqli_fetch_array($date_results)){
+            //     $sqlGetCapitalValues="";
+            // };
 
         ?>
 
         <!-- <div class="search">
             <form method="GET" action="">
-                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+                <input type="text" value="<?php //echo $query; ?>" name="query" placeholder="Search anything...">
                 <button class="btns" type="submit">Search</button>
             </form>
         </div> -->

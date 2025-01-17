@@ -6,7 +6,8 @@
     };
 
     session_start();
-    include('../../utils/connect.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
 
     if ($_POST['action'] == 'remove_line'){
         $line_id= mysqli_real_escape_string($conn, $_POST['remove_line']);
@@ -43,11 +44,10 @@
         $selected_qtys = explode(",", $selected_qtys);
         
         if ($selected_discount == 'No Discount'){
-            $sqlUpdateCart = "UPDATE customer_cart SET selected_discount=NULL WHERE id=$customer_cart_id";
-        } else {
-            $sqlUpdateCart = "UPDATE customer_cart SET selected_discount='$selected_discount' WHERE id=$customer_cart_id";
+            $selected_discount = NULL;
         };
-        
+
+        $sqlUpdateCart = "UPDATE customer_cart SET selected_discount='$selected_discount' WHERE id=$customer_cart_id";    
         if(!mysqli_query($conn,$sqlUpdateCart)){
             die("Something went wrong");
         };

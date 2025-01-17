@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    // $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,7 +44,11 @@
 
         <script>
             function redirectToPage(page) {
-                window.location.href = './'+page+'/index.php';
+                if (page == 'stock'){
+                    window.location.href = './'+page+'/index.php?is_low=true';
+                } else {    
+                    window.location.href = './'+page+'/index.php';
+                };
             };
             
             window.onload = function() {

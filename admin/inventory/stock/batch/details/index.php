@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,7 @@
         ?>
 
         <?php
-            include('../../../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['batch_id'])) {
                 $batch_id = $_GET['batch_id'];
                 $sqlGetBatch = "SELECT
@@ -43,7 +44,8 @@
                                 FROM batch b
                                 INNER JOIN product p ON b.product_id=p.id
                                 INNER JOIN supplier s ON b.supplier_id=s.id
-                                INNER JOIN user u ON b.user_id=u.id
+                                INNER JOIN employee e ON b.employee_id=e.id
+                                INNER JOIN user u ON e.user_id=u.id
                                 WHERE b.id=$batch_id";
 
                 $batch_result = mysqli_query($conn,$sqlGetBatch);

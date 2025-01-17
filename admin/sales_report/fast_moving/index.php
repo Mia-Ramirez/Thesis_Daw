@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -23,21 +24,39 @@
         ?> 
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
 
+            $sqlGetMovingProducts = "SELECT
+                                            product_id,
+                                            p.name AS product_name,
+                                            DATE_FORMAT(transaction_date, '%M %d, %Y') AS formatted_date,
+                                            SUM(qty) AS total_quantity
+                                        FROM transaction t
+                                        INNER JOIN product_line pl ON t.id=pl.transaction_id
+                                        INNER JOIN product p ON pl.product_id=p.id
+                                        GROUP BY product_id, formatted_date
+                                        HAVING total_quantity >= 20 
+                                        ";
+
+            $filter_str = "";
             $query = NULL;
-            if (isset($_GET['query'])){
+            if (isset($_GET['query']) && ($_GET['query'] != '')){
                 $query = $_GET['query'];
+                $filter_str = " AND CONCAT(product_name, formatted_date, total_quantity) LIKE '%$query%'";
             };
+            
+            $sqlGetMovingProducts .= $filter_str." ORDER BY formatted_date DESC";
+            
+            $result = mysqli_query($conn,$sqlGetMovingProducts);
 
         ?>
 
-        <!-- <div class="search">
+        <div class="search">
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                 <button class="btns" type="submit">Search</button>
             </form>
-        </div> -->
+        </div>
 
         <div class="table">
             <table>
@@ -50,11 +69,20 @@
                 </thead>
 
                 <tbody>
+                    <?php
+                    while($data = mysqli_fetch_array($result)){
+                        $date = new DateTime($data["formatted_date"]);
+
+                        $formattedDate = $date->format('F j, Y');
+                    ?>
                     <tr>
-                        <td>Biogesic</td>
-                        <td>January 11, 2025</td>
-                        <td>20</td>
+                        <td><?php echo $data["product_name"];?></td>
+                        <td><?php echo $formattedDate; ?></td>
+                        <td><?php echo $data["total_quantity"];?></td>
                     </tr>
+                    <?php
+                    };
+                    ?>
                 </tbody>
 
             </table>

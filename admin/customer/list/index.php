@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,7 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
                 $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c

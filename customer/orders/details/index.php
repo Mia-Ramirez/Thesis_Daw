@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -35,7 +36,7 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['order_id'])) {
                 $order_id = $_GET['order_id'];
                 if (isset($_SESSION['customer_id']) == false){
@@ -66,6 +67,7 @@
                                         applicable_discounts,
                                         prescription_is_required,
                                         photo,
+                                        pl.line_price,
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
@@ -113,8 +115,11 @@
                                     if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
                                     };
-
-                                    $line_discount = $data['price'] * (1 - $discount_rate);
+                                    $price = $data['line_price'];
+                                    if (is_null($price)){
+                                        $price = $data['price'];
+                                    };
+                                    $line_discount = $price * (1 - $discount_rate);
                                     
                                     $subtotal += $line_subtotal;
                                     $total_discount += ($line_subtotal - ($line_discount * $data['qty']));
@@ -126,7 +131,7 @@
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
-                                <td class="price">₱<?php echo $data['price'];?></td>
+                                <td class="price">₱<?php echo $price; ?></td>
                                 <td class="discounted-price">₱<?php echo $line_discount;?></td>
                                 <td><?php echo $data['qty'];?></td>
                                 <td class="total">₱<?php echo $line_subtotal;?></td>

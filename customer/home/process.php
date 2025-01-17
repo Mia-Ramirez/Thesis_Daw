@@ -11,7 +11,8 @@
     };
 
     session_start();
-    include('../../utils/connect.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
     $product_id = $_GET['product_id'];
     $action = $_GET['action'];
 

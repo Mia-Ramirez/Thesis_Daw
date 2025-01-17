@@ -3,10 +3,11 @@
     $maxFileSize = 5 * 1024 * 1024;  // 5MB in bytes
 
     session_start();
+    $doc_root = $_SESSION["DOC_ROOT"];
     $customer_id = $_SESSION['customer_id'];
     
-    include('../../../utils/connect.php');
-    include('../../../utils/common_fx_and_const.php');
+    include($doc_root.'/utils/connect.php');
+    include($doc_root.'/utils/common_fx_and_const.php');
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ($_POST['action'] == 'apply_prescription'){

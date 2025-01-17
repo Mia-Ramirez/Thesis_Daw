@@ -1,10 +1,21 @@
 <?php
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (isset($_POST['signIn'])) {
-            include('../../utils/connect.php');
+            session_start();
             include('../../utils/common_fx_and_const.php'); // getBaseURL
 
-            session_start();
+            $_SESSION['BASE_URL'] = getBaseURL();
+
+            $doc_root = $_SERVER['DOCUMENT_ROOT'];
+            if (strpos($_SESSION['BASE_URL'], "pharmanest") != false){
+                $doc_root .= "/pharmanest";
+            };
+            
+            $_SESSION['DOC_ROOT'] = $doc_root;
+            error_log("HERE: DOC_ROOT ".$doc_root);
+
+            include($doc_root.'/utils/connect.php');
+            
             
             $email_or_username = mysqli_real_escape_string($conn, $_POST['email_or_username']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);
@@ -39,7 +50,8 @@
 
                     // list($first_name, $creationDate) = explode("_", $row['username']);
                     $_SESSION['user_first_name'] = explode("_", $row['username'])[0];
-                    $_SESSION['BASE_URL'] = getBaseURL();
+                    
+                    
                     
                     if ($role == 'customer'){
                         header("Location: ../../customer/index.php");

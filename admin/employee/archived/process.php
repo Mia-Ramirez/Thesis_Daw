@@ -6,11 +6,11 @@
     };
 
     session_start();
-    
+    $doc_root = $_SESSION["DOC_ROOT"];
     $employee_id = $_GET['employee_id'];
     $action = $_GET['action'];
 
-    include('../../../utils/connect.php');
+    include($doc_root.'/utils/connect.php');
     $sqlGetemployee = "SELECT user_id FROM employee WHERE id=$employee_id";
 
     $employee_result = mysqli_query($conn,$sqlGetemployee);

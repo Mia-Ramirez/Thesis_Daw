@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,23 +20,27 @@
         <?php include '../../components/side_nav.php'; ?>
         
         <?php
-            $current_page_title = "low stocks";
+            $current_page_title = "stocks";
             include '../../components/top_nav.php';
         ?> 
         
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             
-            $sqlGetLowStockProducts = "SELECT
+            $sqlGetStockProducts = "SELECT
                                             id,
                                             name,
                                             current_quantity,
-                                            maintaining_quantity FROM product
-                                        WHERE current_quantity < maintaining_quantity
-                                        ORDER BY current_quantity ASC, maintaining_quantity ASC";
+                                            maintaining_quantity FROM product";
 
+            $filter_str = "";
+            if (isset($_GET['is_low'])){
+                $filter_str=" WHERE current_quantity < maintaining_quantity";
+            };
             
-            $result = mysqli_query($conn,$sqlGetLowStockProducts);
+            $sqlGetStockProducts .= $filter_str." ORDER BY current_quantity ASC, maintaining_quantity ASC";
+
+            $result = mysqli_query($conn,$sqlGetStockProducts);
         ?>
 
         <div class="table">

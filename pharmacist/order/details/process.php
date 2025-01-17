@@ -6,7 +6,8 @@
     };
 
     session_start();
-    include('../../../utils/connect.php');
+    $doc_root = $_SESSION["DOC_ROOT"];
+    include($doc_root.'/utils/connect.php');
 
     $user_id = $_SESSION['user_id'];
     $order_id= mysqli_real_escape_string($conn, $_POST['order_id']);

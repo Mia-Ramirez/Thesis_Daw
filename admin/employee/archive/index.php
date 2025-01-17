@@ -1,6 +1,7 @@
 <?php
     session_start();
     $base_url = $_SESSION["BASE_URL"];
+    $doc_root = $_SESSION["DOC_ROOT"];
 ?>
 <!DOCTYPE html>
 <html>
@@ -24,14 +25,15 @@
         ?>
 
         <?php
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if (isset($_GET['employee_id'])) {
                 $employee_id = $_GET['employee_id'];
+                $user_id = $_SESSION['user_id'];
                 $_SESSION["employee_id"] = $employee_id;
                 $sqlGetemployee = "SELECT e.first_name, e.last_name, e.address, e.contact_number, e.date_of_birth, u.email, e.user_id, e.job_title, e.employment_date FROM employee e
-                            LEFT JOIN user u ON e.user_id=u.id
-                            WHERE e.id=$employee_id";
-
+                            INNER JOIN user u ON e.user_id=u.id
+                            WHERE e.id=$employee_id AND e.job_title!='Not Applicable' AND e.user_id!=$user_id";
+                
                 $employee_result = mysqli_query($conn,$sqlGetemployee);
                 if ($employee_result->num_rows == 0){
                     header("Location:../../../page/404.php");

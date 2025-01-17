@@ -3,13 +3,14 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
+        $doc_root = $_SESSION["DOC_ROOT"];
         if (!isset($_SESSION["customer_id"])){
             header("Location:../list/index.php");
             exit;
         };
 
         if (isset($_POST["action"])) {
-            include('../../../utils/connect.php');
+            include($doc_root.'/utils/connect.php');
             if ($_POST['action'] === 'update_customer') {
                 $first_name = mysqli_real_escape_string($conn, $_POST["first_name"]);
                 $last_name = mysqli_real_escape_string($conn, $_POST["last_name"]);

@@ -3,6 +3,7 @@
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         session_start();
+        $doc_root = $_SESSION["DOC_ROOT"];
         if (!isset($_SESSION["customer_id"])){
             header("Location:../list/index.php");
             exit;
@@ -10,7 +11,7 @@
 
         if (isset($_POST["action"])) {
             if ($_POST['action'] === 'yes') {
-                include('../../../utils/connect.php');
+                include($doc_root.'/utils/connect.php');
                 $user_id = $_SESSION['customer_user_id'];
                 $customer_id = $_SESSION['customer_id'];
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
     session_start();
+    $doc_root = $_SESSION["DOC_ROOT"];
     if (!isset($_SESSION['cart_id'])){
         header("Location: index.php");
         exit;
@@ -13,7 +14,7 @@
         unset($_SESSION['order_id']);
     };
     
-    include('../../utils/connect.php');
+    include($doc_root.'/utils/connect.php');
     if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         if (!isset($_GET['product_id']) || !isset($_GET['action']) ) {
             header("Location:index.php");
