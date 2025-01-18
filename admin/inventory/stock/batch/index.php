@@ -44,13 +44,19 @@
                 $filter_str = " WHERE p.id=".$product_id;
             };
 
-            $offset = '0';
+            if (isset($_GET['soon_to_expire'])){
+                if (strpos($filter_str, "WHERE") != false){
+                    $filter_str .= " AND expiration_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 MONTH)";
+                } else {
+                    $filter_str .= " WHERE expiration_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 MONTH)";
+                };
+            };
+
+            $offset = 0;
             if (isset($_GET['page_no'])){
                 $page_no = $_GET['page_no'];
-                if ($page_no == 1){
-                    $offset = 0;
-                } else {
-                    $offset = (int)$_GET['page_no'] * 10;
+                if ($page_no != 1){
+                    $offset = (int)$page_no * 10;
                 };
             };
 

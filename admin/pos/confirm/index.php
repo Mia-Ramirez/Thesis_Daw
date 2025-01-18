@@ -181,7 +181,12 @@
                         </p>
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
                         <p>Discount: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
-                        <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
+                        <p>Total: ₱<span id="total">
+                            <?php
+                                echo $total;
+                                $_SESSION['total'] = $total;
+                            ?></span>
+                        </p>
                     </div>
 
                     <form action="process.php" method="POST">

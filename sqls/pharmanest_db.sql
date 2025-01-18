@@ -278,7 +278,8 @@ CREATE TABLE `transaction` (
   `receipt_reference` text NOT NULL,
   `selected_discount` varchar(128) NOT NULL,
   `reference_number` varchar(128) NOT NULL,
-  `amount_paid` double NOT NULL
+  `amount_paid` double NOT NULL,
+  `total` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

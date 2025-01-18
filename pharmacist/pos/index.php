@@ -120,7 +120,17 @@
             $sqlGetProducts = "SELECT
                                     id AS product_id,
                                     name AS product_name
-                                FROM product WHERE current_quantity > 0 ORDER BY id";
+                                FROM product
+                                WHERE current_quantity > 0";
+
+            $query = NULL;
+            $filter_str = '';
+            if (isset($_GET['query'])){
+                $query = $_GET['query'];
+                $filter_str = " AND name LIKE '%$query%'";
+            };
+
+            $sqlGetProducts .= $filter_str." ORDER BY name ASC";// LIMIT 0, 25";
 
             $product_result = mysqli_query($conn,$sqlGetProducts);
             $product_list = array();
@@ -146,11 +156,12 @@
         <div class="container" style="margin-left: 15%">
             <div class="cart-left" style="width: 60%;">
                 <div class="card-pos">
-                    <div>
+                    <form method="GET" action="">
                         <label for="product-input">Search Product:</label>
-                        <input type="text" id="product-input" class="product-input" placeholder="Type and press Enter" autocomplete="off">
+                        <input value="<?php echo $query; ?>" type="text" id="product-input" class="product-input" placeholder="Type and press Enter" autocomplete="off" name="query">
                         <ul class="suggestions" id="suggestions-list"></ul>
-                    </div>
+                        <button class="btns" type="submit">Apply</button>
+                    </form>
                     
                     <h2>Product List</h2>
                     <div class="legends">

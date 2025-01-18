@@ -30,6 +30,7 @@
                                             product_id,
                                             p.name AS product_name,
                                             DATE_FORMAT(transaction_date, '%M %d, %Y') AS formatted_date,
+											DATE_FORMAT(transaction_date, '%Y-%m-%d') AS reference_date,
                                             SUM(qty) AS total_quantity
                                         FROM transaction t
                                         INNER JOIN product_line pl ON t.id=pl.transaction_id
@@ -39,14 +40,19 @@
                                         ";
 
             $filter_str = "";
+
             $query = NULL;
             if (isset($_GET['query']) && ($_GET['query'] != '')){
                 $query = $_GET['query'];
-                $filter_str = " AND CONCAT(product_name, formatted_date, total_quantity) LIKE '%$query%'";
+                $filter_str .= " AND CONCAT(product_name, formatted_date, total_quantity) LIKE '%$query%'";
+            };
+
+            if (isset($_GET['get_today'])){
+                $filter_str .= " AND reference_date=CURDATE()";
             };
             
             $sqlGetMovingProducts .= $filter_str." ORDER BY formatted_date DESC";
-            
+            error_log("HERE: sqlGetMovingProducts ".$sqlGetMovingProducts);
             $result = mysqli_query($conn,$sqlGetMovingProducts);
 
         ?>
