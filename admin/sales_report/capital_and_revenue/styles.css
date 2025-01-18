@@ -67,10 +67,7 @@
   position: relative;
   display: inline-block;
   cursor: pointer;
-  padding: 5px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 3px;
+  color: red;
 }
 
 /* Tooltip text (hidden by default) */

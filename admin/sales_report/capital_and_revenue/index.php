@@ -198,8 +198,31 @@
                     <tr>
                         <td><?php echo $data["product_name"];?></td>
                         <td><?php echo $data["line_date"];?></td>
-                        <td><?php echo ($data["revenue"]["web"] + $data["revenue"]["in_house"]) - $data["capital"];?></td>
-                        <td><?php echo $data["capital"];?></td>
+                        <td>
+                            <?php
+                                $total_sales = ($data["revenue"]["web"] + $data["revenue"]["in_house"]) - $data["capital"];
+                                echo $total_sales;
+                                if (!is_null($data["remarks"])){
+                                    ?>
+                                    <span class="tooltip">*
+                                        <span class="tooltip-text"><?php echo $data["remarks"]; ?></span>
+                                    </span>
+                                    <?php
+                                };
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                                echo $data["capital"];
+                                if (!is_null($data["remarks"])){
+                                    ?>
+                                    <span class="tooltip">*
+                                        <span class="tooltip-text"><?php echo $data["remarks"]; ?></span>
+                                    </span>
+                                    <?php
+                                };
+                            ?>
+                        </td>
                         <td><?php echo $data["revenue"]["web"];?></td>
                         <td><?php echo $data["revenue"]["in_house"];?></td>
                     </tr>
