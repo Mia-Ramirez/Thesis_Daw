@@ -43,7 +43,7 @@
                 $filter_str = " AND p.id=".$product_id;
             };
             
-            $offset = '0';
+            $offset = 0;
             if (isset($_GET['page_no'])){
                 $page_no = $_GET['page_no'];
                 if ($page_no == 1){

@@ -102,7 +102,17 @@
                     };
                 };
                 
-                $sqlGetProducts .= " ORDER BY p.id DESC";
+                $offset = 0;
+                if (isset($_GET['page_no'])){
+                    $page_no = $_GET['page_no'];
+                    if ($page_no == 1){
+                        $offset = 0;
+                    } else {
+                        $offset = (int)$_GET['page_no'] * 10;
+                    };
+                };
+
+                $sqlGetProducts .= " ORDER BY p.id DESC";// LIMIT ".$offset.", 6";
                 
                 $product_results = mysqli_query($conn,$sqlGetProducts);
                 while($data = mysqli_fetch_array($product_results)){

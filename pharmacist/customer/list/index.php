@@ -16,9 +16,9 @@
 
     <body>
         <?php include '../../components/unauth_redirection.php'; ?>
-        
+
         <?php include '../../components/side_nav.php'; ?>
-                
+        
         <?php
             $current_page_title = "list of customers";
             include '../../components/top_nav.php';
@@ -26,20 +26,28 @@
 
         <?php
             include($doc_root.'/utils/connect.php');
+            $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
+                            LEFT JOIN user u ON c.user_id=u.id
+                            WHERE c.is_active=1 OR u.is_active=1";
+            
+            $filter_str = "";
+            $query = NULL;
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=1 OR u.is_active=1) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
-                            ORDER BY c.id DESC";
-            } else {
-                $query = NULL;
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE c.is_active=1 OR u.is_active=1
-                            ORDER BY c.id DESC";
-            }
-            
+                $filter_str = " AND (c.is_active=1 OR u.is_active=1) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'";  
+            };
+
+            $offset = 0;
+            if (isset($_GET['page_no'])){
+                $page_no = $_GET['page_no'];
+                if ($page_no == 1){
+                    $offset = 0;
+                } else {
+                    $offset = (int)$_GET['page_no'] * 10;
+                };
+            };
+            $sqlGetCustomers .= $filter_str." ORDER BY c.id DESC";// LIMIT ".$offset.", 10";
+
             $result = mysqli_query($conn,$sqlGetCustomers);
         ?>
 
