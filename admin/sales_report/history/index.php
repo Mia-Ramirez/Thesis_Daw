@@ -38,13 +38,11 @@
                             WHERE h.object_type='transaction'
             ";
 
-            $offset = '0';
+            $offset = 0;
             if (isset($_GET['page_no'])){
                 $page_no = $_GET['page_no'];
-                if ($page_no == 1){
-                    $offset = 0;
-                } else {
-                    $offset = (int)$_GET['page_no'] * 10;
+                if ($page_no != 1){
+                    $offset = (int)$page_no * 10;
                 };
             };
 

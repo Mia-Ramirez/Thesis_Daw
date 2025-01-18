@@ -19,6 +19,7 @@
         exit;
     };
     $selected_discount = $_SESSION['selected_discount'];
+    $total = $_SESSION['total'];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($_POST['action'] == 'confirm_transaction'){
@@ -90,12 +91,12 @@
 
             if ($order_id){
                 $sqlInsertTransaction = "INSERT INTO
-                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid, order_id)
-                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount', '$order_id')";
+                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid, total, order_id)
+                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount', '$total', '$order_id')";
             } else {
                 $sqlInsertTransaction = "INSERT INTO
-                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid)
-                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount')";
+                                            transaction(employee_id, receipt_reference, selected_discount, reference_number, amount_paid, total)
+                                            VALUES ('$employee_id','$or_number','$selected_discount','$tr_number','$amount', '$total')";
             };
 
             if(!mysqli_query($conn,$sqlInsertTransaction)){
