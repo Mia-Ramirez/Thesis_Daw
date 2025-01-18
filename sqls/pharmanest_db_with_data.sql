@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2025 at 11:44 PM
+-- Generation Time: Jan 18, 2025 at 01:11 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -329,24 +329,24 @@ CREATE TABLE `product_line` (
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
-  `line_price` double DEFAULT NULL
+  `line_price` double DEFAULT NULL,
+  `pos_cart_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_line`
 --
 
-INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`) VALUES
-(1, 1, NULL, 1, 1, 0, NULL, 'order', NULL),
-(2, 1, NULL, 2, 2, 0, 4, 'transaction', 5),
-(3, 1, NULL, 3, 20, 0, 1, 'transaction', 5),
-(4, 2, NULL, 4, 2, 0, 2, 'transaction', 10),
-(5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 10),
-(6, 1, NULL, NULL, 1, 0, 5, 'transaction', 5),
-(7, 2, NULL, NULL, 1, 0, 5, 'transaction', 10),
-(8, 2, NULL, NULL, 1, 0, 6, 'transaction', 10),
-(9, 1, NULL, NULL, 1, 0, 6, 'transaction', 5),
-(11, 2, 3, NULL, 1, 1, NULL, 'pos', NULL);
+INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`) VALUES
+(1, 1, NULL, 1, 1, 0, NULL, 'order', NULL, NULL),
+(2, 1, NULL, 2, 2, 0, 4, 'transaction', 5, NULL),
+(3, 1, NULL, 3, 20, 0, 1, 'transaction', 5, NULL),
+(4, 2, NULL, 4, 2, 0, 2, 'transaction', 10, NULL),
+(5, 2, NULL, NULL, 1, NULL, 3, 'transaction', 10, NULL),
+(6, 1, NULL, NULL, 1, 0, 5, 'transaction', 5, NULL),
+(7, 2, NULL, NULL, 1, 0, 5, 'transaction', 10, NULL),
+(8, 2, NULL, NULL, 1, 0, 6, 'transaction', 10, NULL),
+(9, 1, NULL, NULL, 1, 0, 6, 'transaction', 5, NULL);
 
 -- --------------------------------------------------------
 

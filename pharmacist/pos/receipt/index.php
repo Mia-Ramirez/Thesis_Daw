@@ -43,10 +43,10 @@
     $sqlGetProductLines = "SELECT 
                             p.name AS product_name,
                             price,
-                            pl.line_price,
                             applicable_discounts,
                             prescription_is_required,
                             photo,
+                            pl.line_price,
                             qty
                         FROM product_line pl
                         INNER JOIN product p ON pl.product_id=p.id
@@ -76,16 +76,17 @@
     $total_discount = 0;
     while($data = mysqli_fetch_array($product_lines)){
         $content .= "<tr>";
-        $line_subtotal = $data['price'] * $data['qty'];
+        $price = $data['line_price'];
+        if (is_null($price)){
+            $price = $data['price'];
+        };
+        $line_subtotal = $price * $data['qty'];
 
         $discount_rate = 0;
         if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
             $discount_rate = 0.2;
         };
-        $price = $data['line_price'];
-        if (is_null($price)){
-            $price = $data['price'];
-        };
+
         $line_discount = $price * (1 - $discount_rate);
         
         $subtotal += $line_subtotal;

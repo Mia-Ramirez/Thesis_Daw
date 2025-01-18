@@ -223,7 +223,8 @@ CREATE TABLE `product_line` (
   `for_checkout` tinyint(1) DEFAULT NULL,
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
-  `line_price` double DEFAULT NULL
+  `line_price` double DEFAULT NULL,
+  `pos_cart_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

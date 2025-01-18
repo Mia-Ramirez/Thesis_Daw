@@ -7,6 +7,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="../styles.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
@@ -38,7 +39,20 @@
         ?>
 
         <div class="container">
-
+            <?php 
+                if (isset($_SESSION["message_string"])) {
+                ?>
+                    
+                    <div class="alert alert-<?php echo $_SESSION["message_class"] ?>">
+                        <?php 
+                        echo $_SESSION["message_string"];
+                        ?>
+                    </div>
+                <?php
+                unset($_SESSION["message_string"]);
+                unset($_SESSION["message_class"]);
+                }
+            ?>
             <div class="search">
                 <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
@@ -101,7 +115,15 @@
                 <?php
                     if ($data['current_quantity'] == '0'){
                         echo "<p style='color: red;'>Out of Stock</p>";
-                    };
+                    } else {
+                        ?>
+                        <p>Stock: <?php echo $data['current_quantity']; ?> | QTY: <input value="1" type="number" max="<?php echo $data['current_quantity']; ?>" class="quantity" id="qty_<?php echo $data['product_id']; ?>" min="1" oninput="adjustInputValue(this)"></p>
+                        <center>
+                            <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'yes')">Transact Now</button>
+                            <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'no')">Add to POS</button>
+                        </center>
+                    <?php
+                    }
                 ?>
             </div>
             <?php
@@ -113,6 +135,16 @@
         <script>
             window.onload = function() {
                 setActivePage("nav_shop");
+            };
+
+            function addQTY(product_id_reference, redirect_to_cart) {
+                
+                var product_qty = document.getElementById("qty_"+product_id_reference).value;
+                if (redirect_to_cart === 'yes'){
+                    window.location.href = './process.php?action=buy_now&product_id='+product_id_reference+'&qty='+product_qty;
+                } else {
+                    window.location.href = './process.php?action=add_to_cart&product_id='+product_id_reference+'&qty='+product_qty;
+                };
             };
         </script>
     </body>

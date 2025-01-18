@@ -28,9 +28,9 @@
 
         $product_id = $_GET['product_id'];
         if ($order_id){
-            $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type, order_id) VALUES ('$cart_id','$product_id','1','1','pos','$order_id')";
+            $sqlInsertProductLine = "INSERT INTO product_line(pos_cart_id, product_id, qty, for_checkout, line_type, order_id) VALUES ('$cart_id','$product_id','1','1','pos','$order_id')";
         } else {
-            $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$cart_id','$product_id','1','1','pos')";
+            $sqlInsertProductLine = "INSERT INTO product_line(pos_cart_id, product_id, qty, for_checkout, line_type) VALUES ('$cart_id','$product_id','1','1','pos')";
         };
         
         if(!mysqli_query($conn,$sqlInsertProductLine)){

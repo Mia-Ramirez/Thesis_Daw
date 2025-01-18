@@ -6,6 +6,7 @@
     </div>
     <div class="title">
     <h1> PHARMANEST ESSENTIAL </h1>
+    <center><h3>Hi <?php echo ucwords($_SESSION['user_first_name']); ?>!</h3></center>
     </div>
         <div class="li">
             <div id="nav_home" class="menu">

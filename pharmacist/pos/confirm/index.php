@@ -76,7 +76,7 @@
             if ($order_id){
                 $filter_str = " WHERE pl.order_id=$order_id AND for_checkout='1'";
             } else {
-                $filter_str = " WHERE line_type='pos' AND for_checkout='1' AND pl.cart_id=$cart_id";
+                $filter_str = " WHERE line_type='pos' AND for_checkout='1' AND pl.pos_cart_id=$cart_id";
             };
         
 

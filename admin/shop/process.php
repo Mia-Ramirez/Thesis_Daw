@@ -36,27 +36,23 @@
     $row = mysqli_fetch_array($result);
     $max_quantity = $row['current_quantity'];
 
-    $sqlGetCustomerCartID = "SELECT cc.id AS customer_cart_id, c.id AS customer_id FROM customer_cart cc RIGHT JOIN customer c ON cc.customer_id=c.id WHERE c.user_id=$user_id";
+    $sqlGetPOSCartID = "SELECT pc.id AS pos_cart_id FROM pos_cart pc INNER JOIN user u ON pc.user_id=u.id WHERE u.id=$user_id";
                 
-    $result = mysqli_query($conn,$sqlGetCustomerCartID);
+    $result = mysqli_query($conn,$sqlGetPOSCartID);
     $row = mysqli_fetch_array($result);
-    $customer_id = $row['customer_id'];
-    if (isset($_SESSION['customer_id']) == false){
-        $_SESSION['customer_id'] = $customer_id;
-    };
     
-    if ($row['customer_cart_id']){
-        $customer_cart_id = $row['customer_cart_id'];
+    if ($row['pos_cart_id']){
+        $pos_cart_id = $row['pos_cart_id'];
     } else {
-        $sqlInsertCustomerCart = "INSERT INTO customer_cart(customer_id) VALUES ('$customer_id')";
+        $sqlInsertCustomerCart = "INSERT INTO pos_cart(user_id) VALUES ('$user_id')";
         if(!mysqli_query($conn,$sqlInsertCustomerCart)){
             die("Something went wrong");
         };
-        $customer_cart_id = mysqli_insert_id($conn);  
+        $pos_cart_id = mysqli_insert_id($conn);  
     };
     
     if ($action == "buy_now"){
-        $sqlResetProductLine = "UPDATE product_line SET for_checkout='0' WHERE cart_id=$customer_cart_id";
+        $sqlResetProductLine = "UPDATE product_line SET for_checkout='0' WHERE pos_cart_id=$pos_cart_id";
         if(!mysqli_query($conn,$sqlResetProductLine)){
             die("Something went wrong");
         };
@@ -65,7 +61,7 @@
         $for_checkout = 0;
     };
 
-    $sqlGetProductLine = "SELECT id, qty FROM product_line WHERE cart_id=$customer_cart_id AND product_id=$product_id";
+    $sqlGetProductLine = "SELECT id, qty FROM product_line WHERE pos_cart_id=$pos_cart_id AND product_id=$product_id";
     $result = mysqli_query($conn,$sqlGetProductLine);
     if ($result->num_rows != 0){
         $row = mysqli_fetch_array($result);
@@ -91,7 +87,7 @@
             header("Location:index.php");
             exit;
         };
-        $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id','$product_id','$line_qty','$for_checkout','cart')";
+        $sqlInsertProductLine = "INSERT INTO product_line(pos_cart_id, product_id, qty, for_checkout, line_type) VALUES ('$pos_cart_id','$product_id','$line_qty','$for_checkout','pos')";
         if(!mysqli_query($conn,$sqlInsertProductLine)){
             die("Something went wrong");
         };
@@ -99,9 +95,9 @@
 
     $row = mysqli_fetch_array($result);
     if ($action == "buy_now"){
-        header("Location:../cart/index.php");
+        header("Location:../pos/index.php");
     } else {
-        $_SESSION["message_string"] = "Product added to cart!";
+        $_SESSION["message_string"] = "Product added to POS!";
         $_SESSION["message_class"] = "info";
         header("Location:index.php");
     };

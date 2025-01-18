@@ -44,12 +44,12 @@
             
             $user_id = $_SESSION['user_id'];
 
-            $sqlGetUserCartID = "SELECT id AS user_cart_id FROM pos_cart WHERE  user_id=$user_id";    
+            $sqlGetUserCartID = "SELECT id AS pos_cart_id FROM pos_cart WHERE  user_id=$user_id";    
             $result = mysqli_query($conn,$sqlGetUserCartID);
 
             if ($result->num_rows != 0){
                 $row = mysqli_fetch_array($result);
-                $cart_id = $row['user_cart_id'];
+                $cart_id = $row['pos_cart_id'];
 
             } else {
                 $sqlInsertUserCart = "INSERT INTO pos_cart(user_id) VALUES ('$user_id')";
@@ -105,11 +105,11 @@
                 $_SESSION['selected_discount'] = $selected_discount;
                 
                 $filter_str = " WHERE pl.order_id=$order_id AND
-                                (line_type='order' OR (line_type='pos' AND pl.cart_id=$cart_id))
+                                (line_type='order' OR (line_type='pos' AND pl.pos_cart_id=$cart_id))
                             ";
 
             } else {
-                $filter_str = " WHERE line_type='pos' AND pl.cart_id=$cart_id";
+                $filter_str = " WHERE line_type='pos' AND pl.pos_cart_id=$cart_id";
             };
             
             $sqlGetProductLines .= $filter_str;
@@ -204,7 +204,7 @@
                                 </td>
                                 <td class="price">₱<?php echo $price; ?></td>
                                 <td class="discounted-price">₱<?php echo $price;?></td>
-                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1"></td>
+                                <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1" oninput="adjustInputValue(this)"></td>
                                 <td class="total">₱0</td>
                                 <td>
                                     <?php
