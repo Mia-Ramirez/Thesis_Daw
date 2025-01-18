@@ -187,7 +187,7 @@
                     <form action="process.php" method="POST">
                         <div>
                             <label for="amount">Amount:</label>
-                            <input type="number" id="amount" name="amount" min="<?php echo $total; ?>" required>
+                            <input type="number" step="0.01" id="amount" name="amount" min="<?php echo $total; ?>" required>
                             <p>Change: ₱<span id="change"></span></p>
                         </div>
                         <button type="submit" name="action" value="confirm_transaction" id="confirm_transaction" disabled style="background-color: gray">Confirm</button>

@@ -123,6 +123,16 @@
                 if(!mysqli_query($conn,$sqlInsertProductHistory)){
                     die("Something went wrong");
                 };
+                
+                $sqlGetProductStock = "SELECT current_quantity FROM product WHERE id=$product_id";
+                $product_result = mysqli_query($conn,$sqlGetProductStock);
+                $row = mysqli_fetch_array($product_result);
+
+                $current_quantity = $row['current_quantity'] - $data['qty'];
+                $sqlUpdateProductStock = "UPDATE product SET current_quantity='$current_quantity' WHERE id = $product_id";
+                if(!mysqli_query($conn,$sqlUpdateProductStock)){
+                    die("Something went wrong");
+                };
             };
 
             $history_remarks = "Transacted: ".$product_lines->num_rows." item(s) ".$tr_number;

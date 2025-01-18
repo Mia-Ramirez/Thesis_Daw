@@ -176,3 +176,14 @@ input[type="checkbox"] {
   .suggestions li:hover {
     background-color: #f0f0f0;
   }
+
+  .btns{
+    padding: 1%;
+    border: solid black 1px;
+    background-color: lightsalmon; 
+    margin-left: 2%;
+    cursor: pointer;
+  }
+  .btns:hover {
+    background-color: lightcoral;
+  }

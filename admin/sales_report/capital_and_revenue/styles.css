@@ -61,3 +61,51 @@
   .center-text {
     text-align: center !important;
   }
+
+  /* Basic styles for the span element */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+/* Tooltip text (hidden by default) */
+.tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  bottom: 125%;  /* Tooltip appears above the span */
+  left: 50%;
+  margin-left: -100px;  /* Center the tooltip */
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 1;
+  font-size: 14px;
+}
+
+/* Arrow for the tooltip */
+.tooltip-text::after {
+  content: '';
+  position: absolute;
+  top: 100%;  /* Position the arrow below the tooltip */
+  left: 50%;
+  margin-left: -5px;  /* Center the arrow */
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
+/* When hovering over the span, show the tooltip */
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
