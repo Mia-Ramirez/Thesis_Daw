@@ -122,13 +122,10 @@
                         <center>
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'yes')">Buy Now</button>
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'no')">Add to Cart</button>
-                        <!-- <a href="process.php?action=buy_now&product_id=<?php //echo $data["product_id"]; ?>"><button class="btn">Buy Now</button></a> -->
-                        <!-- <a href="process.php?action=add_to_cart&product_id=<?php //echo $data["product_id"]; ?>"><button class="btn">Add to Cart</button></a> -->
                         </center>
                     <?php
                     }
                 ?>
-            
             </div>
             <?php
                 };
@@ -145,7 +142,6 @@
             function addQTY(product_id_reference, redirect_to_cart) {
                 
                 var product_qty = document.getElementById("qty_"+product_id_reference).value;
-                console.log("HERE: product_id_reference",product_id_reference,"product_qty",product_qty);
                 if (redirect_to_cart === 'yes'){
                     window.location.href = './process.php?action=buy_now&product_id='+product_id_reference+'&qty='+product_qty;
                 } else {

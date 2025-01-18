@@ -38,17 +38,18 @@
         <?php
             include($doc_root.'/utils/connect.php');
 
-            $user_id = $_SESSION['user_id'];
             if (isset($_SESSION['receipt_displayed_from'])){
                 unset($_SESSION['receipt_displayed_from']);
             };
+            
+            $user_id = $_SESSION['user_id'];
 
-            $sqlGetUserCartID = "SELECT id AS user_cart_id FROM pos_cart WHERE  user_id=$user_id";    
+            $sqlGetUserCartID = "SELECT id AS pos_cart_id FROM pos_cart WHERE  user_id=$user_id";    
             $result = mysqli_query($conn,$sqlGetUserCartID);
 
             if ($result->num_rows != 0){
                 $row = mysqli_fetch_array($result);
-                $cart_id = $row['user_cart_id'];
+                $cart_id = $row['pos_cart_id'];
 
             } else {
                 $sqlInsertUserCart = "INSERT INTO pos_cart(user_id) VALUES ('$user_id')";
@@ -104,11 +105,11 @@
                 $_SESSION['selected_discount'] = $selected_discount;
                 
                 $filter_str = " WHERE pl.order_id=$order_id AND
-                                (line_type='order' OR (line_type='pos' AND pl.cart_id=$cart_id))
+                                (line_type='order' OR (line_type='pos' AND pl.pos_cart_id=$cart_id))
                             ";
 
             } else {
-                $filter_str = " WHERE line_type='pos' AND pl.cart_id=$cart_id";
+                $filter_str = " WHERE line_type='pos' AND pl.pos_cart_id=$cart_id";
             };
             
             $sqlGetProductLines .= $filter_str;
@@ -178,11 +179,11 @@
                                     } else {
                                         $is_selected = 'false';
                                     };
-                                    $displayed_products[] = $data['product_name'];
                                     $price = $data['line_price'];
                                     if (is_null($price)){
                                         $price = $data['price'];
                                     };
+                                    $displayed_products[] = $data['product_name'];
                                     $dictionary = [
                                         "lineID" => $data['line_id'],
                                         "price" => $price,
@@ -202,7 +203,7 @@
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
                                 <td class="price">₱<?php echo $price; ?></td>
-                                <td class="discounted-price">₱<?php echo $price; ?></td>
+                                <td class="discounted-price">₱<?php echo $price;?></td>
                                 <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1" oninput="adjustInputValue(this)"></td>
                                 <td class="total">₱0</td>
                                 <td>
