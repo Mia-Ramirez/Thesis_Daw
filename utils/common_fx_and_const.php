@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
     $enable_send_email = "1";
-    // $enable_send_email = "0"; // comment this to enable sending email
+    $enable_send_email = "0"; // comment this to enable sending email
     
     $enable_logging = "0";
     $enable_logging = "1"; // comment this to disable logging

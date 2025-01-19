@@ -40,13 +40,18 @@ function openFullscreen(imgElement) {
 function adjustInputValue(input) {
     let maxValue = parseInt(input.max);
     let currentValue = parseInt(input.value);
+    var step = parseFloat(input.step);
     
-    // Handle non-numeric input (e.g., clearing the field)
+    if (!isNaN(currentValue)) {
+        var adjustedValue = Math.round(currentValue / step) * step;
+        
+        input.value = adjustedValue;
+        currentValue = adjustedValue;
+    };
+
     if (isNaN(currentValue)) {
         input.value = '';
-    }
-    // If the value exceeds the max, reset it to the max value
-    else if (currentValue > maxValue) {
+    } else if (currentValue > maxValue) {
         input.value = maxValue;
-    }
+    };
 };

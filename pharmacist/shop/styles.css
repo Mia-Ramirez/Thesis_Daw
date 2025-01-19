@@ -73,7 +73,7 @@ input{
 }
 .meds{
     color:black;
-    background: lightsalmon;
+    /* background: lightsalmon; */
     background-repeat: no-repeat;
     background-attachment: fixed;
     border-radius: 4px;
