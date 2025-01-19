@@ -52,6 +52,14 @@
                 };
             };
 
+            if (isset($_GET['expired'])){
+                if (strpos($filter_str, "WHERE") != false){
+                    $filter_str .= " AND CURDATE() >= expiration_date";
+                } else {
+                    $filter_str .= " WHERE CURDATE() >= expiration_date";
+                };
+            };
+
             $offset = 0;
             if (isset($_GET['page_no'])){
                 $page_no = $_GET['page_no'];

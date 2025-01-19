@@ -42,7 +42,13 @@
             $sqlGetNewOrders = "(SELECT
                                     COUNT(*)
                                 FROM customer_order
-                                WHERE status IN ('placed', 'processing'))
+                                WHERE status IN ('placed', 'preparing'))
+            ";
+
+            $sqlGetForPickupOrders = "(SELECT
+                                    COUNT(*)
+                                FROM customer_order
+                                WHERE status='for_pickup')
             ";
 
             $sqlGetProductShortages = "(SELECT
@@ -55,6 +61,12 @@
                                     COUNT(*)
                                 FROM batch
                                 WHERE expiration_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 3 MONTH)
+            )";
+
+            $sqlExpiredProducts = "(SELECT
+                                    COUNT(*)
+                                FROM batch
+                                WHERE CURDATE() >= expiration_date
             )";
 
             $sqlNotMovingProducts = "(SELECT
@@ -81,6 +93,10 @@
                 SELECT 'expiring_products' AS key_name, COALESCE(".$sqlExpiringProducts.", 0) AS record_count
                 UNION
                 SELECT 'not_moving_products' AS key_name, COALESCE(".$sqlNotMovingProducts.", 0) AS record_count
+                UNION
+                SELECT 'expired_products' AS key_name, COALESCE(".$sqlExpiredProducts.", 0) AS record_count
+                UNION
+                SELECT 'for_pickup_orders' AS key_name, COALESCE(".$sqlGetForPickupOrders.", 0) AS record_count
             ";
             
             $counter_values = array();
@@ -119,9 +135,19 @@
                 <p>Soon to Expire</p>
             </div>
 
+            <div class="card" onclick="redirectToPage('order/list','status=for_pickup')">
+                <h2><?php echo $counter_values['for_pickup_orders']; ?></h2>
+                <p>Ready for Pickup</p>
+            </div>
+
             <div class="card" onclick="redirectToPage('sales_report/slow_moving','get_today=true')">
                 <h2><?php echo $counter_values['not_moving_products']; ?></h2>
                 <p>Not Moving Products</p>
+            </div>
+
+            <div class="card" onclick="redirectToPage('inventory/stock/batch','expired=true')">
+                <h2><?php echo $counter_values['expired_products']; ?></h2>
+                <p>Expired Products</p>
             </div>
         </div>
         
