@@ -1,14 +1,17 @@
 <nav class="navbar">
     <div class="navdiv">
-    <div class="logo">
-        <img style="width: 100px; float: left; border-radius: 100%; border: solid 1px rgb(0, 0, 0); margin: 1.5rem; margin-left: 3rem;" 
-        src=<?php echo $base_url."assets/images/logo.png";?>  alt="PHARMANEST ESSENTIAL LOGO">
-    </div>
-    <div class="title">
-    <h1> PHARMANEST ESSENTIAL </h1>
-    <center><h3>Hi <?php echo ucwords($_SESSION['user_first_name']); ?>!</h3></center>
-    </div>
+
+        <div class="logo">
+            <img style="width: 100px; float: left; border-radius: 100%; border: solid 1px rgb(0, 0, 0); margin: 1.5rem; margin-left: 3rem;" 
+            src=<?php echo $base_url."assets/images/logo.png";?>  alt="PHARMANEST ESSENTIAL LOGO">
+        </div>
+
+        <div class="title">
+            <h1> PHARMANEST ESSENTIAL </h1>
+        </div>
+
         <div class="li">
+            <center style="margin-bottom: -5%;"><h3>Hi <?php echo ucwords($_SESSION['user_first_name']); ?>!</h3></center>
             <div id="nav_home" class="menu">
                 <a href="<?php echo $base_url."customer/home/index.php";?>">
                     <i class="fas fa-home"></i> <!-- home icon -->

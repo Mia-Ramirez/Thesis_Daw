@@ -19,6 +19,7 @@
         exit;
     };
     $selected_discount = $_SESSION['selected_discount'];
+    
     $total = $_SESSION['total'];
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,6 +27,14 @@
             $user_id = $_SESSION['user_id'];
 
             include($doc_root.'/utils/connect.php');
+            if ($order_id){
+                require($doc_root.'/apps/PHPMailer/src/Exception.php');
+                require($doc_root.'/apps/PHPMailer/src/PHPMailer.php');
+                require($doc_root.'/apps/PHPMailer/src/SMTP.php');
+                
+                include($doc_root.'/utils/email.php');
+                include($doc_root.'/utils/common_fx_and_const.php');
+            };
 
             $amount= mysqli_real_escape_string($conn, $_POST['amount']);
 
@@ -50,9 +59,14 @@
 
             $filter_str = "";
             if ($order_id){
-                $sqlCheckOrder = "SELECT id
-                                        FROM customer_order
-                                        WHERE id=$order_id AND status='for_pickup'";
+                $sqlCheckOrder = "SELECT
+                                    u.email,
+                                    co.reference_number 
+                                FROM customer_order co
+                                INNER JOIN customer c ON co.customer_id=c.id
+                                INNER JOIN user u ON co.user_id=u.id
+                                WHERE co.id=$order_id AND co.status='for_pickup'
+                ";
                 
                 $result = mysqli_query($conn,$sqlCheckOrder);
                 if ($result->num_rows == 0){
@@ -61,6 +75,9 @@
                     header("Location: ../index.php");
                     exit;
                 };
+                $row = mysqli_fetch_array($result);
+                $customer_email = $row['email'];
+                $order_reference_number = $row['reference_number'];
             };
             
             if ($order_id){
@@ -153,6 +170,14 @@
                 $sqlInsertOrderHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('order','$order_id','$history_remarks','$user_id')";
                 if(!mysqli_query($conn,$sqlInsertOrderHistory)){
                     die("Something went wrong");
+                };
+
+                if (($enable_send_email == "1") && (!is_null($customer_email))){
+                    send_email(
+                        $customer_email,
+                        "Order Updates",
+                        "Hello!<br/>Your Order ".$order_reference_number." has been ".$history_remarks.".<br/>" 
+                    );
                 };
             };
             

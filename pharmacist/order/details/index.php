@@ -30,13 +30,16 @@
                 $order_id = $_GET['order_id'];
                 
                 $sqlGetCustomerOrder = "SELECT
-                                        date_ordered,
-                                        status,
-                                        reference_number,
-                                        selected_discount,
-                                        remarks
-                                    FROM customer_order
-                                    WHERE id=$order_id";
+                                        co.date_ordered,
+                                        co.status,
+                                        co.reference_number,
+                                        co.selected_discount,
+                                        co.remarks,
+                                        u.email
+                                    FROM customer_order co
+                                    INNER JOIN customer c ON co.customer_id=c.id
+                                    INNER JOIN user u ON c.user_id=u.id
+                                    WHERE co.id=$order_id";
 
                 $order_result = mysqli_query($conn,$sqlGetCustomerOrder);
                 if ($order_result->num_rows == 0){
@@ -44,7 +47,8 @@
                 };
 
                 $row = mysqli_fetch_array($order_result);
-
+                $_SESSION['customer_email'] = $row['email'];
+                $_SESSION['order_reference_number'] = $row['reference_number'];
                 $sqlGetProductLines = "SELECT 
                                         p.name AS product_name,
                                         price,
@@ -113,17 +117,17 @@
                                 $total_discount = 0;
 
                                 while($data = mysqli_fetch_array($product_lines)){
-                                    
-                                    $line_subtotal = $data['price'] * $data['qty'];
+                                    $price = $data['line_price'];
+                                    if (is_null($price)){
+                                        $price = $data['price'];
+                                    };
+                                    $line_subtotal = $price * $data['qty'];
 
                                     $discount_rate = 0;
                                     if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
                                     };
-                                    $price = $data['line_price'];
-                                    if (is_null($price)){
-                                        $price = $data['price'];
-                                    };
+
                                     $line_discount = $price * (1 - $discount_rate);
                                     
                                     $subtotal += $line_subtotal;
@@ -143,7 +147,7 @@
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
-                                <td class="price">₱<?php echo $price; ?></td>
+                                <td class="price">₱<?php echo $price;?></td>
                                 <td class="discounted-price">₱<?php echo $line_discount;?></td>
                                 <td><?php echo $data['qty'];?></td>
                                 <td class="total">₱<?php echo $line_subtotal;?></td>
