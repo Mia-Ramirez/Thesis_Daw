@@ -30,13 +30,16 @@
                 $order_id = $_GET['order_id'];
                 
                 $sqlGetCustomerOrder = "SELECT
-                                        date_ordered,
-                                        status,
-                                        reference_number,
-                                        selected_discount,
-                                        remarks
-                                    FROM customer_order
-                                    WHERE id=$order_id";
+                                        co.date_ordered,
+                                        co.status,
+                                        co.reference_number,
+                                        co.selected_discount,
+                                        co.remarks,
+                                        u.email
+                                    FROM customer_order co
+                                    INNER JOIN customer c ON co.customer_id=c.id
+                                    INNER JOIN user u ON c.user_id=u.id
+                                    WHERE co.id=$order_id";
 
                 $order_result = mysqli_query($conn,$sqlGetCustomerOrder);
                 if ($order_result->num_rows == 0){
@@ -44,7 +47,8 @@
                 };
 
                 $row = mysqli_fetch_array($order_result);
-
+                $_SESSION['customer_email'] = $row['email'];
+                $_SESSION['order_reference_number'] = $row['reference_number'];
                 $sqlGetProductLines = "SELECT 
                                         p.name AS product_name,
                                         price,

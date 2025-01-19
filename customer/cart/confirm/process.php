@@ -10,6 +10,13 @@
 
     include($doc_root.'/utils/connect.php');
 
+    require($doc_root.'/apps/PHPMailer/src/Exception.php');
+    require($doc_root.'/apps/PHPMailer/src/PHPMailer.php');
+    require($doc_root.'/apps/PHPMailer/src/SMTP.php');
+    
+    include($doc_root.'/utils/email.php');
+    include($doc_root.'/utils/common_fx_and_const.php');
+
     $sqlGetProductLines = "SELECT pl.id AS product_line_id
                                     FROM product_line pl
                                     INNER JOIN customer_cart cc ON pl.cart_id=cc.id
@@ -37,10 +44,31 @@
         if(!mysqli_query($conn,$sqlTransferCartLinesToOrder)){
             die("Something went wrong");
         };
-
+        
         $sqlInsertOrderHistory = "INSERT INTO history(object_type, object_id, remarks, user_id) VALUES ('order','$order_id','Order Placed','$user_id')";
         if(!mysqli_query($conn,$sqlInsertOrderHistory)){
             die("Something went wrong");
+        };
+
+        $sqlGetOrder = "SELECT
+                            u.email,
+                            co.reference_number 
+                        FROM customer_order co
+                        INNER JOIN customer c ON co.customer_id=c.id
+                        INNER JOIN user u ON c.user_id=u.id
+                        WHERE co.id=$order_id AND co.status='placed'
+        ";
+        $result = mysqli_query($conn,$sqlGetOrder);
+        $row = mysqli_fetch_array($result);
+        $customer_email = $row['email'];
+        $order_reference_number = $row['reference_number'];
+
+        if (($enable_send_email == "1") && (!is_null($customer_email))){
+            send_email(
+                $customer_email,
+                "Order Updates",
+                "Hello!<br/>Your Order ".$order_reference_number." has been placed.<br/>" 
+            );
         };
 
         $_SESSION["message_string"] = "Order successfully placed!";

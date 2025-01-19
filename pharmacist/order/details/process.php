@@ -7,7 +7,14 @@
 
     session_start();
     $doc_root = $_SESSION["DOC_ROOT"];
+
+    require($doc_root.'/apps/PHPMailer/src/Exception.php');
+    require($doc_root.'/apps/PHPMailer/src/PHPMailer.php');
+    require($doc_root.'/apps/PHPMailer/src/SMTP.php');
+    
     include($doc_root.'/utils/connect.php');
+    include($doc_root.'/utils/email.php');
+    include($doc_root.'/utils/common_fx_and_const.php');
 
     $user_id = $_SESSION['user_id'];
     $order_id= mysqli_real_escape_string($conn, $_POST['order_id']);
@@ -52,6 +59,18 @@
 
         
     };
+
+    $customer_email = $_SESSION['customer_email'];
+    $order_reference_number = $_SESSION['order_reference_number'];
+    if (($enable_send_email == "1") && (!is_null($customer_email))){
+        send_email(
+            $customer_email,
+            "Order Updates",
+            "Hello!<br/>Your Order ".$order_reference_number." has been ".$history_remarks.".<br/>" 
+        );
+    };
+    unset($_SESSION['customer_email']);
+    unset($_SESSION['order_reference_number']);
 
     header("Location:index.php?order_id=".$order_id);
     exit;
