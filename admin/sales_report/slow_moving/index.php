@@ -52,7 +52,6 @@
             };
             
             $sqlGetMovingProducts .= $filter_str." ORDER BY formatted_date DESC";
-            error_log("HERE: sqlGetMovingProducts ".$sqlGetMovingProducts);
             $result = mysqli_query($conn,$sqlGetMovingProducts);
 
         ?>

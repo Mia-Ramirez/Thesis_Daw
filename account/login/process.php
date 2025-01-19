@@ -12,10 +12,7 @@
             };
             
             $_SESSION['DOC_ROOT'] = $doc_root;
-            error_log("HERE: DOC_ROOT ".$doc_root);
-
             include($doc_root.'/utils/connect.php');
-            
             
             $email_or_username = mysqli_real_escape_string($conn, $_POST['email_or_username']);
             $password = mysqli_real_escape_string($conn, $_POST['password']);

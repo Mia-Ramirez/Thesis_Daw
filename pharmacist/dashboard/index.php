@@ -99,7 +99,9 @@
                 <?php
                     while($data = mysqli_fetch_array($result)){
                 ?>
-                    <li><?php echo $data['formatted_date'].": ".$data['related_ref'].' - '.$data['remarks']; ?></li>
+                    <li><?php
+                            $formatted_date = date('Y-m-d h:i A', strtotime($data['formatted_date']));
+                            echo $formatted_date.": ".$data['related_ref'].' - '.$data['remarks']; ?></li>
                 <?php
                     }
                 ?>

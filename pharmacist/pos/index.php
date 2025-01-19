@@ -212,6 +212,7 @@
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
+                                    <br/>Stock:<?php echo $data['max_quantity']; ?>
                                 </td>
                                 <td class="price">₱<?php echo $price; ?></td>
                                 <td class="discounted-price">₱<?php echo $price;?></td>
