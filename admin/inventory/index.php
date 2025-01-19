@@ -23,7 +23,7 @@
             include '../components/top_nav.php';
         ?>
 
-        <div class="main" style="margin-left: 135px; margin-right: 0%">
+        <div class="main" style="margin-left: 12%; margin-right: 0%">
             <div class="card history" onclick="redirectToPage('history')">
                 <h3>HISTORY</h3>
                 <img class="pic" src="../../assets/images/history.png" alt="history">

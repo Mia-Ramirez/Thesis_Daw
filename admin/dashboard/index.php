@@ -25,10 +25,8 @@
 
         <?php
             include($doc_root.'/utils/connect.php');
-            $current_date = date("%Y-%m-%d");
+            // $current_date = date("%Y-%m-%d");
             
-            $counter_values = array();
-
             $sqlGetTotalSales = "(SELECT
                                     SUM(total) AS total_sales
                                 FROM transaction
@@ -72,19 +70,20 @@
             )";
 
             $sqlCounts = "
-                SELECT 'total_sales' AS key_name, ".$sqlGetTotalSales." AS record_count
+                SELECT 'total_sales' AS key_name, COALESCE(".$sqlGetTotalSales.", 0) AS record_count
                 UNION
-                SELECT 'total_purchase' AS key_name, ".$sqlGetTotalPurchase." AS record_count
+                SELECT 'total_purchase' AS key_name, COALESCE(".$sqlGetTotalPurchase.", 0) AS record_count
                 UNION
-                SELECT 'new_orders' AS key_name, ".$sqlGetNewOrders." AS record_count
+                SELECT 'new_orders' AS key_name, COALESCE(".$sqlGetNewOrders.", 0) AS record_count
                 UNION
-                SELECT 'product_shortages' AS key_name, ".$sqlGetProductShortages." AS record_count
+                SELECT 'product_shortages' AS key_name, COALESCE(".$sqlGetProductShortages.", 0) AS record_count
                 UNION
-                SELECT 'expiring_products' AS key_name, ".$sqlExpiringProducts." AS record_count
+                SELECT 'expiring_products' AS key_name, COALESCE(".$sqlExpiringProducts.", 0) AS record_count
                 UNION
-                SELECT 'not_moving_products' AS key_name, ".$sqlNotMovingProducts." AS record_count
+                SELECT 'not_moving_products' AS key_name, COALESCE(".$sqlNotMovingProducts.", 0) AS record_count
             ";
             
+            $counter_values = array();
             $result = mysqli_query($conn,$sqlCounts);
             while($data = mysqli_fetch_array($result)){
                 $counter_values[$data['key_name']] = $data['record_count'];
