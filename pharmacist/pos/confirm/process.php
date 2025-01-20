@@ -64,7 +64,7 @@
                                     co.reference_number 
                                 FROM customer_order co
                                 INNER JOIN customer c ON co.customer_id=c.id
-                                INNER JOIN user u ON co.user_id=u.id
+                                INNER JOIN user u ON c.user_id=u.id
                                 WHERE co.id=$order_id AND co.status='for_pickup'
                 ";
                 
