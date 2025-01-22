@@ -56,11 +56,17 @@
                                         prescription_is_required,
                                         photo,
                                         pl.line_price,
-                                        qty
+                                        qty,
+                                        cp.prescription_photo,
+                                        cp.reference_name AS prescription_name
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
+                                    INNER JOIN customer_cart cc ON pl.cart_id=cc.id
+                                    LEFT JOIN product_prescription mp ON cc.customer_id=mp.customer_id
+                                    LEFT JOIN customer_prescription cp ON mp.prescription_id=cp.id
                                     WHERE pl.order_id=$order_id AND pl.line_type IN ('order', 'transaction')
                 ";
+                
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
                 $selected_discount = $row['selected_discount'];
@@ -88,7 +94,7 @@
         </div>
         
         <div class="container" style="margin-left: 15%">
-            <div class="cart-left" style="width: 50%;">
+            <div class="cart-left" style="width: 62%;">
                 <div class="card-order">
                     <h2>Product List</h2>
                     <div class="legends">
@@ -97,14 +103,13 @@
                     <table id="productTable">
                         <thead>
                             <tr>
-                                <?php
-                                    if ($row['status'] == 'preparing'){
-                                ?> 
+                                <?php if ($row['status'] == 'preparing'){ ?> 
                                 <th>Ready</th>
-                                <?php
-                                    }
-                                ?>
+                                <?php } ?>
                                 <th>Product</th>
+                                <?php if ($row['status'] == 'preparing'){ ?> 
+                                <th>Prescription</th>
+                                <?php } ?>
                                 <th>Price</th>
                                 <th>Discounted Price</th>
                                 <th>Quantity</th>
@@ -136,17 +141,29 @@
                             ?>
                                 <tr>
                                 <?php
-                                    if ($row['status'] == 'preparing'){
-                                ?> 
-                                <td><input type="checkbox" class="product-checkbox"></td>
-                                <?php
-                                    }
+                                    if ($row['status'] == 'preparing'){ 
+                                        echo '<td><input type="checkbox" class="product-checkbox"></td>';
+                                    };
                                 ?>
                                 <td>
                                     <img src="<?php echo $data['photo'];?>" style="width:50px; height:50px"><br/>
                                     <?php echo $data['product_name'];?>
                                     <?php if ($data['prescription_is_required'] == '1') {echo "<i class='button-icon fas fa-prescription' title='Prescription is required' style='color: red !important;'></i>";} ?>
                                 </td>
+                                <?php
+                                    if ($row['status'] == 'preparing'){
+                                        if ($data['prescription_is_required'] == '1'){
+                                            ?>
+                                            <td>
+                                            <img class="prescription_photo" src="<?php echo $data['prescription_photo'];?>" style="width:50px; height:50px" onclick="openFullscreen(this)"><br/>
+                                            <?php echo $data['prescription_name'];?>
+                                            </td>
+                                            <?php
+                                        } else {
+                                            echo "<td>N/A</td>";
+                                        };
+                                    };
+                                ?> 
                                 <td class="price">₱<?php echo $price;?></td>
                                 <td class="discounted-price">₱<?php echo $line_discount;?></td>
                                 <td><?php echo $data['qty'];?></td>
@@ -162,7 +179,7 @@
             </div>
 
             <!-- Details -->
-            <div class="cart-right">
+            <div class="cart-right" style="width: 36%;">
                 <div class="card-order">
                     <?php
                         if (isset($_SESSION["message_string"])) {
@@ -179,16 +196,16 @@
                     ?>
                     <h2>Details</h2>
                     <div id="summary">
-                        <p>Order Reference Number: <?php echo $row['reference_number']; ?></p>
-                        <p>Status: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
+                        <p><b>Order Reference Number</b>: <?php echo $row['reference_number']; ?></p>
+                        <p><b>Status</b>: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
                         <?php
                         if ($row['status'] == 'cancelled'){
                         ?>
-                        <p>Remarks: <?php echo $row['remarks']; ?></p>
+                        <p><b>Remarks</b>: <?php echo $row['remarks']; ?></p>
                         <?php
                         }
                         ?>
-                        <p>Date Ordered: <?php
+                        <p><b>Date Ordered</b>: <?php
                             $date = new DateTime($row["date_ordered"]);
 
                             // Format the DateTime object to 'Y-m-d h:i A' (12-hour format with AM/PM)
@@ -196,7 +213,7 @@
                             echo $formattedDate;
                         ?></p>
 
-                        <p>Discount Type:
+                        <p><b>Discount Type</b>:
                             <?php
                                 if ($selected_discount){
                                     echo $selected_discount;
@@ -205,9 +222,9 @@
                                 };
                             ?>
                         </p>
-                        <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
-                        <p>Discount: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
-                        <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
+                        <p><b>Subtotal</b>: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
+                        <p><b>Discount</b>: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
+                        <p><b>Total</b>: ₱<span id="total"><?php echo $total; ?></span></p>
                     </div>
 
                     <form action="process.php" method="POST">
@@ -216,7 +233,7 @@
                         <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
                         <?php }?>
                         <?php if ($row['status'] == 'preparing'){ ?>
-                        <button class="action_button next_status" type="submit" name="action" value="for_pickup">Move to 'Ready for Pick-up'</button>
+                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Move to 'Ready for Pick-up'</button>
                         <?php } ?>
                         <?php if ($row['status'] == 'for_pickup'){ ?>
                         <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>

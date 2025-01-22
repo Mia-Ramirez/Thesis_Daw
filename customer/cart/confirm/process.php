@@ -40,7 +40,7 @@
         $order_id = mysqli_insert_id($conn);
 
         $idsString = implode(',', $ids);
-        $sqlTransferCartLinesToOrder = "UPDATE product_line SET cart_id = NULL, order_id = '$order_id', for_checkout=0, line_type='order' WHERE id IN ($idsString)";
+        $sqlTransferCartLinesToOrder = "UPDATE product_line SET order_id = '$order_id', for_checkout=0, line_type='order' WHERE id IN ($idsString)";
         if(!mysqli_query($conn,$sqlTransferCartLinesToOrder)){
             die("Something went wrong");
         };

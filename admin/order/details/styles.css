@@ -16,6 +16,15 @@ body {
     margin-bottom: 20px;
 }
 
+.disabled {
+    color: gray;
+    cursor: not-allowed;
+}
+
+.prescription_photo:hover {
+    cursor: pointer;
+}
+
 .card-order {
     background-color: #fff;
     padding: 20px;

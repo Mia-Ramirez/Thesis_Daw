@@ -17,10 +17,12 @@
 
     session_start();
     $doc_root = $_SESSION["DOC_ROOT"];
+
     include($doc_root.'/utils/connect.php');
+    
     $product_id = $_GET['product_id'];
     $action = $_GET['action'];
-
+    
     $user_id = $_SESSION['user_id'];
 
     $sqlCheckProduct = "SELECT current_quantity FROM product WHERE id=$product_id"; 
@@ -55,6 +57,10 @@
         $customer_cart_id = mysqli_insert_id($conn);  
     };
     
+    if (isset($_SESSION['customer_cart_id']) == false){
+        $_SESSION['customer_cart_id'] = $customer_cart_id;
+    };
+
     if ($action == "buy_now"){
         $sqlResetProductLine = "UPDATE product_line SET for_checkout='0' WHERE cart_id=$customer_cart_id";
         if(!mysqli_query($conn,$sqlResetProductLine)){
@@ -65,7 +71,7 @@
         $for_checkout = 0;
     };
 
-    $sqlGetProductLine = "SELECT id, qty FROM product_line WHERE cart_id=$customer_cart_id AND product_id=$product_id";
+    $sqlGetProductLine = "SELECT id, qty FROM product_line WHERE cart_id=$customer_cart_id AND product_id=$product_id AND line_type='cart'";
     $result = mysqli_query($conn,$sqlGetProductLine);
     if ($result->num_rows != 0){
         $row = mysqli_fetch_array($result);
@@ -91,13 +97,14 @@
             header("Location:index.php");
             exit;
         };
+
         $sqlInsertProductLine = "INSERT INTO product_line(cart_id, product_id, qty, for_checkout, line_type) VALUES ('$customer_cart_id','$product_id','$line_qty','$for_checkout','cart')";
         if(!mysqli_query($conn,$sqlInsertProductLine)){
             die("Something went wrong");
         };
     };
 
-    $row = mysqli_fetch_array($result);
+    // $row = mysqli_fetch_array($result);
     if ($action == "buy_now"){
         header("Location:../cart/index.php");
     } else {

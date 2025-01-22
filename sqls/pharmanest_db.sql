@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2025 at 11:44 PM
+-- Generation Time: Jan 21, 2025 at 12:50 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -237,7 +237,7 @@ CREATE TABLE `product_prescription` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `prescription_id` int(11) DEFAULT NULL,
-  `cart_id` int(11) NOT NULL
+  `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -413,7 +413,7 @@ ALTER TABLE `product_prescription`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product` (`product_id`),
   ADD KEY `prescription` (`prescription_id`),
-  ADD KEY `cart` (`cart_id`);
+  ADD KEY `customer` (`customer_id`);
 
 --
 -- Indexes for table `supplier`
@@ -623,14 +623,14 @@ ALTER TABLE `product_line`
 ALTER TABLE `product_prescription`
   ADD CONSTRAINT `product_prescription_ibfk_1` FOREIGN KEY (`prescription_id`) REFERENCES `customer_prescription` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_prescription_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_prescription_ibfk_3` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_prescription_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
   ADD CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE NO ACTION;
-  
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

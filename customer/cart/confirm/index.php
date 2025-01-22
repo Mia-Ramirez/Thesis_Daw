@@ -25,21 +25,21 @@
             
             $customer_id = $_SESSION['customer_id'];
 
-            $sqlGetProductLines = "SELECT 
-                                        p.name AS product_name,
-                                        price,
-                                        applicable_discounts,
-                                        prescription_is_required,
-                                        photo,
-                                        qty,
-                                        selected_discount,
-                                        pl.line_price,
-                                        prescription_id
-                                    FROM product_line pl
-                                    INNER JOIN customer_cart cc ON pl.cart_id=cc.id
-                                    INNER JOIN product p ON pl.product_id=p.id
-                                    LEFT JOIN product_prescription mp ON pl.product_id=mp.product_id
-                                    WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
+            $sqlGetProductLines = "SELECT
+                                    p.name AS product_name,
+                                    price,
+                                    applicable_discounts,
+                                    prescription_is_required,
+                                    photo,
+                                    qty,
+                                    selected_discount,
+                                    pl.line_price,
+                                    prescription_id
+                                FROM product_line pl
+                                INNER JOIN customer_cart cc ON pl.cart_id=cc.id
+                                LEFT JOIN product_prescription mp ON cc.customer_id=mp.customer_id
+                                INNER JOIN product p ON pl.product_id=p.id
+                                WHERE cc.customer_id=$customer_id AND pl.for_checkout=1 AND line_type='cart'
             ";
             
             $product_lines = mysqli_query($conn,$sqlGetProductLines);

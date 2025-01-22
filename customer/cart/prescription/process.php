@@ -104,10 +104,10 @@
 
     } else if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         if ($_GET['action'] == 'remove'){
-            if (isset($_GET['product_line_id']) && isset($_GET['cart_id'])){
-                $line_id = $_GET['product_line_id'];
-                $cart_id = $_GET['cart_id'];
-                $sqlUpdateCartLineStatus = "UPDATE product_line SET for_checkout='0' WHERE id=$line_id AND cart_id=$cart_id";
+            if (isset($_GET['product_id'])){
+                $product_id = $_GET['product_id'];
+                $cart_id = $_SESSION['customer_cart_id'];
+                $sqlUpdateCartLineStatus = "UPDATE product_line SET for_checkout='0' WHERE product_id=$product_id AND cart_id=$cart_id AND line_type='cart'";
                 if(!mysqli_query($conn,$sqlUpdateCartLineStatus)){
                     die("Something went wrong");
                 };

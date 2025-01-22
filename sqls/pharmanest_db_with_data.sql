@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2025 at 01:09 PM
+-- Generation Time: Jan 21, 2025 at 12:50 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,6 +40,15 @@ CREATE TABLE `batch` (
   `disposed_quantity` int(11) DEFAULT NULL,
   `batch_cost` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `batch`
+--
+
+INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`) VALUES
+(1, 'B20250101-001', '2025-01-21', '2027-01-01', 1, 1, 3, 200, NULL, NULL, 4),
+(2, 'B20250101-002', '2025-01-21', '2027-01-01', 1, 3, 3, 100, NULL, NULL, 11),
+(3, 'B20250101-003', '2025-01-21', '2026-01-01', 1, 2, 3, 100, NULL, NULL, 9);
 
 -- --------------------------------------------------------
 
@@ -89,7 +98,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id`, `first_name`, `last_name`, `contact_number`, `user_id`, `address`, `date_of_birth`, `sex`, `is_active`) VALUES
-(1, 'Customer A', 'Last Name A', '09123456789', 2, 'Address A', '2001-01-01', 'Female', 1);
+(1, 'Customer A', 'Last Name A', '09123456789', 2, 'Address A', '1991-01-01', 'Female', 1),
+(2, 'Customer B', 'Last Name B', '09193152214', 5, 'Address B', '1992-02-02', 'Male', 1);
 
 -- --------------------------------------------------------
 
@@ -102,6 +112,14 @@ CREATE TABLE `customer_cart` (
   `customer_id` int(11) NOT NULL,
   `selected_discount` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_cart`
+--
+
+INSERT INTO `customer_cart` (`id`, `customer_id`, `selected_discount`) VALUES
+(1, 2, 'Senior Citizen'),
+(2, 1, 'Person With Disabilities');
 
 -- --------------------------------------------------------
 
@@ -157,7 +175,8 @@ CREATE TABLE `employee` (
 INSERT INTO `employee` (`id`, `first_name`, `last_name`, `contact_number`, `address`, `date_of_birth`, `job_title`, `employment_date`, `user_id`) VALUES
 (1, 'Super', 'Admin', 'Not Applicable', 'Not Applicable', '2025-01-16', 'Not Applicable', '2025-01-16', 1),
 (2, 'Pharmacist A', 'Last Name A', '09123456788', 'Address A', '2002-02-02', 'Pharmacist', '2025-02-02', 3),
-(3, 'Manager A', 'Last Name A', '09123456787', 'Address A', '2003-03-03', 'Manager', '2024-03-03', 4);
+(3, 'Manager A', 'Last Name A', '09123456787', 'Address A', '2003-03-03', 'Manager', '2024-03-03', 4),
+(4, 'Pharmacist B', 'Last Name B', '09193152216', 'Address B', '1992-02-02', 'Pharmacist', '2002-02-02', 6);
 
 -- --------------------------------------------------------
 
@@ -173,6 +192,15 @@ CREATE TABLE `history` (
   `date_recorded` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `history`
+--
+
+INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_recorded`, `user_id`) VALUES
+(1, 'product', 1, 'Add Stock: 200 quantity B20250101-001', '2025-01-20 22:44:03', 4),
+(2, 'product', 3, 'Add Stock: 100 quantity B20250101-002', '2025-01-20 22:52:21', 4),
+(3, 'product', 2, 'Add Stock: 100 quantity B20250101-003', '2025-01-20 22:53:13', 4);
 
 -- --------------------------------------------------------
 
@@ -231,10 +259,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `price`, `current_quantity`, `applicable_discounts`, `prescription_is_required`, `photo`, `rack_location`, `maintaining_quantity`, `cost`) VALUES
-(1, 'Biogesic', 5, 0, 'Both', 0, 'https://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50, NULL),
-(2, 'Loperamide', 10, 0, 'Both', 0, 'https://localhost/pharmanest/assets/photos/loperamide.png', 'Location 1', 50, NULL),
-(3, 'RiteMed Amoxicillin', 12, 0, 'Both', 1, 'https://localhost/pharmanest/assets/photos/amoxicillin.jpg', 'Location 1', 50, NULL),
-(4, 'Tempra for Kids', 120, 0, 'Person With Disabilities', 0, 'https://localhost/pharmanest/assets/photos/tempra_for_kids.png', 'Location 2', 50, NULL);
+(1, 'Biogesic', 5, 200, 'Both', 0, 'http://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50, 4),
+(2, 'Loperamide', 10, 100, 'Both', 0, 'http://localhost/pharmanest/assets/photos/loperamide.png', 'Location 1', 50, 9),
+(3, 'RiteMed Amoxicillin', 12, 100, 'Both', 1, 'http://localhost/pharmanest/assets/photos/amoxicillin.jpg', 'Location 1', 50, 11),
+(4, 'Tempra for Kids', 120, 0, 'Person With Disabilities', 0, 'http://localhost/pharmanest/assets/photos/tempra_for_kids.png', 'Location 2', 50, NULL);
 
 -- --------------------------------------------------------
 
@@ -277,6 +305,16 @@ CREATE TABLE `product_line` (
   `pos_cart_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `product_line`
+--
+
+INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`) VALUES
+(1, 1, 1, NULL, 5, 1, NULL, 'cart', NULL, NULL),
+(2, 3, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
+(3, 2, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
+(4, 3, 1, NULL, 1, 1, NULL, 'cart', NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -287,7 +325,7 @@ CREATE TABLE `product_prescription` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `prescription_id` int(11) DEFAULT NULL,
-  `cart_id` int(11) NOT NULL
+  `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -300,6 +338,13 @@ CREATE TABLE `supplier` (
   `id` int(11) NOT NULL,
   `name` varchar(256) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `supplier`
+--
+
+INSERT INTO `supplier` (`id`, `name`) VALUES
+(1, 'Supplier 1');
 
 -- --------------------------------------------------------
 
@@ -354,9 +399,11 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `role`, `password_length`, `is_active`) VALUES
 (1, 'admin', 'pharmanest123@gmail.com', '$2y$10$glqipyCUEAiVZFA5DgQ4Kelr/27n/9XmNNAOp/JAOqomJgbVda2PO', 'super admin', 15, 1),
-(2, 'Customer A_Last Name A_20250118125912', 'customer@pharmanest.com', '$2y$10$AafyPtEIFkuJSMQvNlT8I.Q8AdVtLt3b5c7wtR1qDkruzY88FtRW.', 'customer', 8, 1),
-(3, 'Pharmacist A_Last Name A_20250118125953', 'pharmacist@pharmanest.com', '$2y$10$oA43cvtryEtuGoemFPbdVO0NvZiiEbJMACPN65NYQIy6FjuQUg.MO', 'pharmacist', 8, 1),
-(4, 'Manager A_Last Name A_20250118130018', 'manager@pharmanest.com', '$2y$10$bYWVrQzaFcA..xenMAwKpOJWiPzD/Fq/wyQnXPiEg9ft9F3c5e7gG', 'admin', 8, 1);
+(2, 'Customer A_Last Name A_20250120234138', 'customer.a@pharmanest.com', '$2y$10$AafyPtEIFkuJSMQvNlT8I.Q8AdVtLt3b5c7wtR1qDkruzY88FtRW.', 'customer', 8, 1),
+(3, 'Pharmacist A_Last Name A_20250120234250', 'pharmacist.a@pharmanest.com', '$2y$10$oA43cvtryEtuGoemFPbdVO0NvZiiEbJMACPN65NYQIy6FjuQUg.MO', 'pharmacist', 8, 1),
+(4, 'Manager A_Last Name A_20250118130018', 'manager@pharmanest.com', '$2y$10$bYWVrQzaFcA..xenMAwKpOJWiPzD/Fq/wyQnXPiEg9ft9F3c5e7gG', 'admin', 8, 1),
+(5, 'Customer B_Last Name B_20250120234127', 'customer.b@pharmanest.com', '$2y$10$Kofnpq3JCeHr4qvFrRL8Jed5f6aUUCL7ckMEbfWu7ZGMAYeuU7.y.', 'customer', 8, 1),
+(6, 'Pharmacist B_Last Name B_20250120234240', 'pharmacist.b@pharmanest.com', '$2y$10$yIptwLYlodFh7QPWQ3/gW.QkflUOp.BQx1Xd1UOSeiIQRFCAK.jmO', 'pharmacist', 8, 1);
 
 --
 -- Indexes for dumped tables
@@ -466,7 +513,7 @@ ALTER TABLE `product_prescription`
   ADD PRIMARY KEY (`id`),
   ADD KEY `product` (`product_id`),
   ADD KEY `prescription` (`prescription_id`),
-  ADD KEY `cart` (`cart_id`);
+  ADD KEY `customer` (`customer_id`);
 
 --
 -- Indexes for table `supplier`
@@ -508,13 +555,13 @@ ALTER TABLE `batch`
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `customer_cart`
@@ -538,7 +585,7 @@ ALTER TABLE `customer_prescription`
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `history`
@@ -550,7 +597,7 @@ ALTER TABLE `history`
 -- AUTO_INCREMENT for table `pos_cart`
 --
 ALTER TABLE `pos_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `prescription_history`
@@ -562,13 +609,13 @@ ALTER TABLE `prescription_history`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `product_line`
@@ -604,7 +651,7 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
@@ -676,7 +723,7 @@ ALTER TABLE `product_line`
 ALTER TABLE `product_prescription`
   ADD CONSTRAINT `product_prescription_ibfk_1` FOREIGN KEY (`prescription_id`) REFERENCES `customer_prescription` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `product_prescription_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `product_prescription_ibfk_3` FOREIGN KEY (`cart_id`) REFERENCES `customer_cart` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `product_prescription_ibfk_3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `transaction`

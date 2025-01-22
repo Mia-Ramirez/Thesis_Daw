@@ -24,3 +24,27 @@ function showCancelOrderModal(order_id, order_reference_number) {
     modal.style.display = "block";
 
 };
+
+const ready_products = document.querySelectorAll('.product-checkbox');
+const readyForPickupButton = document.getElementById("ready_for_pickup");
+
+function checkAllChecked() {
+    const allChecked = Array.from(ready_products).every(checkbox => checkbox.checked);
+    if (allChecked){
+        readyForPickupButton.disabled = false;
+        readyForPickupButton.style.backgroundColor = "green";
+        readyForPickupButton.classList.remove('disabled');
+    } else {
+        readyForPickupButton.disabled = true;
+        readyForPickupButton.classList.add('disabled');
+    };
+    
+};
+
+// Attach event listeners to all checkboxes
+ready_products.forEach(checkbox => {
+    checkbox.addEventListener('change', checkAllChecked);
+});
+
+// Initial check when the page loads
+checkAllChecked();

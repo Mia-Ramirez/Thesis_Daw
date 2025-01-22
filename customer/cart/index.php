@@ -23,6 +23,38 @@
             include($doc_root.'/utils/connect.php');
             
             $user_id = $_SESSION['user_id'];
+            
+            $run_get_customer_sql = false;
+            if (isset($_SESSION['customer_id']) == false){
+                $run_get_customer_sql = true;
+            } else {
+                $customer_id = $_SESSION['customer_id'];
+            };
+
+            if (isset($_SESSION['customer_cart_id']) == false){
+                $run_get_customer_sql = true;
+            } else {
+                $customer_cart_id = $_SESSION['customer_cart_id'];
+            };
+
+            if ($run_get_customer_sql){
+                $sqlGetCustomerCartID = "SELECT cc.id AS customer_cart_id, c.id AS customer_id FROM customer_cart cc RIGHT JOIN customer c ON cc.customer_id=c.id WHERE c.user_id=$user_id";
+                
+                $result = mysqli_query($conn,$sqlGetCustomerCartID);
+                $row = mysqli_fetch_array($result);
+
+                $customer_id = $row['customer_id'];
+                $customer_cart_id = $row['customer_cart_id'];  
+            };
+            
+
+            if (isset($_SESSION['customer_id']) == false){
+                $_SESSION['customer_id'] = $customer_id;
+            };
+
+            if (isset($_SESSION['customer_cart_id']) == false){
+                $_SESSION['customer_cart_id'] = $customer_cart_id;
+            };
 
             $sqlGetProductLines = "SELECT 
                                         pl.id AS line_id,
@@ -37,10 +69,8 @@
                                         pl.line_price,
                                         for_checkout
                                     FROM product_line pl
-                                    INNER JOIN customer_cart cc ON pl.cart_id=cc.id
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    INNER JOIN customer c ON cc.customer_id=c.id
-                                    WHERE c.user_id=$user_id AND line_type='cart'
+                                    WHERE pl.cart_id=$customer_cart_id AND line_type='cart'
             ";
             $product_lines = mysqli_query($conn,$sqlGetProductLines);
             if ($product_lines->num_rows == 0){

@@ -25,16 +25,23 @@
             
             $user_id = $_SESSION['user_id'];
 
-            $sqlGetCustomerID = "SELECT id FROM customer WHERE user_id=$user_id";
-            $customer_result = mysqli_query($conn,$sqlGetCustomerID);
+            $sqlGetCustomerCartID = "SELECT cc.id AS customer_cart_id, c.id AS customer_id FROM customer_cart cc INNER JOIN customer c ON cc.customer_id=c.id WHERE c.user_id=$user_id";
+            $customer_result = mysqli_query($conn,$sqlGetCustomerCartID);
             if ($customer_result->num_rows == 0){
                 header("Location:../../../page/404.php");
             };
 
             $row = mysqli_fetch_array($customer_result);
-            $customer_id = $row['id'];
+            $customer_id = $row['customer_id'];
+            $customer_cart_id = $row['customer_cart_id'];  
+            
+            if (isset($_SESSION['customer_id']) == false){
+                $_SESSION['customer_id'] = $customer_id;
+            };
 
-            $_SESSION['customer_id'] = $customer_id;
+            if (isset($_SESSION['customer_cart_id']) == false){
+                $_SESSION['customer_cart_id'] = $customer_cart_id;
+            };
             
             $sqlGetPrescribedProducts = "SELECT
                                             mp.id AS line_id,
@@ -43,16 +50,17 @@
                                             prescription_id,
                                             cp.reference_name AS prescription_name,
                                             cp.prescription_photo AS prescription_photo,
-                                            pl.id AS product_line_id,
-                                            mp.cart_id AS cart_id
+                                            mp.product_id AS product_id
                                         FROM product_prescription mp
-                                        INNER JOIN customer_cart cc ON mp.cart_id=cc.id
-                                        INNER JOIN product p ON mp.product_id=p.id
-                                        INNER JOIN product_line pl ON mp.product_id=pl.product_id
                                         LEFT JOIN customer_prescription cp ON mp.prescription_id=cp.id
-                                        WHERE for_checkout=1 AND cc.customer_id=$customer_id AND line_type='cart'
+                                        INNER JOIN product p ON mp.product_id=p.id
+                                        WHERE mp.customer_id=$customer_id
+                                            AND product_id IN (
+                                                    SELECT product_id FROM product_line
+                                                    WHERE for_checkout=1 AND cart_id=$customer_cart_id AND line_type='cart'
+                                            )
             ";
-
+            
             $prescribed_meds = mysqli_query($conn,$sqlGetPrescribedProducts);
             if ($prescribed_meds->num_rows == 0){
                 $_SESSION["message_string"] = "Cart is empty!";
@@ -66,7 +74,7 @@
                                                 prescription_photo
                                             FROM customer_prescription
                                             WHERE customer_id=$customer_id";
-
+            
             $customer_prescriptions = mysqli_query($conn,$sqlGetCustomerPrescriptions);
             
             $prescriptions = array();
@@ -183,7 +191,7 @@
                                         echo '<u class="action_modal" onclick="showPrescriptionModal(\''.$data['line_id'].'\', \''.$data['product_name'].'\', \'\')">Add</u>';   
                                     };
                                 ?>
-                                | <a href="process.php?action=remove&cart_id=<?php echo $data['cart_id']; ?>&product_line_id=<?php echo $data['product_line_id'];?>">Remove</a>
+                                | <a href="process.php?action=remove&product_id=<?php echo $data['product_id'];?>">Remove</a>
                             </td>
                         </tr>
                     <?php

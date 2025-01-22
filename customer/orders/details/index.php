@@ -71,7 +71,7 @@
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    WHERE pl.order_id=$order_id AND pl.line_type='order'
+                                    WHERE pl.order_id=$order_id AND pl.line_type IN ('order','transaction')
                 ";
                 $product_lines = mysqli_query($conn,$sqlGetProductLines);
 
