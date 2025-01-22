@@ -24,6 +24,7 @@
         ?>
 
         <div class="main" style="margin-left: 12%; margin-right: 0%">
+            <div class="card"></div>
             <div class="card history" onclick="redirectToPage('history')">
                 <h3>HISTORY</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/history.png"; ?> alt="history">
@@ -31,10 +32,6 @@
             <div class="card stock" onclick="redirectToPage('stock')">
                 <h3>LOW STOCKS</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/stock.png"; ?> alt="stock">
-            </div>
-            <div class="card category" onclick="redirectToPage('category')">
-                <h3>CATEGORIES</h3>
-                <img class="pic" src=<?php echo $base_url."assets/images/categories.png"; ?> alt="category">
             </div>
             <div class="card product" onclick="redirectToPage('product')">
                 <h3>PRODUCTS</h3>

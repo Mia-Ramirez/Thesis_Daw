@@ -26,19 +26,19 @@
         <div class="main">
           <div class="card account-history" onclick="redirectToPage('history')">
               <h3>HISTORY</h3>
-              <img class="pic" src="../../assets/images/history.png" alt="history">
+              <img class="pic" src=<?php echo $base_url."assets/images/history.png"; ?> alt="history">
           </div>
           <div class="card capital-and-revenue" onclick="redirectToPage('capital_and_revenue')">
             <h3>CAPITAL & REVENUE</h3>
-              <img class="pic" src="../../assets/images/capital.png" alt="capital_and_revenue">
+              <img class="pic" src=<?php echo $base_url."assets/images/capital.png"; ?> alt="capital_and_revenue">
           </div>
           <div class="card slow-moving-meds" onclick="redirectToPage('slow_moving')">
               <h3>SLOW MOVING MEDS</h3>
-              <img class="pic" src="../../assets/images/slow.png" alt="slow_moving_meds">
+              <img class="pic" src=<?php echo $base_url."assets/images/slow.png"; ?> alt="slow_moving_meds">
           </div>
           <div class="card slow-moving-meds" onclick="redirectToPage('fast_moving')">
               <h3>FAST MOVING MEDS</h3>
-              <img class="pic" src="../../assets/images/fast.png" alt="fast_moving_meds">
+              <img class="pic" src=<?php echo $base_url."assets/images/fast.png"; ?> alt="fast_moving_meds">
           </div>
         </div>
 

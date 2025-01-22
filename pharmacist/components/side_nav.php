@@ -22,4 +22,8 @@
         <i class="fas fa-cash-register"></i>
         <a href=<?php echo $base_url."pharmacist/pos/index.php";?>>Point of Sale</a>
     </div>
+    <div id="nav_inventory" class="menu">
+        <i class="fas fa-warehouse"></i>
+        <a href=<?php echo $base_url."pharmacist/inventory/index.php";?>>Inventory</a>
+    </div>
 </div>

@@ -26,15 +26,15 @@
         <div class="main">
             <div class="card account-recovery" onclick="redirectToPage('archived')">
                 <h3>ARCHIVED</h3>
-                <img class="pic" src="../../assets/images/recover.png" alt="recovery">
+                <img class="pic" src=<?php echo $base_url."assets/images/recover.png"; ?> alt="recovery">
             </div>
             <div class="card create-account" onclick="redirectToPage('add')">
                 <h3>CREATE ACCOUNT</h3>
-                <img class="pic" src="../../assets/images/addAcct.png" alt="add_employee">
+                <img class="pic" src=<?php echo $base_url."assets/images/addAcct.png"; ?> alt="add_employee">
             </div>
             <div class="card accounts" onclick="redirectToPage('list')">
                 <h3>ACCOUNTS</h3>
-                <img class="pic" src="../../assets/images/acct.png" alt="list_employees">
+                <img class="pic" src=<?php echo $base_url."assets/images/acct.png"; ?> alt="list_employees">
             </div>
         </div>
 

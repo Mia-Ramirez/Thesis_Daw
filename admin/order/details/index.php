@@ -35,7 +35,9 @@
                                         co.reference_number,
                                         co.selected_discount,
                                         co.remarks,
-                                        u.email
+                                        u.email,
+                                        c.first_name,
+                                        c.last_name
                                     FROM customer_order co
                                     INNER JOIN customer c ON co.customer_id=c.id
                                     INNER JOIN user u ON c.user_id=u.id
@@ -197,6 +199,7 @@
                     <h2>Details</h2>
                     <div id="summary">
                         <p><b>Order Reference Number</b>: <?php echo $row['reference_number']; ?></p>
+                        <p><b>Customer Name</b>: <?php echo $row['first_name']." ".$row['last_name']; ?></p>
                         <p><b>Status</b>: <?php echo ucwords(str_replace("_", " ", $row['status'])); ?></p>
                         <?php
                         if ($row['status'] == 'cancelled'){

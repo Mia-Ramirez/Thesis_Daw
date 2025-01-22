@@ -1,0 +1,143 @@
+.main{
+	border-radius: 5px;
+	box-sizing: border-box;
+	background-color: transparent;
+	padding:20px;
+	padding-left: 60px;
+	width:70%;
+	float:right;
+	margin-right:80px;
+	margin-bottom:50px;
+	margin-top: 2%;
+	font-family:Arial;
+  }
+  
+  .column {
+	float: left;
+	width: 50%;
+   }
+  
+  .row:after {
+	content: "";
+	display: table;
+	clear: both;
+  }
+  
+  
+  input[type=text],input[type=number],input[type=date], input[type=email],select {
+	width: 80%;
+	padding: 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+  }
+  
+  label {
+	padding: 12px 12px 12px 0;
+	display: inline-block;
+  }
+  
+
+  #add_stock{
+	background-color: rgb(253, 253, 253);
+	color: rgb(5, 5, 5);
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	display:inline-block;
+	margin-top:20px;
+	margin-left: 17%;
+	width: 60%;
+  }
+
+  button:hover {
+	background-color: lightcoral;
+  }
+
+  #edit_supplier_button:hover {
+    color: lightyellow !important;
+  }
+
+.btns{
+  background-color: rgba(255, 255, 255, 0.836); 
+  padding: 1%;
+  border: solid black 1px;
+}
+
+/* Text or placeholder styling */
+.image-container span {
+    font-size: 16px;
+    color: #888;
+}
+  
+/* Category */
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.category {
+  background-color: #007bff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.category span {
+  cursor: pointer;
+}
+.category-input {
+  flex: 1;
+  min-width: 100px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.suggestions {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  position: absolute;
+  max-height: 100px;
+  overflow-y: auto;
+  width: 200px;
+}
+.suggestions li {
+  padding: 5px;
+  cursor: pointer;
+}
+.suggestions li:hover {
+  background-color: #f0f0f0;
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.modal input[type="text"] {
+  width: 95%;
+  padding: 10px;
+  margin-top: 10px;
+}
+
+
