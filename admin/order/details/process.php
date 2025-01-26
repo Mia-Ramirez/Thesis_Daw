@@ -14,11 +14,13 @@
     
     include($doc_root.'/utils/connect.php');
     include($doc_root.'/utils/email.php');
+    include($doc_root.'/utils/sms.php');
     include($doc_root.'/utils/common_fx_and_const.php');
 
     $user_id = $_SESSION['user_id'];
     $order_id= mysqli_real_escape_string($conn, $_POST['order_id']);
-    
+    $order_reference_number = $_SESSION['order_reference_number'];
+
     if ($_POST['action'] == 'cancel_order'){
         $user_role = ucwords(str_replace("_", " ", $_SESSION['user_role']));
 
@@ -57,11 +59,20 @@
         $_SESSION["message_string"] = "Order is successfully moved to '".ucwords(str_replace("_", " ", $action))."'!";
         $_SESSION["message_class"] = "info";
 
-        
+        if ($action == 'for_pickup'){
+            $message = "Your Order with Reference Number ".$order_reference_number." is ready to Pick-up\n\nPharmanest";
+            if ($enable_logging == "1"){
+                error_log("This is a log message for debugging purposes: ");
+                error_log($message);
+            };
+
+            if (($enable_send_sms == "1") && (!is_null($_SESSION["customer_mobile_number"]))){
+                sendSMS($_SESSION["customer_mobile_number"], $message);
+            };
+        };
     };
 
     $customer_email = $_SESSION['customer_email'];
-    $order_reference_number = $_SESSION['order_reference_number'];
     if (($enable_send_email == "1") && (!is_null($customer_email))){
         send_email(
             $customer_email,

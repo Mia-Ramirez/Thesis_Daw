@@ -37,7 +37,8 @@
                                         co.remarks,
                                         u.email,
                                         c.first_name,
-                                        c.last_name
+                                        c.last_name,
+                                        c.contact_number
                                     FROM customer_order co
                                     INNER JOIN customer c ON co.customer_id=c.id
                                     INNER JOIN user u ON c.user_id=u.id
@@ -50,6 +51,7 @@
 
                 $row = mysqli_fetch_array($order_result);
                 $_SESSION['customer_email'] = $row['email'];
+                $_SESSION["customer_mobile_number"] = $row['contact_number'];
                 $_SESSION['order_reference_number'] = $row['reference_number'];
                 $sqlGetProductLines = "SELECT 
                                         p.name AS product_name,

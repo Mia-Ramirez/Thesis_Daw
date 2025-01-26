@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <?php
     $enable_send_email = "1";
-    $enable_send_email = "0"; // comment this to enable sending email
+    $enable_send_email = "0"; // comment this to enable sending email in local
     
     $enable_logging = "0";
-    $enable_logging = "1"; // comment this to disable logging
+    $enable_logging = "1"; // comment this to disable logging in local
 
     $enable_send_sms = "1";
-    $enable_send_sms = "0"; // comment this to enable sending SMS
+    $enable_send_sms = "0"; // comment this to enable sending SMS in local
 
     $timezone = "Asia/Manila";
 

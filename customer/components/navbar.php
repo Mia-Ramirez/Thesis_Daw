@@ -25,7 +25,7 @@
             </div>
 
             <div id="nav_message" class="menu">
-                <a href="#">
+                <a href="<?php echo $base_url."customer/messaging/index.php";?>">
                     <i class="fas fa-envelope"></i> <!-- chat icon -->
                 </a>
             </div>

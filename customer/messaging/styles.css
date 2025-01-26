@@ -1,0 +1,168 @@
+
+.main-container {
+    display: flex;
+    width: 80%;
+    max-width: 1000px;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-left: 15%;
+    margin-top: 1%;
+}
+
+.send-message-section {
+    flex: 1;
+    padding: 40px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.send-message-section h1 {
+    color: #243B55;
+    margin-bottom: 20px;
+}
+
+.send-message-section textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    resize: none;
+    font-family: Arial;
+}
+
+.send-message-section button {
+    background-color: lightsalmon;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 100%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.send-message-section button:hover {
+    background-color: salmon;
+}
+
+.conversation-section {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* .conversation-section h1 {
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #E6F7F8;
+} */
+
+.conversation-section h1 {
+    color: #000;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px;
+    background-color: #ffccbc;
+    border-bottom: 1px solid #f3cfcf;
+}
+
+.chat-box {
+    background-color: #fff;
+    color: #000;
+    padding: 10px;
+    border-radius: 10px;
+    overflow-y: auto;
+    height: 300px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.messages {
+    flex-grow: 1;
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.message {
+    margin-bottom: 10px;
+    max-width: 70%;
+    text-align: left;
+}
+
+.message.customer {
+    /* text-align: left; */
+    color: #fff;
+    background: #ffa726;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    clear: both;
+}
+.message.customer {
+    float: right;
+}
+.message.pharmacist{
+    float: left;
+}
+.message.pharmacist {
+    /* text-align: left; */
+    color: #333;
+    background: #e0f7fa;
+    padding: 5px 10px;
+    border-radius: 8px;
+    display: inline-block;
+    clear: both;
+}
+
+#photoButton {
+    margin-left: 10px;
+    background: lightsalmon;
+    border: none;
+    color: white;
+    padding: 8px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+#photoButton:hover {
+    background: salmon;
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+}
+button.disabled {
+    background-color: grey;
+}
+button.disabled:hover {
+    background-color: grey;
+}
+
+.prescription_photo:hover {
+    cursor: pointer;
+}

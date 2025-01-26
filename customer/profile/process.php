@@ -63,7 +63,7 @@
                 if(!mysqli_query($conn,$sqlUpdateCustomer)){
                     die("Something went wrong");
                 };
-
+                $_SESSION['user_first_name'] = $first_name;
                 $_SESSION["message_string"] = "Profile info updated successfully!";
                 $_SESSION["message_class"] = "info";
                 header("Location:index.php");

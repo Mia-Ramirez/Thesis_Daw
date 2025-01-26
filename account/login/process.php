@@ -46,7 +46,7 @@
                     $_SESSION['user_name'] = $row['username'];
 
                     // list($first_name, $creationDate) = explode("_", $row['username']);
-                    $_SESSION['user_first_name'] = explode("_", $row['username'])[0];
+                    list($_SESSION['user_first_name'], $_SESSION['user_last_name'], $date_created) = explode("_", $row['username']);
                     
                     
                     
