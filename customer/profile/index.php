@@ -25,7 +25,7 @@
             
             include($doc_root.'/utils/connect.php');
 
-            $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, u.password_length, c.id AS customer_id FROM customer c
+            $sqlGetCustomer = "SELECT c.first_name, c.last_name, c.address, c.contact_number, c.date_of_birth, c.sex, u.email, u.password_length, c.id AS customer_id, u.password FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
                             WHERE c.user_id=$user_id";
 
@@ -47,6 +47,7 @@
             }
             $pass_placeholder = str_repeat('•', $pass_len);
             $_SESSION["pass_placeholder"] = $pass_placeholder;
+            $_SESSION["user_hashed_password"] = $row["password"];
         ?>
         
         <div class="form-container">

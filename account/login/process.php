@@ -46,9 +46,11 @@
                     $_SESSION['user_name'] = $row['username'];
 
                     // list($first_name, $creationDate) = explode("_", $row['username']);
-                    list($_SESSION['user_first_name'], $_SESSION['user_last_name'], $date_created) = explode("_", $row['username']);
-                    
-                    
+                    if ($row['username'] != 'admin'){
+                        list($_SESSION['user_first_name'], $_SESSION['user_last_name'], $date_created) = explode("_", $row['username']);
+                    } else {
+                        $_SESSION['user_first_name'] = $row['username'];
+                    };
                     
                     if ($role == 'customer'){
                         header("Location: ../../customer/index.php");

@@ -50,7 +50,11 @@
                 };
 
                 $password_len = strlen($password);
-                $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                if ($password == $_SESSION["pass_placeholder"]){
+                    $hashed_password = $_SESSION["user_hashed_password"];
+                } else {
+                    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+                };
                 $username = $first_name."_".$last_name."_".date('YmdHis');
                 $sqlUpdateUser = "UPDATE user SET username='$username', email='$email', password_length = $password_len, password = '$hashed_password' WHERE id=$user_id";
                 if(!mysqli_query($conn,$sqlUpdateUser)){
