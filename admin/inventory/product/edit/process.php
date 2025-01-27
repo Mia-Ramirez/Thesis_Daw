@@ -18,7 +18,7 @@
                 
                 $category_names = mysqli_real_escape_string($conn, $_POST["category_names"]);
                 $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
-                $price = mysqli_real_escape_string($conn, $_POST["price"]);
+                // $price = mysqli_real_escape_string($conn, $_POST["price"]);
                 $valid_discounts = mysqli_real_escape_string($conn, $_POST["valid_discounts"]);
                 $required_prescription = mysqli_real_escape_string($conn, $_POST["required_prescription"]);
                 $rack_location = mysqli_real_escape_string($conn, $_POST["rack_location"]);
@@ -120,7 +120,8 @@
 
                 };
                 
-                $sqlUpdateProduct = "UPDATE product SET name='$product_name', price='$price', applicable_discounts='$valid_discounts', prescription_is_required='$required_prescription', photo='$imagePath', rack_location='$rack_location', maintaining_quantity='$maintaining_quantity' WHERE id=$product_id";
+                // $sqlUpdateProduct = "UPDATE product SET name='$product_name', price='$price', applicable_discounts='$valid_discounts', prescription_is_required='$required_prescription', photo='$imagePath', rack_location='$rack_location', maintaining_quantity='$maintaining_quantity' WHERE id=$product_id";
+                $sqlUpdateProduct = "UPDATE product SET name='$product_name', applicable_discounts='$valid_discounts', prescription_is_required='$required_prescription', photo='$imagePath', rack_location='$rack_location', maintaining_quantity='$maintaining_quantity' WHERE id=$product_id";
                 if(!mysqli_query($conn,$sqlUpdateProduct)){
                     die("Something went wrong");
                 };

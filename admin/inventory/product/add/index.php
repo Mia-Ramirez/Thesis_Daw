@@ -65,13 +65,13 @@
                         <div class="row">
                             <p class="column">
                                 <label for="product_name">Name:</label><br>
-                                <input type="text" id="product_name" name="product_name" required value="<?php if(isset($_SESSION["product_name"])){echo $_SESSION["product_name"];unset($_SESSION["product_name"]);}?>">
+                                <input style="width:165%;" type="text" id="product_name" name="product_name" required value="<?php if(isset($_SESSION["product_name"])){echo $_SESSION["product_name"];unset($_SESSION["product_name"]);}?>">
                             </p>
 
-                            <p class="column">
+                            <!-- <p class="column">
                                 <label for="price">Price:</label><br>
-                                <input type="number" step="0.01" min="1" id="price" name="price" required value="<?php if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
-                            </p>
+                                <input type="number" step="0.01" min="1" id="price" name="price" required value="<?php //if(isset($_SESSION["price"])){echo $_SESSION["price"];unset($_SESSION["price"]);}?>">
+                            </p> -->
                         </div>
                         
                         <div class="row">

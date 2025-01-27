@@ -24,13 +24,13 @@
         ?>
 
         <div class="main" style="margin-left: 12%; margin-right: 0%">
-            <div class="card history" onclick="redirectToPage('history')">
-                <h3>HISTORY</h3>
-                <img class="pic" src=<?php echo $base_url."assets/images/history.png"; ?> alt="history">
+            <div class="card stock_out" onclick="redirectToPage('stock/batch')">
+                <h3>STOCK OUT</h3>
+                <img class="pic" src=<?php echo $base_url."assets/images/stockOut.png"; ?> alt="history">
             </div>
-            <div class="card stock" onclick="redirectToPage('stock')">
-                <h3>LOW STOCKS</h3>
-                <img class="pic" src=<?php echo $base_url."assets/images/stock.png"; ?> alt="stock">
+            <div class="card stock_in" onclick="redirectToPage('stock')">
+                <h3>STOCK IN</h3>
+                <img class="pic" src=<?php echo $base_url."assets/images/stockIn.png"; ?> alt="history">
             </div>
             <div class="card category" onclick="redirectToPage('category')">
                 <h3>CATEGORIES</h3>
@@ -40,12 +40,20 @@
                 <h3>PRODUCTS</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/meds.png"; ?> alt="product">
             </div>
+            <div class="card history" onclick="redirectToPage('history')">
+                <h3>HISTORY</h3>
+                <img class="pic" src=<?php echo $base_url."assets/images/history.png"; ?> alt="history">
+            </div>
+            <div class="card stock" onclick="redirectToPage('low_stock')">
+                <h3>LOW STOCKS</h3>
+                <img class="pic" src=<?php echo $base_url."assets/images/stock.png"; ?> alt="stock">
+            </div>  
         </div>
 
         <script>
             function redirectToPage(page) {
-                if (page == 'stock'){
-                    window.location.href = './'+page+'/index.php?is_low=true';
+                if (page == 'low_stock'){
+                    window.location.href = './stock/index.php?is_low=true';
                 } else {    
                     window.location.href = './'+page+'/index.php';
                 };

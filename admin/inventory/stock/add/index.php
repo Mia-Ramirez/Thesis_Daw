@@ -28,7 +28,7 @@
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['product_id'])) {
                 $product_id = $_GET['product_id'];
-                $sqlGetProduct = "SELECT name, cost FROM product WHERE id=$product_id";
+                $sqlGetProduct = "SELECT name, cost, price FROM product WHERE id=$product_id";
                 $product_result = mysqli_query($conn,$sqlGetProduct);
                 if ($product_result->num_rows == 0){
                     header("Location:../../../../../page/404.php");
@@ -37,6 +37,9 @@
                 $_SESSION['product_id'] = $product_id;
                 if (!is_null($row['cost']) && (isset($_SESSION['cost']) == false)){
                     $_SESSION['cost'] = $row['cost'];
+                };
+                if (!is_null($row['price']) && (isset($_SESSION['selling_price']) == false)){
+                    $_SESSION['selling_price'] = $row['price'];
                 };
 
             } else {
@@ -103,10 +106,17 @@
                     </div>
                    
 
-                    <p>
-                        <label for="cost">Wholesale Price:</label><br>
-                        <input id="cost_input" type="number" step="0.01" min="1" name="cost" required value="<?php if(isset($_SESSION["cost"])){echo $_SESSION["cost"];unset($_SESSION["cost"]);}?>">
-                    </p>
+                    <div class="row">
+                        <p class="column">
+                            <label for="cost">Wholesale Price:</label><br>
+                            <input style="width: 60%" id="cost_input" type="number" step="0.01" min="1" name="cost" required value="<?php if(isset($_SESSION["cost"])){echo $_SESSION["cost"];unset($_SESSION["cost"]);}?>">
+                        </p>
+                        <p class="column">
+                            <label for="selling_price">Selling Price:</label><br>
+                            <input style="width: 60%" id="selling_price_input" type="number" step="0.01" min="1" name="selling_price" required value="<?php if(isset($_SESSION["selling_price"])){echo $_SESSION["selling_price"];unset($_SESSION["selling_price"]);}?>">
+                        </p>
+                    </div>
+
                 </div>
 
                 <div class="column">

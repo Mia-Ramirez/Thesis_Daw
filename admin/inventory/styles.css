@@ -36,7 +36,7 @@ th{
     width: 10%;
 }
 
-.lamesa tr:nth-child(even){
+/* .lamesa tr:nth-child(even){
     background-color: #f2f2f2;
 }
 
@@ -50,7 +50,7 @@ th{
     text-align: left;
     background-color: lightsalmon;
     color: black;
-}
+} */
 
 .card {
     width: 20%;

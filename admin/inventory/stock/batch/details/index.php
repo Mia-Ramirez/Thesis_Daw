@@ -40,7 +40,8 @@
                                     u.username,
                                     date_disposed,
                                     disposed_quantity,
-                                    batch_cost
+                                    batch_cost,
+                                    batch_selling_price
                                 FROM batch b
                                 INNER JOIN product p ON b.product_id=p.id
                                 INNER JOIN supplier s ON b.supplier_id=s.id
@@ -92,6 +93,9 @@
                     </p>
                     <p>
                         Wholesale Price: <b>&#8369 <?php echo $row['batch_cost']; ?></b>
+                    </p>
+                    <p>
+                        Selling Price: <b>&#8369 <?php echo $row['batch_selling_price']; ?></b>
                     </p>
                     <p>
                         Expiration Date: <b><?php
