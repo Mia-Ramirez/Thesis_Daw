@@ -196,6 +196,7 @@
                                     };
                                     $displayed_products[] = $data['product_name'];
                                     $dictionary = [
+                                        "name" => $data['product_name'],
                                         "lineID" => $data['line_id'],
                                         "price" => $price,
                                         "discountedPrice" => $price,
@@ -284,6 +285,20 @@
                         </select>
                         <?php if (isset($_SESSION['selected_discount'])){ unset($_SESSION['selected_discount']); } ?>
                     </div>
+
+                    <table id="product_list">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>QTY</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    
                     <div id="summary">
                         <p>Subtotal: ₱<span id="subtotal">0</span></p>
                         <p>Discount: ₱<span id="discountAmount">0</span></p>
