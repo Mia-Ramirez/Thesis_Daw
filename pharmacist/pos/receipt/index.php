@@ -1,4 +1,13 @@
 <?php
+    function getFirstLetters($str) {
+        $words = explode(' ', $str);  // Split the string into words
+        $firstLetters = array_map(function($word) {
+            return strtoupper($word[0]);  // Get the first letter of each word and capitalize it
+        }, $words);
+        
+        return implode('', $firstLetters);  // Join the letters together
+    };
+
     if (!isset($_GET['transaction_id'])) {
         header("Location:../../../page/404.php");
         exit;
@@ -69,7 +78,7 @@
     ";
 
     $content .= "--------------------------------------------------------------------------------<br/>";
-    $content .= "<table><thead><tr><th>QTY</th><th>PRODUCT</th><th>PRICE</th><th>SUBTOTAL</th></tr></thead>";
+    $content .= "<table><thead><tr><th>QTY</th><th>PRODUCT</th><th>PRICE</th><th>TOTAL</th></tr></thead>";
     $content .= "<tbody>";
     
     $subtotal = 0;
@@ -82,16 +91,19 @@
         };
         $line_subtotal = $price * $data['qty'];
 
+        $product_name = $data['product_name'];
         $discount_rate = 0;
         if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
-            $discount_rate = 0.2;
+            $discount_rate = 0.2; 
+            $product_name .= " (".getFirstLetters($selected_discount)." DSC)";
         };
 
         $line_discount = $price * (1 - $discount_rate);
+        $line_total = $line_discount * $data['qty'];
         
         $subtotal += $line_subtotal;
         $total_discount += ($line_subtotal - ($line_discount * $data['qty']));
-        $content .= "<td>".$data['qty']."</td><td>".$data['product_name']."</td><td>₱".$data['price']."</td><td>₱".$line_subtotal."</td></tr>";
+        $content .= "<td>".$data['qty']."</td><td>".$product_name."</td><td>₱".$line_discount."</td><td>₱".$line_total."</td></tr>";
         
     };
     $content .= "</tbody>";
@@ -100,6 +112,7 @@
     $content .= "--------------------------------------------------------------------------------<br/>";
     $total = $subtotal - $total_discount;
     $content .= "No. of Item(s): ".$product_lines->num_rows."<br/>";
+    $content .= "Discount Type: ".$selected_discount."<br/>";
     $content .= "Subtotal: ₱".number_format($subtotal, 2)."<br/>";
     $content .= "Discount: ₱".number_format($total_discount, 2)."<br/>";
     $content .= "Total: ₱".number_format($total, 2)."<br/>";

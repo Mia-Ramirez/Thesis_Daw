@@ -60,6 +60,7 @@
                                         prescription_is_required,
                                         photo,
                                         pl.line_price,
+                                        pl.line_discount,
                                         qty,
                                         cp.prescription_photo,
                                         cp.reference_name AS prescription_name
@@ -135,6 +136,10 @@
                                     $discount_rate = 0;
                                     if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
+                                    };
+                                    
+                                    if (!is_null($data['line_discount'])){
+                                        $discount_rate = $data['line_discount']/100;
                                     };
 
                                     $line_discount = $price * (1 - $discount_rate);

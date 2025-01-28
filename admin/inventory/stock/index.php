@@ -35,7 +35,11 @@
 
             $filter_str = "";
             if (isset($_GET['is_low'])){
-                $filter_str=" WHERE current_quantity < maintaining_quantity";
+                $filter_str=" WHERE current_quantity BETWEEN 1 AND maintaining_quantity";
+            };
+
+            if (isset($_GET['is_zero'])){
+                $filter_str=" WHERE current_quantity=0";
             };
             
             $sqlGetStockProducts .= $filter_str." ORDER BY current_quantity ASC, maintaining_quantity ASC";

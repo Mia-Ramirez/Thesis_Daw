@@ -59,6 +59,7 @@
                                         prescription_is_required,
                                         photo,
                                         pl.line_price,
+                                        pl.line_discount,
                                         qty
                                     FROM product_line pl
                                     INNER JOIN product p ON pl.product_id=p.id
@@ -110,6 +111,10 @@
                                     $discount_rate = 0;
                                     if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                                         $discount_rate = 0.2;
+                                    };
+                                    
+                                    if (!is_null($data['line_discount'])){
+                                        $discount_rate = $data['line_discount']/100;
                                     };
 
                                     $line_discount = $price * (1 - $discount_rate);
@@ -185,7 +190,7 @@
 
         </div>
         
-        <script src="script.js"></script>
+        <!-- <script src="script.js"></script> -->
         <script>
             window.onload = function() {
                 setActivePage("nav_sales_report");

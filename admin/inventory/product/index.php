@@ -26,7 +26,7 @@
 
         <?php
             include($doc_root.'/utils/connect.php');
-            $sqlGetProducts = "SELECT * FROM product";
+            $sqlGetProducts = "SELECT id, name, price, rack_location, applicable_discounts FROM product";
             $filter_str = "";
             $query = NULL;
             if (isset($_GET['query'])){
@@ -66,7 +66,7 @@
                         <th>Name</th>
                         <th>Price</th>
                         <th>Rack Location</th>
-                        <th>Current Number of Stock</th>
+                        <th>Applicable Discounts</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -80,11 +80,18 @@
                         <td><?php echo $data["name"];?></td>
                         <td>₱<?php echo $data["price"];?></td>
                         <td><?php echo $data["rack_location"];?></td>
-                        <td><?php echo $data["current_quantity"];?></td>
+                        <td><?php
+                            if ($data['applicable_discounts'] == "Both"){
+                                echo "Senior Citizen/Person with Disabilities";
+                            } else {
+                                echo $data['applicable_discounts'];
+                            };
+                            ?>
+                        </td>
                         <td>
                             <a href="./edit/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-pen-to-square" title="Edit"></i></a>
-                            <a href="../stock/add/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a>
-                            <a href="../stock/batch/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-minus" title="Stock Out"></i></a>
+                            <!-- <a href="../stock/add/index.php?product_id=<?php //echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a> -->
+                            <!-- <a href="../stock/batch/index.php?product_id=<?php //echo $data["id"]; ?>"><i class="button-icon fas fa-minus" title="Stock Out"></i></a> -->
                             <a href="../history/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
                         </td>
                     </tr>

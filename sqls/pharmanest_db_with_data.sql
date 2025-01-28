@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2025 at 02:58 AM
+-- Generation Time: Jan 28, 2025 at 12:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,17 +38,18 @@ CREATE TABLE `batch` (
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
-  `batch_cost` double NOT NULL
+  `batch_cost` double NOT NULL,
+  `batch_selling_price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`) VALUES
-(1, 'B20250101-001', '2025-01-21', '2027-01-01', 1, 1, 3, 200, NULL, NULL, 4),
-(2, 'B20250101-002', '2025-01-21', '2027-01-01', 1, 3, 3, 100, NULL, NULL, 11),
-(3, 'B20250101-003', '2025-01-21', '2026-01-01', 1, 2, 3, 100, NULL, NULL, 9);
+INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`, `batch_selling_price`) VALUES
+(1, 'B20250101-001', '2025-01-21', '2027-01-01', 1, 1, 3, 200, NULL, NULL, 4, 0),
+(2, 'B20250101-002', '2025-01-21', '2027-01-01', 1, 3, 3, 100, NULL, NULL, 11, 0),
+(3, 'B20250101-003', '2025-01-21', '2026-01-01', 1, 2, 3, 100, NULL, NULL, 9, 0);
 
 -- --------------------------------------------------------
 
@@ -203,6 +204,7 @@ INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_record
 (3, 'product', 2, 'Add Stock: 100 quantity B20250101-003', '2025-01-20 22:53:13', 4);
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `messages`
 --
@@ -218,6 +220,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `pos_cart`
 --
@@ -316,18 +319,19 @@ CREATE TABLE `product_line` (
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
   `line_price` double DEFAULT NULL,
-  `pos_cart_id` int(11) DEFAULT NULL
+  `pos_cart_id` int(11) DEFAULT NULL,
+  `line_discount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_line`
 --
 
-INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`) VALUES
-(1, 1, 1, NULL, 5, 1, NULL, 'cart', NULL, NULL),
-(2, 3, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
-(3, 2, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
-(4, 3, 1, NULL, 1, 1, NULL, 'cart', NULL, NULL);
+INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`, `line_discount`) VALUES
+(1, 1, 1, NULL, 5, 1, NULL, 'cart', NULL, NULL, 0),
+(2, 3, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL, 0),
+(3, 2, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL, 0),
+(4, 3, 1, NULL, 1, 1, NULL, 'cart', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 

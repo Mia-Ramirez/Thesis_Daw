@@ -51,10 +51,16 @@
                                 WHERE status='for_pickup')
             ";
 
-            $sqlGetProductShortages = "(SELECT
+            $sqlGetLowStockProducts = "(SELECT
                                     COUNT(*)
                                 FROM product
-                                WHERE current_quantity < maintaining_quantity
+                                WHERE current_quantity BETWEEN 1 AND maintaining_quantity
+            )";
+
+            $sqlGetOutOfStockProducts = "(SELECT
+                                    COUNT(*)
+                                FROM product
+                                WHERE current_quantity=0
             )";
 
             $sqlExpiringProducts = "(SELECT
@@ -69,7 +75,7 @@
                                 WHERE CURDATE() >= expiration_date
             )";
 
-            $sqlNotMovingProducts = "(SELECT
+            $sqlSlowMovingProducts = "(SELECT
                                         COUNT(*) AS result_count
                                         FROM (SELECT 
                                             DATE_FORMAT(t.transaction_date, '%Y-%m-%d') AS formatted_date,
@@ -88,11 +94,13 @@
                 UNION
                 SELECT 'new_orders' AS key_name, COALESCE(".$sqlGetNewOrders.", 0) AS record_count
                 UNION
-                SELECT 'product_shortages' AS key_name, COALESCE(".$sqlGetProductShortages.", 0) AS record_count
+                SELECT 'low_stock_products' AS key_name, COALESCE(".$sqlGetLowStockProducts.", 0) AS record_count
+                UNION
+                SELECT 'out_of_stock_products' AS key_name, COALESCE(".$sqlGetOutOfStockProducts.", 0) AS record_count
                 UNION
                 SELECT 'expiring_products' AS key_name, COALESCE(".$sqlExpiringProducts.", 0) AS record_count
                 UNION
-                SELECT 'not_moving_products' AS key_name, COALESCE(".$sqlNotMovingProducts.", 0) AS record_count
+                SELECT 'slow_moving_products' AS key_name, COALESCE(".$sqlSlowMovingProducts.", 0) AS record_count
                 UNION
                 SELECT 'expired_products' AS key_name, COALESCE(".$sqlExpiredProducts.", 0) AS record_count
                 UNION
@@ -126,29 +134,40 @@
             </div>
 
             <div class="card" onclick="redirectToPage('inventory/stock','is_low=true')">
-                <h2><?php echo $counter_values['product_shortages']; ?></h2>
-                <p>Product Shortage</p>
+                <h2><?php echo $counter_values['low_stock_products']; ?></h2>
+                <p>Low Stock Products</p>
             </div>
 
             <div class="card" onclick="redirectToPage('inventory/stock/batch','soon_to_expire=true')">
                 <h2><?php echo $counter_values['expiring_products']; ?></h2>
                 <p>Soon to Expire</p>
             </div>
+            
 
             <div class="card" onclick="redirectToPage('order/list','status=for_pickup')">
                 <h2><?php echo $counter_values['for_pickup_orders']; ?></h2>
                 <p>Ready for Pickup</p>
             </div>
 
-            <div class="card" onclick="redirectToPage('sales_report/slow_moving','get_today=true')">
-                <h2><?php echo $counter_values['not_moving_products']; ?></h2>
-                <p>Not Moving Products</p>
+            <div class="card" onclick="redirectToPage('inventory/stock','is_zero=true')">
+                <h2><?php echo $counter_values['out_of_stock_products']; ?></h2>
+                <p>Out of Stock Products</p>
             </div>
 
             <div class="card" onclick="redirectToPage('inventory/stock/batch','expired=true')">
                 <h2><?php echo $counter_values['expired_products']; ?></h2>
                 <p>Expired Products</p>
             </div>
+            <div class="card blank">
+            </div>
+            <div class="card blank">
+            </div>
+            <div class="card" onclick="redirectToPage('sales_report/slow_moving','get_today=true')">
+                <h2><?php echo $counter_values['slow_moving_products']; ?></h2>
+                <p>Slow Moving Products</p>
+            </div>
+
+            
         </div>
         
         <script>

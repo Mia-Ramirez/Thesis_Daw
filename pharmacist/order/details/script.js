@@ -30,15 +30,16 @@ const readyForPickupButton = document.getElementById("ready_for_pickup");
 
 function checkAllChecked() {
     const allChecked = Array.from(ready_products).every(checkbox => checkbox.checked);
-    if (allChecked){
-        readyForPickupButton.disabled = false;
-        readyForPickupButton.style.backgroundColor = "green";
-        readyForPickupButton.classList.remove('disabled');
-    } else {
-        readyForPickupButton.disabled = true;
-        readyForPickupButton.classList.add('disabled');
+    if (readyForPickupButton){
+        if (allChecked){
+            readyForPickupButton.disabled = false;
+            readyForPickupButton.style.backgroundColor = "green";
+            readyForPickupButton.classList.remove('disabled');
+        } else {
+            readyForPickupButton.disabled = true;
+            readyForPickupButton.classList.add('disabled');
+        };
     };
-    
 };
 
 // Attach event listeners to all checkboxes

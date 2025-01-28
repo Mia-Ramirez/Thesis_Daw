@@ -128,9 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (product_line_id){ // If the product exists in table body, update the quantity and price
                     var cells = product_line_id.getElementsByTagName('td');
-                    cells[1].textContent = '₱'+ product.discountedPrice;
+                    cells[1].textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
                     cells[2].textContent = product.quantity;
-                    cells[3].textContent = '₱'+ (product.discountedPrice * product.quantity);
+                    cells[3].textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
 
                 } else { // Else create a new row
                     const table = product_list.getElementsByTagName('tbody')[0];
@@ -144,15 +144,17 @@ document.addEventListener('DOMContentLoaded', () => {
                     const cell4 = newRow.insertCell(3);
                     
                     cell1.textContent = product.name;
-                    cell2.textContent = '₱'+ product.discountedPrice;
+                    cell2.textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
                     cell3.textContent = product.quantity;
-                    cell4.textContent = '₱'+ (product.discountedPrice * product.quantity);
+                    cell4.textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
                 };
             } else {
                 document.querySelectorAll('.total')[index].textContent = '₱0';
 
                 // Remove the row in the table
-                product_line_id.parentNode.removeChild(product_line_id);
+                if (product_line_id){
+                    product_line_id.parentNode.removeChild(product_line_id);
+                };
             };
         });
         

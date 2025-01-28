@@ -104,6 +104,9 @@
 
             if ($selected_discount == 'No Discount'){
                 $selected_discount = NULL;
+                $line_discount = 0;
+            } else {
+                $line_discount = 20;
             };
 
             if ($order_id){
@@ -128,9 +131,9 @@
                 $product_id = $data['product_id'];
 
                 if ($order_id){
-                    $sqlTransferLineToTransaction = "UPDATE product_line SET pos_cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price', order_id='$order_id' WHERE id=$line_id";
+                    $sqlTransferLineToTransaction = "UPDATE product_line SET pos_cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price', line_discount='$line_discount', order_id='$order_id' WHERE id=$line_id";
                 } else {
-                    $sqlTransferLineToTransaction = "UPDATE product_line SET pos_cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price' WHERE id=$line_id";
+                    $sqlTransferLineToTransaction = "UPDATE product_line SET pos_cart_id=NULL, for_checkout=0, transaction_id=$transaction_id, line_type='transaction', line_price='$line_price', line_discount='$line_discount' WHERE id=$line_id";
                 };
                 if(!mysqli_query($conn,$sqlTransferLineToTransaction)){
                     die("Something went wrong");
