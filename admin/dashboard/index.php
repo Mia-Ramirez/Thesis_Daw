@@ -22,7 +22,7 @@
             $current_page_title = "dashboard";
             include '../components/top_nav.php';
         ?>
-
+        <div class="content" style="margin-top: 10%;">
         <?php
             include($doc_root.'/utils/connect.php');
             // $current_date = date("%Y-%m-%d");
@@ -169,7 +169,7 @@
 
             
         </div>
-        
+        </div>
         <script>
             window.onload = function() {
                 setActivePage("nav_dashboard");

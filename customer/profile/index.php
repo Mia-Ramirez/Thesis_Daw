@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PHARMANEST ESSENTIAL</title>
+        <title>Value MED Generics Pharmacy</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../styles.css">
@@ -19,6 +19,7 @@
         <script src="<?php echo $base_url;?>assets/scripts/common_fx.js"></script>
     </head>
     <body class="body">
+        <div class="content" style="margin-top: 12%;">
         <?php include '../components/unauth_redirection.php'; ?>
         
         <?php include '../components/navbar.php'; ?>  
@@ -110,7 +111,7 @@
                 <button name="action" value="update_customer">Update</button>
             </form>
         </div>
-
+        </div>
         <script src="../script.js"></script>
         
         <script>
@@ -118,5 +119,6 @@
                 setActivePage("nav_menu");
             };
         </script>
-    </body>
+    
+</body>
 </html>

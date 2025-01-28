@@ -12,7 +12,7 @@
     padding-left: 1%;
     margin-left: 1%;
     margin-right: 1%;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-bottom: 1%;
 }
 .img{
@@ -38,26 +38,30 @@
     margin-top: 13%;
     margin-left: 0.5%;
     margin-bottom: 0.5%;
+    z-index: 1000;
+    top: 0;
+    position: fixed;
 }
 input{
     padding: 1%; 
     width: 25%;
 }
   .btns{
-    background-color: lightsalmon; 
+    background: linear-gradient(to bottom right, red,red);
     padding: 1%;
     border: solid 1px black;
+    color: white;
 }
 .categories{
     width: 100%;
-    background: transparent;
+    margin-top: 14%;
 }
 .categories {
     display: flex;
     overflow-x: auto;
     gap: 10px;
     padding: 10px 0;
-    text-decoration: underline;
+    
 }
 .categories button {
     flex: 0 0 auto;
@@ -67,6 +71,7 @@ input{
     cursor: pointer;
     white-space: nowrap; /* Prevents text from wrapping */
     width: auto; /* Ensures button width adjusts to text length */
+    
 }
 .categories button:hover {
     background-color: #e67e22;

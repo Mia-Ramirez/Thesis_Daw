@@ -20,7 +20,7 @@
         </div>
             <div class="menu">
                 <ul>
-                    <li><a href="#">Home</a></li>
+                    <li><a href="index.php">Home</a></li>
                     <li><a href="#">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li><a href="./account/login/index.php">Sign In</a></li>
@@ -33,8 +33,8 @@
     <div class="descript">
         <h3>
         Welcome to Value MED Generics Pharmacy<br/>
-        Your trusted online pharmacy, delivering quality and healthcare products.
-        At PharmaNest Essentials, we prioritize your health and well-being. 
+        Your trusted pharmacy, delivering quality and healthcare products.
+        At Value MED Generics Pharmacy, we prioritize your health and well-being. 
         With a wide range of prescription medicines, over-the-counter products, 
         and wellness supplements, we make it easy and convenient for you to manage 
         your healthcare needs.
