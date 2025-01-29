@@ -84,10 +84,10 @@
         
         
         <!-- Select Prescription Modal -->
-        <div class="custom-modal" id="prescriptionModal">
+        <div class="custom-modal" id="prescriptionModal" style="margin-top: 10%;">
             <div class="modal-content">
             <form action="process.php" method="POST" enctype="multipart/form-data">
-                <h1 id="modal_header">Upload Prescription</h1>
+                <h4 id="modal_header">Upload Prescription</h4>
                 <div class="form-group">
                     <label for="prescription-option">Choose an option:</label>
                     <select id="prescription-option" name="prescription_id">
@@ -147,7 +147,7 @@
             }
         ?>
 
-        <div class="card">
+        <div class="card" style="margin-top: 13%;">
             <h2>
                 Product(s) that requires Prescription
                 <button id="proceed_button" type="button" class="modal-button yes-button" onclick="redirectToOrderPage()" style="margin-left: 45%">Proceed</button>

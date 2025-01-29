@@ -153,7 +153,7 @@
             ";
         ?>
 
-        <div class="container" style="margin-left: 15%">
+        <div class="container" style="margin-top: 9%; margin-left: 15%">
             <div class="cart-left" style="width: 60%;">
                 <div class="card-pos">
                     <form method="GET" action="">

@@ -38,7 +38,7 @@
 
         ?>
 
-        <div class="container">
+        <div class="container" style="margin-top: 9%;">
             <?php 
                 if (isset($_SESSION["message_string"])) {
                 ?>

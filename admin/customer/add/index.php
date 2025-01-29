@@ -24,7 +24,7 @@
             include '../../components/top_nav.php';
         ?>
 
-        <div class="main">
+        <div class="main" style="margin-top: 9%;">
             <div class="row">
                 <?php
                     if (isset($_SESSION["message_string"])) {

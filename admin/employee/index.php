@@ -23,7 +23,7 @@
             include '../components/top_nav.php';
         ?>
 
-        <div class="main">
+        <div class="main" style="margin-top: 9%;">
             <div class="card account-recovery" onclick="redirectToPage('archived')">
                 <h3>ARCHIVED</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/recover.png"; ?> alt="recovery">

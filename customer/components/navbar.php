@@ -7,11 +7,11 @@
         </div>
 
         <div class="title">
-            <h1> PHARMANEST ESSENTIAL </h1>
+            <h1> ValueMED Generics Pharmacy </h1>
         </div>
 
         <div class="li">
-            <center style="margin-bottom: -5%;"><h3>Hi <?php echo ucwords($_SESSION['user_first_name']); ?>!</h3></center>
+            <center style="margin-bottom: -5%;"><h3>Hi Customer <?php echo ucwords($_SESSION['user_first_name']); ?>!</h3></center>
             <div id="nav_home" class="menu">
                 <a href="<?php echo $base_url."customer/home/index.php";?>">
                     <i class="fas fa-home"></i> <!-- home icon -->

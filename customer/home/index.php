@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PHARMANEST ESSENTIAL</title>
+        <title>Value MED Generics Pharmacy</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../styles.css">
@@ -52,7 +52,7 @@
             }
         ?>
 
-        <div class="search">
+        <div class="search" style="margin-top: 12%;">
         <form method="GET" action="">
         <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
             <button class="btns" type="submit">Search</button>

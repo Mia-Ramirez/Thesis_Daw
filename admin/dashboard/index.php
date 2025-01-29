@@ -114,7 +114,7 @@
             }
         ?>
 
-        <div class="pot">
+        <div class="pot"  style="margin-top: 9%;">
 	        <div class="main">
 				<h2 style="text-align: center;">Today's Report</h2>
 				<br>
