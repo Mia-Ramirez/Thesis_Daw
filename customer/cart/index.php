@@ -85,6 +85,7 @@
             $products = array();
         ?>
 
+
         <?php include '../components/yesNo_modal.php'; ?> 
         
 

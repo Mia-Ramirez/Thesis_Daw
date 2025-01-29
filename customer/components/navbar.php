@@ -1,4 +1,4 @@
-<nav class="navbar">
+<nav class="navbar" style="background-color: transparent;">
     <div class="navdiv">
 
         <div class="logo">
