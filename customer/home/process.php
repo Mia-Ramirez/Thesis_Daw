@@ -106,7 +106,7 @@
 
     // $row = mysqli_fetch_array($result);
     if ($action == "buy_now"){
-        header("Location:../cart/index.php");
+        header("Location:../cart/confirm/index.php");
     } else {
         $_SESSION["message_string"] = "Product added to cart!";
         $_SESSION["message_class"] = "info";

@@ -128,6 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 if (product_line_id){ // If the product exists in table body, update the quantity and price
                     var cells = product_line_id.getElementsByTagName('td');
+                    cells[0].textContent = product.name;
+                    if (product.discountedPrice != product.price){
+                        cells[0].innerHTML = product.name + "<br/>(DISC)";
+                    }
                     cells[1].textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
                     cells[2].textContent = product.quantity;
                     cells[3].textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
@@ -138,15 +142,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     newRow.id = 'product_'+product.lineID; // Assign a unique ID to the new row
 
-                    const cell1 = newRow.insertCell(0);
-                    const cell2 = newRow.insertCell(1);
-                    const cell3 = newRow.insertCell(2);
-                    const cell4 = newRow.insertCell(3);
+                    const cell0 = newRow.insertCell(0);
+                    const cell1 = newRow.insertCell(1);
+                    const cell2 = newRow.insertCell(2);
+                    const cell3 = newRow.insertCell(3);
                     
-                    cell1.textContent = product.name;
-                    cell2.textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
-                    cell3.textContent = product.quantity;
-                    cell4.textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
+                    cell0.textContent = product.name;
+                    if (product.discountedPrice != product.price){
+                        cell0.innerHTML = product.name + "<br/>(DISC)";
+                    }
+                    cell1.textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
+                    cell2.textContent = product.quantity;
+                    cell3.textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
                 };
             } else {
                 document.querySelectorAll('.total')[index].textContent = '₱0';

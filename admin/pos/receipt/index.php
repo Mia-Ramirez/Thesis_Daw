@@ -1,12 +1,12 @@
 <?php
-    function getFirstLetters($str) {
-        $words = explode(' ', $str);  // Split the string into words
-        $firstLetters = array_map(function($word) {
-            return strtoupper($word[0]);  // Get the first letter of each word and capitalize it
-        }, $words);
+    // function getFirstLetters($str) {
+    //     $words = explode(' ', $str);  // Split the string into words
+    //     $firstLetters = array_map(function($word) {
+    //         return strtoupper($word[0]);  // Get the first letter of each word and capitalize it
+    //     }, $words);
         
-        return implode('', $firstLetters);  // Join the letters together
-    };
+    //     return implode('', $firstLetters);  // Join the letters together
+    // };
 
     if (!isset($_GET['transaction_id'])) {
         header("Location:../../../page/404.php");
@@ -95,7 +95,7 @@
         $discount_rate = 0;
         if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
             $discount_rate = 0.2; 
-            $product_name .= " (".getFirstLetters($selected_discount)." DSC)";
+            $product_name .= " (DISC)";
         };
 
         $line_discount = $price * (1 - $discount_rate);

@@ -5,6 +5,6 @@ assets/photos/*
 !assets/photos/biogesic.png
 !assets/photos/loperamide.png
 !assets/photos/amoxicillin.jpg
-!assets/photos/amoxicillin_prescription.jpeg
+!assets/photos/amoxicillin_prescription*.jpeg
 !assets/photos/tempra_for_kids.png
 !apps/init.txt

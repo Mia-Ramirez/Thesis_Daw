@@ -40,7 +40,16 @@
             $filter_str = "";
             if (isset($_GET['product_id'])){
                 $product_id = $_GET['product_id'];
-                $filter_str = " AND p.id=".$product_id;
+                $filter_str .= " AND p.id=".$product_id;
+            };
+
+            if (isset($_GET['stock_type'])){
+                $stock_type = $_GET['stock_type'];
+                if ($stock_type == 'in'){
+                    $filter_str .= " AND h.remarks LIKE '%Add%'";
+                } else if ($stock_type == 'out'){
+                    $filter_str .= " AND (h.remarks LIKE '%Sold%') OR (h.remarks LIKE '%Disposed%')";
+                };
             };
             
             $offset = 0;

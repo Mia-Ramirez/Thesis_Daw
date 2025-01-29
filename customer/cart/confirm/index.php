@@ -24,6 +24,11 @@
             include($doc_root.'/utils/connect.php');
             
             $customer_id = $_SESSION['customer_id'];
+            $from_prescription_page = '0';
+            if (isset($_SESSION['from_prescription_page']) && ($_SESSION['from_prescription_page'] == '1')){
+                $from_prescription_page = '1';
+                unset($_SESSION['from_prescription_page']);
+            };
 
             $sqlGetProductLines = "SELECT
                                     p.name AS product_name,
@@ -34,7 +39,8 @@
                                     qty,
                                     selected_discount,
                                     pl.line_price,
-                                    prescription_id
+                                    prescription_id,
+                                    pl.id AS line_id
                                 FROM product_line pl
                                 INNER JOIN customer_cart cc ON pl.cart_id=cc.id
                                 LEFT JOIN product_prescription mp ON cc.customer_id=mp.customer_id
@@ -50,6 +56,7 @@
             };
 
             $selected_discount = NULL;
+            $products = array();
 
         ?>
         
@@ -77,7 +84,18 @@
                                 $total_discount = 0;
 
                                 while($data = mysqli_fetch_array($product_lines)){
-                                    if ($data['prescription_is_required'] == '1' && is_null($data['prescription_id'])){
+                                    $dictionary = [
+                                        "lineID" => $data['line_id'],
+                                        "price" => $data['price'],
+                                        "discountedPrice" => $data['price'],
+                                        "quantity" => $data['qty'],
+                                        "selected" => '1',
+                                        "applicableDiscounts" => $data['applicable_discounts'],
+                                        "prescriptionIsRequired" => $data['prescription_is_required'],
+                                    ];
+                                    array_push($products, $dictionary);
+                                    error_log("HERE: ".$data['prescription_is_required']." | ".$from_prescription_page);
+                                    if ($data['prescription_is_required'] == '1' && ($from_prescription_page == '0')){
                                         header("Location:../prescription/index.php");
                                     };
 
@@ -115,6 +133,12 @@
                             <?php
                                 };
                                 $total = $subtotal - $total_discount;
+                                
+                                echo "
+                                    <script>
+                                        let products = ".json_encode($products).";
+                                    </script>
+                                ";
                             ?>
                         </tbody>
                     </table>
@@ -126,22 +150,21 @@
                 <div class="card">
                     <h2>Summary</h2>
                     <div id="summary">
-                        <p>Discount Type:
-                            <?php
-                                if ($selected_discount){
-                                    echo $selected_discount;
-                                } else {
-                                    echo "None";
-                                };
-                                $_SESSION['selected_discount'] = $selected_discount;
-                            ?>
-                        </p>
+                        <div class="discount">
+                            <label for="discount">Discount</label>
+                            <select id="discount">
+                                <option value="No Discount_0" <?php if($selected_discount && $selected_discount == ''){echo 'selected';}?>>No Discount</option>
+                                <option value="Senior Citizen_0.2" <?php if($selected_discount && $selected_discount == 'Senior Citizen'){echo 'selected';}?>>Senior Citizen (20%)</option>
+                                <option value="Person With Disabilities_0.2" <?php if($selected_discount && $selected_discount == 'Person With Disabilities'){echo 'selected';}?>>Person With Disabilities (20%)</option>
+                            </select>
+                        </div>
                         <p>Subtotal: ₱<span id="subtotal"><?php echo $subtotal; ?></span></p>
                         <p>Discount: ₱<span id="discountAmount"><?php echo $total_discount; ?></span></p>
                         <p>Total: ₱<span id="total"><?php echo $total; ?></span></p>
                     </div>
 
                     <form action="process.php" method="POST">
+                        <input type="hidden" name="selected_discount" id="selected_discount">
                         <button class="disabled" type="submit" name="action" value="confirm_order" id="confirm_order" disabled>Confirm</button>
                     </form>
                     
@@ -149,7 +172,7 @@
             </div>
         </div>
 
-
+        <script src="script.js"></script>
         <script src="../../script.js"></script>
         
         <script>

@@ -24,11 +24,11 @@
         ?>
 
         <div class="main" style="margin-left: 12%; margin-right: 0%">
-            <div class="card stock_out" onclick="redirectToPage('stock/batch')">
+            <div class="card stock_out" onclick="redirectToPage('stock_out')">
                 <h3>STOCK OUT</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/stockOut.png"; ?> alt="history">
             </div>
-            <div class="card stock_in" onclick="redirectToPage('stock')">
+            <div class="card stock_in" onclick="redirectToPage('stock_in')">
                 <h3>STOCK IN</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/stockIn.png"; ?> alt="history">
             </div>
@@ -54,6 +54,10 @@
             function redirectToPage(page) {
                 if (page == 'low_stock'){
                     window.location.href = './stock/index.php?is_low=true';
+                } else if (page == 'stock_in'){
+                    window.location.href = './stock/index.php?stock_type=in';
+                } else if (page == 'stock_out'){
+                    window.location.href = './stock/index.php?stock_type=out';
                 } else {    
                     window.location.href = './'+page+'/index.php';
                 };

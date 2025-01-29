@@ -146,7 +146,7 @@
                         ?>
                         <p>Stock: <?php echo $data['current_quantity']; ?> | QTY: <input value="1" step="1" type="number" max="<?php echo $data['current_quantity']; ?>" class="quantity" id="qty_<?php echo $data['product_id']; ?>" min="1" oninput="adjustInputValue(this)"></p>
                         <center>
-                            <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'yes')">Transact Now</button>
+                            <!-- <button class="btn" onclick="addQTY('<?php //echo $data['product_id']; ?>', 'yes')">Transact Now</button> -->
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'no')">Add to POS</button>
                         </center>
                     <?php
