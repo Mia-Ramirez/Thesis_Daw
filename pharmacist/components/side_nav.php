@@ -14,6 +14,10 @@
         <i class="fas fa-user"></i>
         <a href=<?php echo $base_url."pharmacist/customer/index.php";?>>Customer</a>
     </div>
+    <div id="nav_messages" class="menu">
+        <i class="fas fa-envelope"></i>
+        <a href=<?php echo $base_url."pharmacist/messages/index.php";?>>Message</a>
+    </div>
     <div id="nav_order" class="menu">
         <i class="fas fa-cart-shopping"></i>
         <a href=<?php echo $base_url."pharmacist/order/index.php";?>>Order</a>

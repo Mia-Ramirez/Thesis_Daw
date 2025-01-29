@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 21, 2025 at 12:50 AM
+-- Generation Time: Jan 26, 2025 at 02:58 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -203,7 +203,21 @@ INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_record
 (3, 'product', 2, 'Add Stock: 100 quantity B20250101-003', '2025-01-20 22:53:13', 4);
 
 -- --------------------------------------------------------
+--
+-- Table structure for table `messages`
+--
 
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
+  `employee_id` int(11) DEFAULT NULL,
+  `inquiry` text NOT NULL,
+  `date_inquired` datetime NOT NULL DEFAULT current_timestamp(),
+  `response` text DEFAULT NULL,
+  `inquiry_attachment_path` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
 --
 -- Table structure for table `pos_cart`
 --
@@ -467,6 +481,14 @@ ALTER TABLE `history`
   ADD KEY `recorded_by` (`user_id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `customer` (`customer_id`),
+  ADD KEY `employee` (`employee_id`);
+
+--
 -- Indexes for table `pos_cart`
 --
 ALTER TABLE `pos_cart`
@@ -594,6 +616,12 @@ ALTER TABLE `history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `pos_cart`
 --
 ALTER TABLE `pos_cart`
@@ -694,6 +722,13 @@ ALTER TABLE `customer_prescription`
 --
 ALTER TABLE `employee`
   ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`id`) ON DELETE SET NULL,
+  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`) ON DELETE NO ACTION;
 
 --
 -- Constraints for table `prescription_history`

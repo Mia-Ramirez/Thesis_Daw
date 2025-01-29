@@ -17,8 +17,8 @@
     };
 
     function sendSMSViaInfoBIP($receiver_mobile_number, $message){
-        $INFOBIP_API_BASE_URL = "";
-        $INFO_BIP_API_KEY = "";
+        $INFOBIP_API_BASE_URL = "1g1k59.api.infobip.com";
+        $INFO_BIP_API_KEY = "b532cacc3740f7d37d64d36fc99ed8d4-0572894d-e95d-4e77-8f2d-62033b656ffd";
 
         $ch = curl_init('https://'.$INFOBIP_API_BASE_URL.'/sms/2/text/advanced');
         
