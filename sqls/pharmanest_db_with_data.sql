@@ -370,7 +370,7 @@ INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `f
 (4, 3, 1, 2, 4, 0, NULL, 'order', NULL, NULL, NULL),
 (5, 2, 2, 3, 3, 0, NULL, 'order', NULL, NULL, NULL),
 (6, 2, NULL, NULL, 1, 0, 2, 'transaction', 10, NULL, 20),
-(7, 1, NULL, NULL, 1, 0, 2, 'transaction', 5, NULL, 20),
+(7, 1, NULL, NULL, 1, 0, 2, 'transaction', 5, NULL, 0),
 (8, 1, 2, 4, 13, 0, 3, 'transaction', 5, NULL, 0);
 
 -- --------------------------------------------------------
