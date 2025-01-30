@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2025 at 02:58 AM
+-- Generation Time: Jan 29, 2025 at 12:52 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,17 +38,18 @@ CREATE TABLE `batch` (
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
-  `batch_cost` double NOT NULL
+  `batch_cost` double NOT NULL,
+  `batch_selling_price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `batch`
 --
 
-INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`) VALUES
-(1, 'B20250101-001', '2025-01-21', '2027-01-01', 1, 1, 3, 200, NULL, NULL, 4),
-(2, 'B20250101-002', '2025-01-21', '2027-01-01', 1, 3, 3, 100, NULL, NULL, 11),
-(3, 'B20250101-003', '2025-01-21', '2026-01-01', 1, 2, 3, 100, NULL, NULL, 9);
+INSERT INTO `batch` (`id`, `reference_number`, `date_received`, `expiration_date`, `supplier_id`, `product_id`, `employee_id`, `received_quantity`, `date_disposed`, `disposed_quantity`, `batch_cost`, `batch_selling_price`) VALUES
+(1, 'B20250101-001', '2025-01-21', '2027-01-01', 1, 1, 3, 200, NULL, NULL, 4, 0),
+(2, 'B20250101-002', '2025-01-21', '2027-01-01', 1, 3, 3, 100, NULL, NULL, 11, 0),
+(3, 'B20250101-003', '2025-01-21', '2026-01-01', 1, 2, 3, 100, NULL, NULL, 9, 0);
 
 -- --------------------------------------------------------
 
@@ -118,8 +119,8 @@ CREATE TABLE `customer_cart` (
 --
 
 INSERT INTO `customer_cart` (`id`, `customer_id`, `selected_discount`) VALUES
-(1, 2, 'Senior Citizen'),
-(2, 1, 'Person With Disabilities');
+(1, 2, 'NULL'),
+(2, 1, 'NULL');
 
 -- --------------------------------------------------------
 
@@ -137,6 +138,16 @@ CREATE TABLE `customer_order` (
   `remarks` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `customer_order`
+--
+
+INSERT INTO `customer_order` (`id`, `customer_id`, `date_ordered`, `status`, `reference_number`, `selected_discount`, `remarks`) VALUES
+(1, 2, '2025-01-29 07:35:14', 'picked_up', '20250129003514-2', '', NULL),
+(2, 2, '2025-01-29 07:35:51', 'placed', '20250129003551-2', 'Senior Citizen', NULL),
+(3, 1, '2025-01-29 07:40:28', 'for_pickup', '20250129004028-1', 'Person With Disabilities', NULL),
+(4, 1, '2025-01-29 07:51:27', 'picked_up', '20250129005127-1', '', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -149,6 +160,13 @@ CREATE TABLE `customer_prescription` (
   `reference_name` varchar(256) DEFAULT NULL,
   `prescription_photo` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `customer_prescription`
+--
+
+INSERT INTO `customer_prescription` (`id`, `customer_id`, `reference_name`, `prescription_photo`) VALUES
+(1, 2, 'CB P1', 'http://localhost/pharmanest/assets/photos/amoxicillin_prescription_B.jpeg');
 
 -- --------------------------------------------------------
 
@@ -200,9 +218,29 @@ CREATE TABLE `history` (
 INSERT INTO `history` (`id`, `object_type`, `object_id`, `remarks`, `date_recorded`, `user_id`) VALUES
 (1, 'product', 1, 'Add Stock: 200 quantity B20250101-001', '2025-01-20 22:44:03', 4),
 (2, 'product', 3, 'Add Stock: 100 quantity B20250101-002', '2025-01-20 22:52:21', 4),
-(3, 'product', 2, 'Add Stock: 100 quantity B20250101-003', '2025-01-20 22:53:13', 4);
+(3, 'product', 2, 'Add Stock: 100 quantity B20250101-003', '2025-01-20 22:53:13', 4),
+(4, 'order', 1, 'Order Placed', '2025-01-28 23:35:14', 5),
+(5, 'order', 2, 'Order Placed', '2025-01-28 23:35:51', 5),
+(6, 'order', 1, 'Moved to \"Preparing\"', '2025-01-28 23:37:19', 4),
+(7, 'order', 1, 'Moved to \"For Pickup\"', '2025-01-28 23:37:27', 4),
+(8, 'product', 1, 'Sold: 6 quantity SR#000001', '2025-01-28 23:37:55', 4),
+(9, 'transaction', 1, 'Transacted: 1 item(s) TR#20250129-003755', '2025-01-28 23:37:55', 4),
+(10, 'order', 1, 'Moved to \"Picked-up\"', '2025-01-28 23:37:55', 4),
+(11, 'order', 3, 'Order Placed', '2025-01-28 23:40:28', 2),
+(12, 'order', 3, 'Moved to \"Preparing\"', '2025-01-28 23:40:37', 4),
+(13, 'order', 3, 'Moved to \"For Pickup\"', '2025-01-28 23:40:52', 4),
+(14, 'product', 2, 'Sold: 1 quantity SR#000002', '2025-01-28 23:50:15', 3),
+(15, 'product', 1, 'Sold: 1 quantity SR#000002', '2025-01-28 23:50:15', 3),
+(16, 'transaction', 2, 'Transacted: 2 item(s) TR#20250129-005015', '2025-01-28 23:50:15', 3),
+(17, 'order', 4, 'Order Placed', '2025-01-28 23:51:27', 2),
+(18, 'order', 4, 'Moved to \"Preparing\"', '2025-01-28 23:51:36', 4),
+(19, 'order', 4, 'Moved to \"For Pickup\"', '2025-01-28 23:51:38', 4),
+(20, 'product', 1, 'Sold: 13 quantity SR#000003', '2025-01-28 23:51:50', 4),
+(21, 'transaction', 3, 'Transacted: 1 item(s) TR#20250129-005150', '2025-01-28 23:51:50', 4),
+(22, 'order', 4, 'Moved to \"Picked-up\"', '2025-01-28 23:51:50', 4);
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `messages`
 --
@@ -218,6 +256,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `pos_cart`
 --
@@ -233,7 +272,8 @@ CREATE TABLE `pos_cart` (
 --
 
 INSERT INTO `pos_cart` (`id`, `user_id`, `selected_discount`) VALUES
-(1, 4, NULL);
+(1, 4, NULL),
+(2, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -273,9 +313,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `name`, `price`, `current_quantity`, `applicable_discounts`, `prescription_is_required`, `photo`, `rack_location`, `maintaining_quantity`, `cost`) VALUES
-(1, 'Biogesic', 5, 200, 'Both', 0, 'http://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50, 4),
-(2, 'Loperamide', 10, 100, 'Both', 0, 'http://localhost/pharmanest/assets/photos/loperamide.png', 'Location 1', 50, 9),
-(3, 'RiteMed Amoxicillin', 12, 100, 'Both', 1, 'http://localhost/pharmanest/assets/photos/amoxicillin.jpg', 'Location 1', 50, 11),
+(1, 'Biogesic', 5, 180, 'None', 0, 'http://localhost/pharmanest/assets/photos/biogesic.png', 'Location 1', 50, 4),
+(2, 'Loperamide', 10, 99, 'Both', 0, 'http://localhost/pharmanest/assets/photos/loperamide.png', 'Location 1', 50, 9),
+(3, 'RiteMed Amoxicillin', 12, 100, 'Senior Citizen', 1, 'http://localhost/pharmanest/assets/photos/amoxicillin.jpg', 'Location 1', 150, 11),
 (4, 'Tempra for Kids', 120, 0, 'Person With Disabilities', 0, 'http://localhost/pharmanest/assets/photos/tempra_for_kids.png', 'Location 2', 50, NULL);
 
 -- --------------------------------------------------------
@@ -316,18 +356,22 @@ CREATE TABLE `product_line` (
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
   `line_price` double DEFAULT NULL,
-  `pos_cart_id` int(11) DEFAULT NULL
+  `pos_cart_id` int(11) DEFAULT NULL,
+  `line_discount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `product_line`
 --
 
-INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`) VALUES
-(1, 1, 1, NULL, 5, 1, NULL, 'cart', NULL, NULL),
-(2, 3, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
-(3, 2, 2, NULL, 1, 1, NULL, 'cart', NULL, NULL),
-(4, 3, 1, NULL, 1, 1, NULL, 'cart', NULL, NULL);
+INSERT INTO `product_line` (`id`, `product_id`, `cart_id`, `order_id`, `qty`, `for_checkout`, `transaction_id`, `line_type`, `line_price`, `pos_cart_id`, `line_discount`) VALUES
+(1, 2, 1, NULL, 2, 0, NULL, 'cart', NULL, NULL, NULL),
+(2, 1, 1, 1, 6, 0, 1, 'transaction', 5, NULL, 0),
+(4, 3, 1, 2, 4, 0, NULL, 'order', NULL, NULL, NULL),
+(5, 2, 2, 3, 3, 0, NULL, 'order', NULL, NULL, NULL),
+(6, 2, NULL, NULL, 1, 0, 2, 'transaction', 10, NULL, 20),
+(7, 1, NULL, NULL, 1, 0, 2, 'transaction', 5, NULL, 0),
+(8, 1, 2, 4, 13, 0, 3, 'transaction', 5, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -341,6 +385,13 @@ CREATE TABLE `product_prescription` (
   `prescription_id` int(11) DEFAULT NULL,
   `customer_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_prescription`
+--
+
+INSERT INTO `product_prescription` (`id`, `product_id`, `prescription_id`, `customer_id`) VALUES
+(1, 3, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -390,6 +441,15 @@ CREATE TABLE `transaction` (
   `amount_paid` double NOT NULL,
   `total` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`id`, `transaction_date`, `employee_id`, `order_id`, `receipt_reference`, `selected_discount`, `reference_number`, `amount_paid`, `total`) VALUES
+(1, '2025-01-29 07:37:55', 3, 1, 'SR#000001', '', 'TR#20250129-003755', 50, 30),
+(2, '2025-01-29 07:50:15', 2, NULL, 'SR#000002', 'Senior Citizen', 'TR#20250129-005015', 15, 13),
+(3, '2025-01-29 07:51:50', 3, 4, 'SR#000003', '', 'TR#20250129-005150', 100, 65);
 
 -- --------------------------------------------------------
 
@@ -571,49 +631,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer_cart`
 --
 ALTER TABLE `customer_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customer_order`
 --
 ALTER TABLE `customer_order`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `customer_prescription`
 --
 ALTER TABLE `customer_prescription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `history`
 --
 ALTER TABLE `history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -625,7 +685,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `pos_cart`
 --
 ALTER TABLE `pos_cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `prescription_history`
@@ -637,31 +697,31 @@ ALTER TABLE `prescription_history`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_line`
 --
 ALTER TABLE `product_line`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product_prescription`
 --
 ALTER TABLE `product_prescription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `temporary_record`
@@ -673,13 +733,13 @@ ALTER TABLE `temporary_record`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

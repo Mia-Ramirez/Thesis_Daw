@@ -217,7 +217,7 @@
                 const pageHeight = document.documentElement.scrollHeight;
                 
                 // If user has reached the bottom, enable the button
-                if (scrollPosition >= pageHeight) {
+                if ((scrollPosition >= pageHeight) && button) {
                     button.disabled = false;
                 }
             }

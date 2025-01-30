@@ -93,13 +93,13 @@
                         <div class="row">
                             <p class="column">
                                 <label for="product_name">Name:</label><br>
-                                <input type="text" id="product_name" name="product_name" value="<?php echo $row["name"];?>">
+                                <input style="width:165%;" type="text" id="product_name" name="product_name" value="<?php echo $row["name"];?>">
                             </p>
 
-                            <p class="column">
+                            <!-- <p class="column">
                                 <label for="price">Price:</label><br>
-                                <input type="number" step="0.01" min="1" id="price" name="price" value="<?php echo $row["price"];?>">
-                            </p>
+                                <input type="number" step="0.01" min="1" id="price" name="price" value="<?php //echo $row["price"];?>">
+                            </p> -->
                         </div>
                         
                         <div class="row">

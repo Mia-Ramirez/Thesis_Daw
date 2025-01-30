@@ -12,7 +12,7 @@ amountInput.addEventListener('input', function() {
         if (change < 0){
             confirm_button_is_disabled = true;
         };
-        changeSpan.innerText = change;
+        changeSpan.innerText = parseFloat(change).toFixed(2);
     } else {
         confirm_button_is_disabled = true;
         changeSpan.innerText = null;

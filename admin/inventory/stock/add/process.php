@@ -14,6 +14,7 @@
         $_SESSION["supplier_name"] = $modal_supplier_name;
 
         $cost = mysqli_real_escape_string($conn, $_POST["cost"]);
+        $selling_price = mysqli_real_escape_string($conn, $_POST["selling_price"]);
         $reference_number = mysqli_real_escape_string($conn, $_POST["reference_number"]);
         $quantity = mysqli_real_escape_string($conn, $_POST["quantity"]);
         $expiration_date = mysqli_real_escape_string($conn, $_POST["expiration_date"]);
@@ -74,9 +75,9 @@
             $employee_id = $row['id'];
 
             // BATCH
-            $sqlInsertBatch = "INSERT INTO
-                                    batch(reference_number, expiration_date, supplier_id, product_id, employee_id, received_quantity, batch_cost)
-                                    VALUES ('$reference_number','$expiration_date','$supplier_id','$product_id','$employee_id','$quantity','$cost')";
+            $sqlInsertBatch = "INSERT
+                                    INTO batch(reference_number, expiration_date, supplier_id, product_id, employee_id, received_quantity, batch_cost, batch_selling_price)
+                                    VALUES ('$reference_number','$expiration_date','$supplier_id','$product_id','$employee_id','$quantity','$cost', '$selling_price')";
 
             if(!mysqli_query($conn,$sqlInsertBatch)){
                 die("Something went wrong");
@@ -98,7 +99,8 @@
             $row = mysqli_fetch_array($product_result);
             $current_quantity = $row['current_quantity'] + $quantity;
 
-            $sqlUpdateProduct = "UPDATE product SET cost = '$cost', current_quantity='$current_quantity' WHERE id = $product_id";
+            // $sqlUpdateProduct = "UPDATE product SET cost = '$cost', current_quantity='$current_quantity' WHERE id = $product_id";
+            $sqlUpdateProduct = "UPDATE product SET cost = '$cost', current_quantity='$current_quantity', price='$selling_price' WHERE id = $product_id";
             if(!mysqli_query($conn,$sqlUpdateProduct)){
                 die("Something went wrong");
             };

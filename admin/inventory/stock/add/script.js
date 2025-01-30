@@ -26,6 +26,7 @@ function checkSelection() {
 function openModal(action, id = '', name = '') {
     document.getElementById('supplier-option').removeAttribute('required');
     document.getElementById('cost_input').removeAttribute('required');
+    document.getElementById('selling_price_input').removeAttribute('required');
     document.getElementById('reference_number_input').removeAttribute('required');
     document.getElementById('quantity_input').removeAttribute('required');
     document.getElementById('expiration_date_input').removeAttribute('required');
@@ -51,6 +52,7 @@ function closeModal() {
 
     document.getElementById('supplier-option').setAttribute('required', 'true');
     document.getElementById('cost_input').setAttribute('required', 'true');
+    document.getElementById('selling_price_input').setAttribute('required', 'true');
     document.getElementById('reference_number_input').setAttribute('required', 'true');
     document.getElementById('quantity_input').setAttribute('required', 'true');
     document.getElementById('expiration_date_input').setAttribute('required', 'true');

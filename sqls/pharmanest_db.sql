@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2025 at 02:58 AM
+-- Generation Time: Jan 28, 2025 at 12:10 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -38,7 +38,8 @@ CREATE TABLE `batch` (
   `received_quantity` int(11) NOT NULL,
   `date_disposed` date DEFAULT NULL,
   `disposed_quantity` int(11) DEFAULT NULL,
-  `batch_cost` double NOT NULL
+  `batch_cost` double NOT NULL,
+  `batch_selling_price` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -151,6 +152,7 @@ CREATE TABLE `history` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `messages`
 --
@@ -166,6 +168,7 @@ CREATE TABLE `messages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
+
 --
 -- Table structure for table `pos_cart`
 --
@@ -238,7 +241,8 @@ CREATE TABLE `product_line` (
   `transaction_id` int(11) DEFAULT NULL,
   `line_type` varchar(128) NOT NULL,
   `line_price` double DEFAULT NULL,
-  `pos_cart_id` int(11) DEFAULT NULL
+  `pos_cart_id` int(11) DEFAULT NULL,
+  `line_discount` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

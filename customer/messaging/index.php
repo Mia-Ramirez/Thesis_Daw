@@ -3,6 +3,9 @@
     session_start();
     $base_url = $_SESSION["BASE_URL"];
     $doc_root = $_SESSION["DOC_ROOT"];
+    if (isset($_SESSION['from_prescription_page'])){
+        unset($_SESSION['from_prescription_page']);
+    };
 ?>
 <!DOCTYPE html>
 <html lang="en">

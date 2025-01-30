@@ -196,6 +196,7 @@
                                     };
                                     $displayed_products[] = $data['product_name'];
                                     $dictionary = [
+                                        "name" => $data['product_name'],
                                         "lineID" => $data['line_id'],
                                         "price" => $price,
                                         "discountedPrice" => $price,
@@ -215,7 +216,7 @@
                                     <br/>Stock:<?php echo $data['max_quantity']; ?>
                                 </td>
                                 <td class="price">₱<?php echo $price; ?></td>
-                                <td class="discounted-price">₱<?php echo $price;?></td>
+                                <td class="discounted-price">₱<?php echo $price; ?></td>
                                 <td><input type="number" max="<?php echo $data['max_quantity']; ?>" value="<?php echo $data['qty'];?>" class="quantity" data-index="<?php echo $data['line_id']; ?>" min="1" step="1" oninput="adjustInputValue(this)"></td>
                                 <td class="total">₱0</td>
                                 <td>
@@ -284,6 +285,20 @@
                         </select>
                         <?php if (isset($_SESSION['selected_discount'])){ unset($_SESSION['selected_discount']); } ?>
                     </div>
+
+                    <table id="product_list">
+                        <thead>
+                            <tr>
+                                <th>PRODUCT</th>
+                                <th>PRICE</th>
+                                <th>QTY</th>
+                                <th>TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    
                     <div id="summary">
                         <p>Subtotal: ₱<span id="subtotal">0</span></p>
                         <p>Discount: ₱<span id="discountAmount">0</span></p>

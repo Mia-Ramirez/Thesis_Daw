@@ -102,7 +102,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let checkout_is_disabled = true;
         // prescription_is_required = false;
 
+        var product_list = document.getElementById('product_list');
+        
         products.forEach((product, index) => {
+            var product_line_id = document.getElementById('product_'+product.lineID);
             if (product.selected == true || product.selected == 'true') {
                 checkout_is_disabled = false;
                 if (selected_ids === ''){
@@ -123,8 +126,42 @@ document.addEventListener('DOMContentLoaded', () => {
                 discountAmount += discount;
                 document.querySelectorAll('.total')[index].textContent = '₱'+total.toFixed(2);
                 
+                if (product_line_id){ // If the product exists in table body, update the quantity and price
+                    var cells = product_line_id.getElementsByTagName('td');
+                    cells[0].textContent = product.name;
+                    if (product.discountedPrice != product.price){
+                        cells[0].innerHTML = product.name + "<br/>(DISC)";
+                    }
+                    cells[1].textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
+                    cells[2].textContent = product.quantity;
+                    cells[3].textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
+
+                } else { // Else create a new row
+                    const table = product_list.getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow(); // Create a new row
+
+                    newRow.id = 'product_'+product.lineID; // Assign a unique ID to the new row
+
+                    const cell0 = newRow.insertCell(0);
+                    const cell1 = newRow.insertCell(1);
+                    const cell2 = newRow.insertCell(2);
+                    const cell3 = newRow.insertCell(3);
+                    
+                    cell0.textContent = product.name;
+                    if (product.discountedPrice != product.price){
+                        cell0.innerHTML = product.name + "<br/>(DISC)";
+                    }
+                    cell1.textContent = '₱'+ parseFloat(product.discountedPrice).toFixed(2);
+                    cell2.textContent = product.quantity;
+                    cell3.textContent = '₱'+ (product.discountedPrice * product.quantity).toFixed(2);
+                };
             } else {
                 document.querySelectorAll('.total')[index].textContent = '₱0';
+
+                // Remove the row in the table
+                if (product_line_id){
+                    product_line_id.parentNode.removeChild(product_line_id);
+                };
             };
         });
         

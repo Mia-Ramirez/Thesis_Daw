@@ -2,6 +2,9 @@
     session_start();
     $base_url = $_SESSION["BASE_URL"];
     $doc_root = $_SESSION["DOC_ROOT"];
+    if (isset($_SESSION['from_prescription_page'])){
+        unset($_SESSION['from_prescription_page']);
+    };
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,7 +83,8 @@
                                         name AS product_name,
                                         price,
                                         current_quantity,
-                                        photo
+                                        photo,
+                                        applicable_discounts
                                     FROM product_categories mc
                                     JOIN product p ON mc.product_id = p.id
                                     ";
@@ -120,9 +124,21 @@
                 <center>
                     <img class="img" src="<?php echo $data['photo']; ?>" alt="<?php echo $data['product_name']; ?>">
                 </center>
-                <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <p><?php echo $data['product_name']; ?></p>
+                <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <?php
+                    if ($data['applicable_discounts'] != 'None'){
+                        $discounted_price = $data['price'] * (1 - 0.2);
+                        if ($data['applicable_discounts'] == "Both"){
+                            $discount_label = "for SC/PWD";
+                        } elseif ($data['applicable_discounts'] == "Senior Citizen"){
+                            $discount_label = "for SC";
+                        } else {
+                            $discount_label = "for PWD";
+                        }
+                        echo "<p style='color: green; '>Price ".$discount_label." &#8369 ".$discounted_price."</p>";
+                    };
+                    
                     if ($data['current_quantity'] == '0'){
                         echo "<p style='color: red;'>Out of Stock</p>";
                     } else {

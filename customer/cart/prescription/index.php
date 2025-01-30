@@ -218,6 +218,7 @@
             };
 
             function redirectToOrderPage() {
+                <?php $_SESSION['from_prescription_page']='1'; ?>
                 window.location.href = '../confirm/index.php';
             };
 

@@ -79,10 +79,16 @@
         
             <div class="details">
             <?php
-                $sqlGetProducts = "SELECT p.id AS product_id, name AS product_name, price, photo, current_quantity
-                                        FROM product_categories mc
-                                        JOIN product p ON mc.product_id = p.id
-                                    ";
+                $sqlGetProducts = "SELECT
+                        p.id AS product_id,
+                        name AS product_name,
+                        price,
+                        photo,
+                        current_quantity,
+                        applicable_discounts
+                    FROM product_categories mc
+                    JOIN product p ON mc.product_id = p.id
+                ";
 
                 if ($category_id){
                     $sqlGetProducts .= " WHERE p.id IN (SELECT product_id FROM product_categories WHERE FIND_IN_SET($category_id, category_ids) > 0)";
@@ -119,16 +125,28 @@
                 <center>
                     <img class="img" src="<?php echo $data['photo']; ?>" alt="<?php echo $data['product_name']; ?>">
                 </center>
-                <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <p><?php echo $data['product_name']; ?></p>
+                <p>Price &#8369 <?php echo $data['price']; ?></p>
                 <?php
+                    if ($data['applicable_discounts'] != 'None'){
+                        $discounted_price = $data['price'] * (1 - 0.2);
+                        if ($data['applicable_discounts'] == "Both"){
+                            $discount_label = "for SC/PWD";
+                        } elseif ($data['applicable_discounts'] == "Senior Citizen"){
+                            $discount_label = "for SC";
+                        } else {
+                            $discount_label = "for PWD";
+                        }
+                        echo "<p style='color: green; '>Price ".$discount_label." &#8369 ".$discounted_price."</p>";
+                    };
+
                     if ($data['current_quantity'] == '0'){
                         echo "<p style='color: red;'>Out of Stock</p>";
                     } else {
                         ?>
                         <p>Stock: <?php echo $data['current_quantity']; ?> | QTY: <input value="1" step="1" type="number" max="<?php echo $data['current_quantity']; ?>" class="quantity" id="qty_<?php echo $data['product_id']; ?>" min="1" oninput="adjustInputValue(this)"></p>
                         <center>
-                            <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'yes')">Transact Now</button>
+                            <!-- <button class="btn" onclick="addQTY('<?php //echo $data['product_id']; ?>', 'yes')">Transact Now</button> -->
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'no')">Add to POS</button>
                         </center>
                     <?php

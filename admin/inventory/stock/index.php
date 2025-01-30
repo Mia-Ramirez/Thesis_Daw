@@ -28,17 +28,32 @@
             include($doc_root.'/utils/connect.php');
             
             $sqlGetStockProducts = "SELECT
-                                            id,
-                                            name,
-                                            current_quantity,
-                                            maintaining_quantity FROM product";
+                                        p.id,
+                                        p.name,
+                                        p.current_quantity,
+                                        p.maintaining_quantity,
+                                        COUNT(b.id) AS batch_count
+                                    FROM product p
+                                    LEFT JOIN batch b ON p.id=b.product_id
+                                    ";
 
+            $stock_type = 'both';
             $filter_str = "";
             if (isset($_GET['is_low'])){
-                $filter_str=" WHERE current_quantity < maintaining_quantity";
+                $stock_type = 'in';
+                $filter_str=" WHERE current_quantity BETWEEN 1 AND maintaining_quantity";
+            };
+
+            if (isset($_GET['is_zero'])){
+                $stock_type = 'in';
+                $filter_str=" WHERE current_quantity=0";
+            };
+
+            if (isset($_GET['stock_type'])){
+                $stock_type = $_GET['stock_type'];
             };
             
-            $sqlGetStockProducts .= $filter_str." ORDER BY current_quantity ASC, maintaining_quantity ASC";
+            $sqlGetStockProducts .= $filter_str." GROUP BY p.id ORDER BY current_quantity ASC, maintaining_quantity ASC";
 
             $result = mysqli_query($conn,$sqlGetStockProducts);
         ?>
@@ -63,7 +78,14 @@
                     <tr>
                         <th>Product</th>
                         <th>Current Number of Stock</th>
-                        <th>Maintaining Quantity</th>
+                        <?php
+                            if (in_array($stock_type, ['in', 'both'])){
+                                echo '<th>Maintaining Quantity</th>';
+                            };
+                            if (in_array($stock_type, ['out', 'both'])){
+                                echo '<th>Number of Batches</th>';
+                            };
+                        ?>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -76,10 +98,25 @@
                         
                         <td><?php echo $data["name"];?></td>
                         <td><?php echo $data["current_quantity"];?></td>
-                        <td><?php echo $data["maintaining_quantity"];?></td>
+                        <?php
+                            if (in_array($stock_type, ['in', 'both'])){
+                                echo '<td>'.$data["maintaining_quantity"].'</td>';
+                            };
+                            if (in_array($stock_type, ['out', 'both'])){
+                                echo '<td>'.$data["batch_count"].'</td>';
+                            };
+                        ?>
                         <td>
-                            <a href="./add/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a>
-                            <a href="../history/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
+                            <?php
+                                if (in_array($stock_type, ['in', 'both'])){
+                                    echo '<a href="./add/index.php?product_id='.$data['id'].'"><i class="button-icon fas fa-plus" title="Stock In"></i></a>';
+                                };
+                                if (in_array($stock_type, ['out', 'both'])){
+                                    echo '<a href="./batch/index.php?product_id='.$data['id'].'"><i class="button-icon fas fa-minus" title="Stock Out"></i></a>';
+                                };
+                            ?>
+                            
+                            <a href="../history/index.php?stock_type=<?php echo $stock_type; ?>&product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
                         </td>
                     </tr>
                     <?php

@@ -5,8 +5,8 @@
     $customer_id = $_SESSION['customer_id'];
     $user_id = $_SESSION['user_id'];
 
-    $selected_discount = $_SESSION['selected_discount'];
-    unset($_SESSION["selected_discount"]);
+    // $selected_discount = $_SESSION['selected_discount'];
+    // unset($_SESSION["selected_discount"]);
 
     include($doc_root.'/utils/connect.php');
 
@@ -16,6 +16,11 @@
     
     include($doc_root.'/utils/email.php');
     include($doc_root.'/utils/common_fx_and_const.php');
+
+    $selected_discount= mysqli_real_escape_string($conn, $_POST['selected_discount']);
+    if ($selected_discount == 'No Discount'){
+        $selected_discount = NULL;
+    };
 
     $sqlGetProductLines = "SELECT pl.id AS product_line_id
                                     FROM product_line pl
@@ -70,9 +75,16 @@
                 "Hello!<br/>Your Order ".$order_reference_number." has been placed.<br/>" 
             );
         };
+        
+        $customer_cart_id = $_SESSION['customer_cart_id'];
+        $sqlUpdateCart = "UPDATE customer_cart SET selected_discount='NULL' WHERE id=$customer_cart_id";    
+        if(!mysqli_query($conn,$sqlUpdateCart)){
+            die("Something went wrong");
+        };
 
         $_SESSION["message_string"] = "Order successfully placed!";
         $_SESSION["message_class"] = "info";
+        unset($_SESSION['selected_discount']);
         header("Location:../../home/index.php");
         
     } else {

@@ -11,7 +11,7 @@
             if ($_POST['action'] === 'add_product') {
                 $category_names = mysqli_real_escape_string($conn, $_POST["category_names"]);
                 $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
-                $price = mysqli_real_escape_string($conn, $_POST["price"]);
+                // $price = mysqli_real_escape_string($conn, $_POST["price"]);
                 $valid_discounts = mysqli_real_escape_string($conn, $_POST["valid_discounts"]);
                 $required_prescription = mysqli_real_escape_string($conn, $_POST["required_prescription"]);
                 $rack_location = mysqli_real_escape_string($conn, $_POST["rack_location"]);
@@ -20,7 +20,7 @@
                 $imagePath = '';
                 
                 $_SESSION["product_name"] = $product_name;
-                $_SESSION["price"] = $price;
+                // $_SESSION["price"] = $price;
                 $_SESSION["rack_location"] = $rack_location;
                 $_SESSION["maintaining_quantity"] = $maintaining_quantity;
                 
@@ -107,7 +107,8 @@
                     exit;
                 };
                 
-                $sqlInsertProduct = "INSERT INTO product(name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$product_name','$price','$valid_discounts','$required_prescription','$imagePath','$rack_location','$maintaining_quantity')";
+                // $sqlInsertProduct = "INSERT INTO product(name, price, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$product_name','$price','$valid_discounts','$required_prescription','$imagePath','$rack_location','$maintaining_quantity')";
+                $sqlInsertProduct = "INSERT INTO product(name, applicable_discounts, prescription_is_required, photo, rack_location, maintaining_quantity) VALUES ('$product_name','$valid_discounts','$required_prescription','$imagePath','$rack_location','$maintaining_quantity')";
                 if(!mysqli_query($conn,$sqlInsertProduct)){
                     die("Something went wrong");
                 };
@@ -122,7 +123,7 @@
                 $_SESSION["message_class"] = "success";
 
                 unset($_SESSION["product_name"]);
-                unset($_SESSION["price"]);
+                // unset($_SESSION["price"]);
 
                 header("Location:index.php");
                 exit;

@@ -62,6 +62,15 @@
     border-radius: 5%
 }
 
+.blank {
+    background-color: white;
+}
+
+.blank:hover {
+    background-color: white;
+    cursor: default;
+}
+
 .box{
     box-sizing: border-box;
     width: 85%;
