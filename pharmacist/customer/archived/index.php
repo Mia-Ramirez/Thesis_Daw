@@ -90,7 +90,7 @@
                         <td><?php echo $data["email"];?></td>
                         <td>
                             <a href="./process.php?action=recover&customer_id=<?php echo $data["customer_id"]; ?>">Recover</a>
-                            <!-- | <a href="./process.php?action=delete&customer_id=<?php?>">Delete</a> -->
+                            <!-- | <a href="./process.php?action=delete&customer_id=<?//php?>">Delete</a> -->
                         </td>
                     </tr>
                     <?php

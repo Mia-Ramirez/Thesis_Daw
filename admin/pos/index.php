@@ -260,7 +260,7 @@
                         unset($_SESSION["message_class"]);
                         }
                     ?>
-                    <h2>Summary</h2>
+                    <h2>Order</h2>
                     <?php
                         if ($order_id){
                             ?>

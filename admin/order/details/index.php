@@ -243,10 +243,10 @@
                         <button class="action_button next_status" type="submit" name="action" value="preparing">Preparing</button>
                         <?php }?>
                         <?php if ($row['status'] == 'preparing'){ ?>
-                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Ready for Pick-up</button>
+                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Ready for Pick-Up</button>
                         <?php } ?>
                         <?php if ($row['status'] == 'for_pickup'){ ?>
-                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>
+                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Next</button>
                         <?php } ?>
                         <button class="action_button<?php if (in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>

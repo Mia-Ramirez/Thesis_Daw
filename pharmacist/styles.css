@@ -128,3 +128,7 @@ div.head {
     background:linear-gradient(to bottom right, lightblue, blue);
     cursor: pointer;
 }
+
+#clickable{
+    color: black !important;
+}

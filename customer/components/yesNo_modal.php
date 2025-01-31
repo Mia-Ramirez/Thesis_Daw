@@ -1,4 +1,4 @@
-<div class="custom-modal" id="yesNoModal">
+<div class="custom-modal" id="yesNoModal" style="z-index: 1000;">
     <div class="modal-content">
         <p id="modal_message">Do you want to proceed?</p>
         <form action="process.php" method="POST">

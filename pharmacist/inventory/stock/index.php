@@ -78,8 +78,8 @@
                         <td><?php echo $data["current_quantity"];?></td>
                         <td><?php echo $data["maintaining_quantity"];?></td>
                         <td>
-                            <a style="color: black;" href="./add/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-plus" title="Stock In"></i></a>
-                            <a style="color: black;" href="../history/index.php?product_id=<?php echo $data["id"]; ?>"><i class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
+                            <a style="color: black !important;" href="./add/index.php?product_id=<?php echo $data["id"]; ?>"><i id="clickable" class="button-icon fas fa-plus" title="Stock In"></i></a>
+                            <a style="color: black !important;" href="../history/index.php?product_id=<?php echo $data["id"]; ?>"><i id="clickable" class="button-icon fas fa-clock-rotate-left" title="View History"></i></a>
                         </td>
                     </tr>
                     <?php

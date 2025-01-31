@@ -11,9 +11,9 @@
     border-radius: 20% solid black;
     padding-bottom: 1%;
     padding-left: 1%;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 4%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 2%;
     margin-bottom: 1%;
 }
 .img{
@@ -36,22 +36,25 @@
 .search{
     background-color: transparent;
     width: 70%;
-    margin-top: 2%;
+    margin-top: 1%;
     margin-left: 0.5%;
     margin-bottom: 0.5%;
+    position: fixed;
+    z-index: 1000;
 }
 input{
     padding: 1%; 
     width: 25%;
 }
   .btns{
-    background-color: lightsalmon; 
+    background-color: red; 
     padding: 1%;
-    border: solid 1px black;
+    border: solid 1px white;
 }
 .categories{
     width: 100%;
     background: transparent;
+    margin-top: 3%;
 }
 .categories {
     display: flex;
