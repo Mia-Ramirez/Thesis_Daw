@@ -23,7 +23,7 @@
             $current_page_title = "point of sale";
             include '../../components/top_nav.php';
         ?> 
-
+<div class="space" style="margin-top: 9%;"></div>
         <?php
             if (!isset($_SESSION['cart_id'])){
                 header("Location: ../index.php");

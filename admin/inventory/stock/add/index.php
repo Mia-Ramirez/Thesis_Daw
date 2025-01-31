@@ -65,7 +65,7 @@
             </div>
         </div>
         
-        <div class="main">
+        <div class="main" style="margin-top: 11%;">
             <div class="row">
 
             <?php
@@ -108,7 +108,7 @@
 
                     <div class="row">
                         <p class="column">
-                            <label for="cost">Wholesale Price:</label><br>
+                            <label for="cost">Capital Cost:</label><br>
                             <input style="width: 60%" id="cost_input" type="number" step="0.01" min="1" name="cost" required value="<?php if(isset($_SESSION["cost"])){echo $_SESSION["cost"];unset($_SESSION["cost"]);}?>">
                         </p>
                         <p class="column">
@@ -136,7 +136,7 @@
                     </p>
                 </div>
 
-                <button id="add_stock" name="action" value="add_stock">Add Stock</button>
+                <button style="background-color: red; color:white" id="add_stock" name="action" value="add_stock">Add Stock</button>
             
             </div>
         </div>

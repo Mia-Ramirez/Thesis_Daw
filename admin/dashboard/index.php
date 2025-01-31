@@ -114,7 +114,7 @@
             }
         ?>
 
-        <div class="pot"  style="margin-top: 9%;">
+        <div class="pot"  style="margin-top: 3%;">
 	        <div class="main">
 				<h2 style="text-align: center;">Today's Report</h2>
 				<br>
@@ -158,15 +158,12 @@
                 <h2><?php echo $counter_values['expired_products']; ?></h2>
                 <p>Expired Products</p>
             </div>
-            <div class="card blank">
-            </div>
-            <div class="card blank">
-            </div>
+        <!--
             <div class="card" onclick="redirectToPage('sales_report/slow_moving','get_today=true')">
                 <h2><?php echo $counter_values['slow_moving_products']; ?></h2>
                 <p>Slow Moving Products</p>
             </div>
-
+        -->
             
         </div>
         </div>

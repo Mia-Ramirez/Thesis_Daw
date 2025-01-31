@@ -22,7 +22,7 @@
             $current_page_title = "order history";
             include '../../components/top_nav.php';
         ?> 
-
+        <div class="content" style="margin-top: 11%;">
 <?php
             include($doc_root.'/utils/connect.php');
 
@@ -111,7 +111,7 @@
 
             </table>
         </div>
-
+        </div>
         <script>
             window.onload = function() {
                 setActivePage("nav_order");

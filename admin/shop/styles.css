@@ -39,26 +39,29 @@
     margin-top: 2%;
     margin-left: 0.5%;
     margin-bottom: 0.5%;
+    position: fixed;
+    z-index: 1000;
 }
 input{
     padding: 1%; 
     width: 25%;
 }
-  .btns{
-    background-color: lightsalmon; 
+.btns{
+    background: linear-gradient(to bottom right, red,red);
     padding: 1%;
     border: solid 1px black;
+    color: white;
 }
 .categories{
     width: 100%;
-    background: transparent;
-    text-decoration: underline;
+    margin-top: 5%;
 }
 .categories {
     display: flex;
     overflow-x: auto;
     gap: 10px;
     padding: 10px 0;
+    
 }
 .categories button {
     flex: 0 0 auto;
@@ -68,6 +71,7 @@ input{
     cursor: pointer;
     white-space: nowrap; /* Prevents text from wrapping */
     width: auto; /* Ensures button width adjusts to text length */
+    
 }
 .categories button:hover {
     background-color: #e67e22;
@@ -147,7 +151,7 @@ input{
 }
 
 li a{
-    color: rgb(15, 15, 15); 
+    color: white; 
     font-size: 18px; 
     font-weight: bold; 
     margin-right: 25px;
@@ -164,7 +168,7 @@ button{
     width:100%;
     font-family:Arial;
     background-color:white;
-    color:black;
+    color:white;
     float:right;;
     margin-top:0px;
     margin-right:0px;
@@ -243,12 +247,9 @@ footer{
 
 .active-category {
     color: white !important;
+    background-color: tomato !important;
+    border-radius: 25% !important;
+    padding: 2% !important;
+    width: 2rem;
 }
 
-a {
-    color: black !important;
-}
-
-a.active {
-    color: white !important;
-}

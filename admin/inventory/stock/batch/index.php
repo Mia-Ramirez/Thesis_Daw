@@ -76,7 +76,7 @@
 
         <?php include './utils/disposeStockModal.php'; ?>
 
-        <div class="table" style="margin-top: 9%;">
+        <div class="table" style="margin-top: 11%;">
             <?php
                 if (isset($_SESSION["message_string"])) {
                     ?>

@@ -25,6 +25,7 @@
         
         <?php include '../../components/side_nav.php'; ?>
         
+        <div class="content" style="margin-top: 11%;">
         <?php
             $current_page_title = "list of categories";
             include '../../components/top_nav.php';
@@ -50,8 +51,8 @@
         <div class="search">
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-                <button class="btns" type="submit">Search</button>
-                <button type="button" class="btns" onclick="openModal('add')">Add Category</button>  
+                <button style="background-color: red; color: white;"  class="btns" type="submit">Search</button>
+                <button style="background-color: red; color: white;"  type="button" class="btns" onclick="openModal('add')">Add Category</button>  
             </form>
         </div>
         
@@ -110,6 +111,7 @@
                 </form>
                 
             </div>
+        </div>
         </div>
 
         <script src="script.js"></script>

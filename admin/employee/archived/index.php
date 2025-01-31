@@ -23,7 +23,7 @@
             $current_page_title = "archived employees";
             include '../../components/top_nav.php';
         ?> 
-
+  <div class="space" style="margin-top: 10%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.address, e.contact_number, u.email, e.id AS employee_id FROM employee e

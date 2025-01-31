@@ -22,7 +22,7 @@
             $current_page_title = "capital and revenue";
             include '../../components/top_nav.php';
         ?> 
-
+  <div class="space" style="margin-top: 11%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
 

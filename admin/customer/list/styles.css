@@ -47,13 +47,14 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: lightsalmon;
-    color: black;
+    background-color: red;
+    color: white;
   }
   
   .btns{
-    background-color: rgba(255, 255, 255, 0.836); 
+    background-color: red; 
     padding: 1%;
+    color: white;
     border: solid black 1px;
   }
   

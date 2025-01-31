@@ -55,7 +55,7 @@ th{
 .card {
     width: 20%;
     background-color: white;
-    float: right;
+    float: left;
     margin-top: 1%;
     text-align: center;
     border-radius: 5px;

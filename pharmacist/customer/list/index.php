@@ -23,7 +23,7 @@
             $current_page_title = "list of customers";
             include '../../components/top_nav.php';
         ?>
-
+<div class="space" style="margin-top: 9%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c

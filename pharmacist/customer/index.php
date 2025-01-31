@@ -22,7 +22,7 @@
             $current_page_title = "customers";
             include '../components/top_nav.php';
         ?>
-
+<div class="space" style="margin-top: 9%;"></div>
         <div class="main">
             <div class="card account-recovery" onclick="redirectToPage('archived')">
                 <h3>ARCHIVED</h3>

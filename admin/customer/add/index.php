@@ -24,7 +24,7 @@
             include '../../components/top_nav.php';
         ?>
 
-        <div class="main" style="margin-top: 9%;">
+        <div class="main" style="margin-top: 11%;">
             <div class="row">
                 <?php
                     if (isset($_SESSION["message_string"])) {
@@ -87,7 +87,7 @@
                         </p>
                     </div>
                     
-                    <button name="action" value="add_customer">Add</button>
+                    <button style="color: white; background-color: red;" name="action" value="add_customer">Add</button>
                 </form>
             </div>
         </div>

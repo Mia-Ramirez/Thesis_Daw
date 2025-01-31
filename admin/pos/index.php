@@ -14,7 +14,7 @@
         <?php include '../components/title.php'; ?>
     </head>
 
-    <body>
+    <body style="background-color: white;">
         <?php include '../components/unauth_redirection.php'; ?>
 
         <?php include '../components/side_nav.php'; ?>
@@ -153,7 +153,7 @@
             ";
         ?>
 
-        <div class="container" style="margin-top: 9%; margin-left: 15%">
+        <div class="container" style="margin-top: 11%; margin-left: 15%">
             <div class="cart-left" style="width: 60%;">
                 <div class="card-pos">
                     <form method="GET" action="">

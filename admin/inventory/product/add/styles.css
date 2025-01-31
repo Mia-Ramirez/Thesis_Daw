@@ -46,8 +46,8 @@
   
 
   button{
-	background-color: rgb(253, 253, 253);
-	color: rgb(5, 5, 5);
+	background-color: red;
+	color: white;
 	padding: 12px 20px;
 	border: none;
 	border-radius: 4px;
@@ -59,7 +59,7 @@
   }
 
   button:hover {
-	background-color: lightcoral;
+	background-color: navy;
   }
   
   /* Container for the image upload button */

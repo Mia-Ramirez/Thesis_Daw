@@ -43,10 +43,10 @@
             $result = mysqli_query($conn,$sqlGetCustomers);
         ?>
 
-        <div class="search" style="margin-top: 9%;">
+        <div class="search" style="margin-top: 11%;">
             <form method="GET" action="">
             <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-                <button class="btns" type="submit">Search</button>
+                <button style="background-color: red; color: white;" class="btns" type="submit">Search</button>
             </form>
         </div>
 

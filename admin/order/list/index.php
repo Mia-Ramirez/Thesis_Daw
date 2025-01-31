@@ -73,11 +73,11 @@
             
             $result = mysqli_query($conn,$sqlGetOrders);
         ?>
-
+        <div class="content" style="margin-top: 11%;">
         <div class="search">
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-                <button class="btns" type="submit">Search</button>
+                <button style="background-color: red; color: white;" class="btns" type="submit">Search</button>
             </form>
         </div>
 
@@ -132,7 +132,7 @@
 
             </table>
         </div>
-
+        </div>
         <script>
             window.onload = function() {
                 setActivePage("nav_order");

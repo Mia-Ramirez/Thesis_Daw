@@ -14,7 +14,7 @@
         <?php include '../components/title.php'; ?>
     </head>
 
-    <body style="background: linear-gradient(to bottom right, lightsalmon, white); background-repeat: no-repeat; background-attachment: fixed;">
+    <body>
         <?php include '../components/unauth_redirection.php'; ?>
 
         <?php include '../components/side_nav.php'; ?>
@@ -23,7 +23,7 @@
             $current_page_title = "shop";
             include '../components/top_nav.php';
         ?>
-
+<div class="space" style="margin-top: 10%;"></div>
         <?php
             $category_id = NULL;
             $query = NULL;

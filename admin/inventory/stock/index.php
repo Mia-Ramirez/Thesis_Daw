@@ -24,6 +24,8 @@
             include '../../components/top_nav.php';
         ?> 
         
+        <div class="content" style="margin-top: 11%;">
+
         <?php
             include($doc_root.'/utils/connect.php');
             
@@ -126,7 +128,7 @@
 
             </table>
         </div>
-
+        </div>
         <script>
             // function redirectToPage(page) {
             //     window.location.href = './'+page+'/index.php';

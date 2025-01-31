@@ -23,7 +23,7 @@
             $current_page_title = "update product details";
             include '../../../components/top_nav.php';
         ?> 
-
+        <div class="content" style="margin-top: 9%;">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['product_id'])) {

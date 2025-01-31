@@ -20,15 +20,20 @@
         </div>
             <div class="menu">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li><a href="./account/login/index.php">Sign In</a></li>
                     <li><a href="./account/register/index.php">Sign Up</a></li>
                 </ul>
             </div>
 		</div>
 	</nav>
+    <!-- Spacer to prevent content from being hidden behind navbar -->
+    <div class="spacer"></div>
+
+<!-- Page Sections -->
+<section id="home">
 <div class="photo">
     <div class="descript">
         <h3>
@@ -41,14 +46,18 @@
         </h3>
     </div>
 </div>
+</section>
 
+<section id="about">
 <div class="container">
  <center>
     <h1 class="pamagat">Our Mission</h1>
     <h2><label for="text">At ValueMed Generics Pharmacy our ultimate mission is to offer consumers
-    quality products at a very affordable price in a very convenient locations</label></h2>
+    quality products at a very affordable price in a very convenient locations.</label></h2>
 </center>
 </div>
+</section>
+<section id="contact">
 <center>
 <div class="containers">
     <h4>
@@ -64,6 +73,7 @@
     <a href="./account/login/index.php"><button>Shop Now</button></a>
 </div>
 </center>
+</section>
 <footer>
     <h4> Value MED @ 2025</h4>
 </footer>

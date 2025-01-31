@@ -1,6 +1,6 @@
 body{
     font-family: Arial, sans-serif;
-    background-color: lightsalmon;
+    background-color: white;
 }
 
 .sidenav {
@@ -10,7 +10,8 @@ body{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: white;
+    background-color: navy;
+    color: white;
     padding-top: 10px;
     padding-left:5px;
     font-family:Arial;
@@ -20,7 +21,7 @@ body{
     padding: 6px 8px 6px 16px;
     text-decoration: none;
     font-size: 20px;
-    color: #050505;
+    color: white;
     display: block;
     border: none;
     background: none;
@@ -31,15 +32,15 @@ body{
 }
 
 .sidenav a:hover, .dropdown-btn:hover {
-    color: lightsalmon;
+    color: red !important;
 }
 
 .active a {
-    color: lightsalmon !important;
+    color: red !important;
 }
 
 .active i {
-    color: lightsalmon !important;
+    color: red !important;
 }
 
 .topnav {
@@ -61,7 +62,7 @@ body{
     text-decoration: none;
     font-size: 20px;
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color: black;
+    color: white;
     display: block;
     border: none;
     background: none;
@@ -70,7 +71,7 @@ body{
 }
 
 .topnav a:hover {
-    color: lightsalmon;
+    color: red;
 }
 
 .topnav a.active {
@@ -91,10 +92,11 @@ i{
     cursor:pointer;
     margin:0 15px;
     transition:1s;
+    color: white;
 }
 
 i:hover{
-    color:lightsalmon;
+    color:red;
     font-size:1.10rem;
 }
 
@@ -110,8 +112,8 @@ i:hover{
 div.head {
     width:100%;
     font-family:Arial;
-    background-color:white;
-    color:black;
+    background:linear-gradient(to bottom right, lightblue, blue);
+    color:white;
     float:right;;
     margin-top:0px;
     margin-right:0px;
@@ -119,9 +121,10 @@ div.head {
     top: 0;
     right: 0;
     overflow:hidden;
+    position: fixed;
 }
 
 .card:hover{
-    background-color: lightcoral;
+    background:linear-gradient(to bottom right, lightblue, blue);
     cursor: pointer;
 }

@@ -23,7 +23,7 @@
             $current_page_title = "update employee details";
             include '../../components/top_nav.php';
         ?> 
-
+  <div class="space" style="margin-top: 10%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['employee_id'])) {
@@ -121,7 +121,7 @@
                     </div>
                     
                 
-                    <button name="action" value="update_employee">Update</button>
+                    <button style="background-color: red; color:white" name="action" value="update_employee">Update</button>
                 </form>
             </div>
         </div>

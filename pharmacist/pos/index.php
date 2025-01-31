@@ -23,8 +23,8 @@
             $current_page_title = "point of sale";
             include '../components/top_nav.php';
         ?> 
-
-        <div class="custom-modal" id="yesNoModal">
+<div class="space" style="margin-top: 9%;"></div>
+        <div class="custom-modal" id="yesNoModal" style="z-index: 1000;">
             <div class="modal-content">
                 <p id="modal_message">Do you want to proceed?</p>
                 <form action="process.php" method="POST">

@@ -22,7 +22,7 @@
             $current_page_title = "fast moving products";
             include '../../components/top_nav.php';
         ?> 
-
+        <div class="space" style="margin-top: 10%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
 

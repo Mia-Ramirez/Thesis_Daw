@@ -23,7 +23,7 @@
             $current_page_title = "order details";
             include '../../components/top_nav.php';
         ?> 
-
+        <div class="content" style="background-color: red; color:white">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['order_id'])) {
@@ -240,10 +240,10 @@
                     <form action="process.php" method="POST">
                         <input id="order_id" type="hidden" name="order_id" value="<?php echo $order_id; ?>">
                         <?php if ($row['status'] == 'placed'){ ?>
-                        <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
+                        <button class="action_button next_status" type="submit" name="action" value="preparing">Preparing</button>
                         <?php }?>
                         <?php if ($row['status'] == 'preparing'){ ?>
-                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Move to 'Ready for Pick-up'</button>
+                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Ready for Pick-up</button>
                         <?php } ?>
                         <?php if ($row['status'] == 'for_pickup'){ ?>
                         <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>
@@ -254,6 +254,7 @@
                 </div>
             </div>
 
+        </div>
         </div>
         
         <script src="script.js"></script>

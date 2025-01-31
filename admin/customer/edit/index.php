@@ -23,7 +23,7 @@
             $current_page_title = "update customer details";
             include '../../components/top_nav.php';
         ?>
-
+        <div class="content" style="margin-top: 11%;">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['customer_id'])) {
@@ -107,11 +107,11 @@
                     </div>
                     
                 
-                    <button name="action" value="update_customer">Update</button>
+                    <button style="background-color: red; color: white;" name="action" value="update_customer">Update</button>
                 </form>
             </div>
         </div>
-
+        </div>
         <script>
             window.onload = function() {
                 setActivePage("nav_customer");

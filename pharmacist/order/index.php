@@ -22,7 +22,7 @@
             $current_page_title = "orders";
             include '../components/top_nav.php';
         ?> 
-
+<div class="space" style="margin-top: 9%;"></div>
         <div class="main">
             <div class="card history" onclick="redirectToPage('history','')">
                 <h3>HISTORY</h3>

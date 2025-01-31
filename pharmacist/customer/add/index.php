@@ -23,7 +23,7 @@
             $current_page_title = "add customer";
             include '../../components/top_nav.php';
         ?>
-
+<div class="space" style="margin-top: 8%;"></div>
         <div class="main">
             <div class="row">
                 <?php
