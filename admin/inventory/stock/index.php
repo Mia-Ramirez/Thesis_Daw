@@ -59,6 +59,38 @@
             $sqlGetStockProducts .= $filter_str." GROUP BY p.id ORDER BY current_quantity ASC, maintaining_quantity ASC";
 
             $result = mysqli_query($conn,$sqlGetStockProducts);
+            
+            $filtered_product_ids = "";
+            $stock_map = array();
+
+            while($data = mysqli_fetch_array($result)){
+                $stock_map[$data['id']] = [
+                    'id' => $data['id'],
+                    'name' => $data['name'],
+                    'current_quantity' => $data['current_quantity'],
+                    'maintaining_quantity' => $data['maintaining_quantity'],
+                    'batch_count' => $data['batch_count'],
+                    'sold_quantity' => 0,
+                    'disposed_quantity' => 0
+                ];
+                if ($filtered_product_ids == ""){
+                    $filtered_product_ids = $data['id'];
+                } else {
+                    $filtered_product_ids .= ",".$data['id'];
+                };
+            };
+
+            $sqlGetNumberOfSold = "SELECT SUM(qty) AS sold_qty, product_id FROM product_line WHERE line_type='transaction' AND product_id IN ($filtered_product_ids) GROUP BY product_id";
+            $result = mysqli_query($conn,$sqlGetNumberOfSold);
+            while($data = mysqli_fetch_array($result)){
+                $stock_map[$data['product_id']]['sold_quantity'] = $data['sold_qty'];
+            };
+
+            $sqlGetNumberOfDisposed = "SELECT product_id, SUM(disposed_quantity) AS disposed_quantity FROM `batch` WHERE disposed_quantity IS NOT NULL AND product_id IN ($filtered_product_ids) GROUP BY product_id";
+            $result = mysqli_query($conn,$sqlGetNumberOfDisposed);
+            while($data = mysqli_fetch_array($result)){
+                $stock_map[$data['product_id']]['disposed_quantity'] = $data['disposed_quantity'];
+            };
         ?>
 
         <div class="table">
@@ -88,6 +120,8 @@
                                 echo '<th>Maintaining Quantity</th>';
                             };
                             if (in_array($stock_type, ['out', 'both'])){
+                                echo '<th>Sold</th>';
+                                echo '<th>Disposed</th>';
                                 echo '<th>Number of Batches</th>';
                             };
                         ?>
@@ -97,7 +131,7 @@
 
                 <tbody>
                     <?php
-                    while($data = mysqli_fetch_array($result)){
+                    foreach ($stock_map as $data) {
                     ?>
                     <tr>
                         <td><?php echo $data["name"];?></td>
@@ -111,6 +145,8 @@
                                 echo '<td>'.$data["maintaining_quantity"].'</td>';
                             };
                             if (in_array($stock_type, ['out', 'both'])){
+                                echo '<td>'.$data["sold_quantity"].'</td>';
+                                echo '<td>'.$data["disposed_quantity"].'</td>';
                                 echo '<td>'.$data["batch_count"].'</td>';
                             };
                         ?>
