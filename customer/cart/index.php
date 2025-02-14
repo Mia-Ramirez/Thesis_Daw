@@ -164,7 +164,7 @@
             <!-- Summary -->
             <div class="cart-right">
                 <div class="card">
-                    <h2>Summary</h2>
+                    <h2>Order</h2>
                     <div class="discount">
                         <label for="discount">Discount</label>
                         <select id="discount">

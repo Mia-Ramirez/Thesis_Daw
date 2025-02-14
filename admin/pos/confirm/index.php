@@ -89,7 +89,7 @@
             };
             $_SESSION['order_id'] = $order_id;
         ?>
-        
+        <div class="space" style="margin-top: 11%;" ></div>
         <div class="container" style="margin-left: 15%">
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">

@@ -25,11 +25,17 @@
         
         <div class="main" style="margin-top: 11%;">
           <div class="card account-history" onclick="redirectToPage('history')">
-              <h3>HISTORY</h3>
+              <h3>HISTORY
+              <br>
+                <label for="text" style="color: transparent;">part</label>
+              </h3>
               <img class="pic" src=<?php echo $base_url."assets/images/history.png"; ?> alt="history">
           </div>
           <div class="card capital-and-revenue" onclick="redirectToPage('capital_and_revenue')">
-            <h3>CAPITAL & REVENUE</h3>
+            <h3>CAPITAL & REVENUE
+            <br>
+            <label for="text" style="color: transparent;">part</label>
+            </h3>
               <img class="pic" src=<?php echo $base_url."assets/images/capital.png"; ?> alt="capital_and_revenue">
           </div>
           <div class="card slow-moving-meds" onclick="redirectToPage('slow_moving')">

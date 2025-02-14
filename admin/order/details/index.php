@@ -23,7 +23,7 @@
             $current_page_title = "order details";
             include '../../components/top_nav.php';
         ?> 
-        <div class="content" style="background-color: red; color:white">
+        <div class="content" style="margin-top: 10%;">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['order_id'])) {
@@ -82,7 +82,7 @@
 
         ?>
 
-        <div class="custom-modal" id="cancelOrderModal">
+        <div class="custom-modal" id="cancelOrderModal" style="z-index: 1000;">
             <div class="modal-content">
                 <h1 id="modal_header">Order</h1>
                 <p id="modal_message">Are you sure you want to cancel this Order?</p>

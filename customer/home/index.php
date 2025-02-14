@@ -52,14 +52,14 @@
             }
         ?>
 
-        <div class="search">
+        <div class="search" >
         <form method="GET" action="">
         <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
             <button class="btns" type="submit">Search</button>
         </form>
         </div>
 
-        <div class="categories"> <!-- show different types of meds for faster and easier navigation -->
+        <div class="categories" style="background-color: lightsteelblue;"> <!-- show different types of meds for faster and easier navigation -->
             <div class="meds"><a <?php if (is_null($category_id)){echo 'class=active-category '; }; ?>href="./index.php">All</a></div>
             <?php
                 include($doc_root.'/utils/connect.php');

@@ -37,6 +37,7 @@
                                         COUNT(b.id) AS batch_count
                                     FROM product p
                                     LEFT JOIN batch b ON p.id=b.product_id
+                                  
                                     ";
 
             $stock_type = 'both';
@@ -79,6 +80,8 @@
                 <thead>
                     <tr>
                         <th>Product</th>
+                        <th>Sold</th>
+                        <th>Expired</th>
                         <th>Current Number of Stock</th>
                         <?php
                             if (in_array($stock_type, ['in', 'both'])){
@@ -97,8 +100,11 @@
                     while($data = mysqli_fetch_array($result)){
                     ?>
                     <tr>
-                        
                         <td><?php echo $data["name"];?></td>
+                        <td> <?php  ?> </td>
+                        <td> <?php
+                            
+                         ?> </td>
                         <td><?php echo $data["current_quantity"];?></td>
                         <?php
                             if (in_array($stock_type, ['in', 'both'])){

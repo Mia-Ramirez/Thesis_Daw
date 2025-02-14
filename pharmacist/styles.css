@@ -32,15 +32,15 @@ body{
 }
 
 .sidenav a:hover, .dropdown-btn:hover {
-    color: red !important;
+    color:steelblue !important;
 }
 
 .active a {
-    color: red !important;
+    color:steelblue !important;
 }
 
 .active i {
-    color: red !important;
+    color:steelblue !important;
 }
 
 .topnav {
@@ -71,7 +71,7 @@ body{
 }
 
 .topnav a:hover {
-    color: red;
+    color:black !important;
 }
 
 .topnav a.active {
@@ -96,7 +96,7 @@ i{
 }
 
 i:hover{
-    color:red;
+    color:black !important;
     font-size:1.10rem;
 }
 
@@ -112,7 +112,7 @@ i:hover{
 div.head {
     width:100%;
     font-family:Arial;
-    background:linear-gradient(to bottom right, lightblue, blue);
+    background:lightsteelblue;
     color:white;
     float:right;;
     margin-top:0px;
@@ -125,7 +125,8 @@ div.head {
 }
 
 .card:hover{
-    background:linear-gradient(to bottom right, lightblue, blue);
+    background: linear-gradient(to bottom right, lightblue, blue);
+    color: white !important;
     cursor: pointer;
 }
 
