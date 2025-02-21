@@ -128,6 +128,7 @@
                 // $line_cost = $data['line_cost'];
                 $line_price = $data['line_price'];
                 $product_id = $data['product_id'];
+                $line_discount = 0;
                 if ($selected_discount && ($selected_discount == $data['applicable_discounts'] || $data['applicable_discounts'] == 'Both')){
                     $line_discount = 20;
                 };
