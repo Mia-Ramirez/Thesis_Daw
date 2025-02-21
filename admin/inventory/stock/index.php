@@ -112,8 +112,6 @@
                 <thead>
                     <tr>
                         <th>Product</th>
-                        <th>Sold</th>
-                        <th>Expired</th>
                         <th>Current Number of Stock</th>
                         <?php
                             if (in_array($stock_type, ['in', 'both'])){
@@ -135,10 +133,6 @@
                     ?>
                     <tr>
                         <td><?php echo $data["name"];?></td>
-                        <td> <?php  ?> </td>
-                        <td> <?php
-                            
-                         ?> </td>
                         <td><?php echo $data["current_quantity"];?></td>
                         <?php
                             if (in_array($stock_type, ['in', 'both'])){
