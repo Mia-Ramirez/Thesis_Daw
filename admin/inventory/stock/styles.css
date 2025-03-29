@@ -1,3 +1,16 @@
+.search{
+    float: right;
+    background-color: transparent;
+    width: 82%;
+    padding: 1rem;
+    margin-top: 1%;
+    float: right;
+  }
+
+  input{
+    padding: 1%;
+    width: 25%;
+  }
 
 .table{
     background-color: white;

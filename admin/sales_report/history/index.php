@@ -22,7 +22,7 @@
             $current_page_title = "sales history";
             include '../../components/top_nav.php';
         ?> 
-
+  <div class="space" style="margin-top: 8%;"></div>
 <?php
             include($doc_root.'/utils/connect.php');
 
@@ -37,6 +37,8 @@
                             INNER JOIN user u ON h.user_id=u.id
                             WHERE h.object_type='transaction'
             ";
+             $filter ="";
+             $query = NULL;
 
             $offset = 0;
             if (isset($_GET['page_no'])){
@@ -50,6 +52,13 @@
             
             $result = mysqli_query($conn,$sqlGetOrderHistory);
         ?>
+
+<div class="search">
+            <form method="GET" action="">
+                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+                <button style="background-color: red; color: white; padding: 0.7rem;"  class="btns" type="submit">Search</button>
+            </form>
+        </div>
 
         <div class="table">
             <?php

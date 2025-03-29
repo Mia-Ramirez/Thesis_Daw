@@ -19,7 +19,7 @@
         <?php include '../components/unauth_redirection.php'; ?>
 
         <?php include '../components/side_nav.php'; ?>
-        
+        <div class="space" style="margin-top: 10%;"></div>
         <?php
             $current_page_title = "messages";
             include '../components/top_nav.php';

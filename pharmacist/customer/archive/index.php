@@ -18,7 +18,7 @@
         <?php include '../../components/unauth_redirection.php'; ?>
 
         <?php include '../../components/side_nav.php'; ?>
-        
+                
         <?php
             $current_page_title = "archive customer";
             include '../../components/top_nav.php';
@@ -44,7 +44,7 @@
                 header("Location:../../../page/404.php");
             };
         ?>
-        <div class="main">
+        <div class="main"  style="margin-top: 9%;">
             <div class="row">
                 <b>Are you sure you want to archive this Customer with the Details below?</b>
                 <form action="process.php" method="post">

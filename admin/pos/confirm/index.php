@@ -89,7 +89,7 @@
             };
             $_SESSION['order_id'] = $order_id;
         ?>
-        
+        <div class="space" style="margin-top: 11%;" ></div>
         <div class="container" style="margin-left: 15%">
         <!-- Product Table -->
             <div class="cart-left" style="width: 50%;">
@@ -154,7 +154,7 @@
             <!-- Summary -->
             <div class="cart-right">
                 <div class="card-pos">
-                    <h2>Summary</h2>
+                    <h2>Order</h2>
                     <?php
                         if ($order_id){
                             ?>

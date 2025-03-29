@@ -22,7 +22,7 @@
 
     $receipt_displayed_from = $_SESSION['receipt_displayed_from'];
     // PHP can dynamically generate content, if needed.
-    $content = "<center><h1>Pharmanest</h1></center>";
+    $content = "<center><h1>Value Med</h1></center>";
 
     include($doc_root.'/utils/connect.php');
     $transaction_id = $_GET['transaction_id'];
@@ -138,7 +138,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmanest Sales Receipt</title>
+    <title>Value Med Sales Receipt</title>
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>

@@ -36,10 +36,14 @@
                 $row = mysqli_fetch_array($product_result);
                 $_SESSION['product_id'] = $product_id;
                 if (!is_null($row['cost']) && (isset($_SESSION['cost']) == false)){
-                    $_SESSION['cost'] = $row['cost'];
+                    if ($row['cost'] > 0){
+                        $_SESSION['cost'] = $row['cost'];
+                    };
                 };
                 if (!is_null($row['price']) && (isset($_SESSION['selling_price']) == false)){
-                    $_SESSION['selling_price'] = $row['price'];
+                    if ($row['price'] > 0){
+                        $_SESSION['selling_price'] = $row['price'];
+                    }; 
                 };
 
             } else {
@@ -65,7 +69,7 @@
             </div>
         </div>
         
-        <div class="main">
+        <div class="main" style="margin-top: 11%;">
             <div class="row">
 
             <?php
@@ -108,7 +112,7 @@
 
                     <div class="row">
                         <p class="column">
-                            <label for="cost">Wholesale Price:</label><br>
+                            <label for="cost">Capital Cost:</label><br>
                             <input style="width: 60%" id="cost_input" type="number" step="0.01" min="1" name="cost" required value="<?php if(isset($_SESSION["cost"])){echo $_SESSION["cost"];unset($_SESSION["cost"]);}?>">
                         </p>
                         <p class="column">
@@ -136,7 +140,7 @@
                     </p>
                 </div>
 
-                <button id="add_stock" name="action" value="add_stock">Add Stock</button>
+                <button style="background-color: red; color:white" id="add_stock" name="action" value="add_stock">Add Stock</button>
             
             </div>
         </div>

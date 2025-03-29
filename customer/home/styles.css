@@ -10,9 +10,9 @@
     border-radius: 20% solid black;
     padding-bottom: 1%;
     padding-left: 1%;
-    margin-left: 2%;
-    margin-right: 2%;
-    margin-top: 4%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
     margin-bottom: 1%;
 }
 .img{
@@ -33,30 +33,36 @@
     
 }
 .search{
-    background-color: transparent;
-    width: 70%;
-    margin-top: 2%;
-    margin-left: 0.5%;
+    background: white;
+    width: 100%;
+    margin-top: 9%;
+    margin-left: 0%;
     margin-bottom: 0.5%;
+    top: 0;
+    position: fixed;
+    padding: 2%;
 }
 input{
     padding: 1%; 
     width: 25%;
 }
   .btns{
-    background-color: lightsalmon; 
+    background: lightgrey;
     padding: 1%;
     border: solid 1px black;
+    color: rgb(14, 13, 13);
 }
 .categories{
     width: 100%;
-    background: transparent;
+    margin-top: 15%;
+    padding: 0;
 }
 .categories {
     display: flex;
     overflow-x: auto;
     gap: 10px;
     padding: 10px 0;
+    
 }
 .categories button {
     flex: 0 0 auto;
@@ -66,6 +72,7 @@ input{
     cursor: pointer;
     white-space: nowrap; /* Prevents text from wrapping */
     width: auto; /* Ensures button width adjusts to text length */
+    
 }
 .categories button:hover {
     background-color: #e67e22;

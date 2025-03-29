@@ -1,6 +1,6 @@
 <div class="sidenav">
 	<img id="logo" src=<?php echo $base_url."assets/images/logo.png";?> alt="Logo">
-    <h2 style="text-align: center;"> Pharmanest Essential </h2>
+    <h2 style="text-align: center;"> Value MED Generics Pharmacy </h2>
     
     <div id="nav_dashboard" class="menu">
         <i class="fas fa-dashboard"></i>

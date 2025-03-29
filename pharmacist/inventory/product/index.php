@@ -23,7 +23,7 @@
             $current_page_title = "list of products";
             include '../../components/top_nav.php';
         ?>
-
+<div class="space" style="margin-top: 9%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetProducts = "SELECT * FROM product";

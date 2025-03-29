@@ -22,7 +22,7 @@
             $current_page_title = "dashboard";
             include '../components/top_nav.php';
         ?>
-
+        <div class="content" style="margin-top: 10%;">
         <?php
             include($doc_root.'/utils/connect.php');
             // $current_date = date("%Y-%m-%d");
@@ -122,7 +122,7 @@
 					<div class="boxs"><h4>Total Sales</h4>
 					    <h3><?php echo $counter_values['total_sales']; ?></h3>
 					</div>
-					<div class="boxs"><h4>Total Purchase</h4>
+					<div class="boxs"><h4>Total Capital</h4>
 					    <h3><?php echo $counter_values['total_purchase']; ?></h3>
 					</div>
 				</div>
@@ -158,18 +158,15 @@
                 <h2><?php echo $counter_values['expired_products']; ?></h2>
                 <p>Expired Products</p>
             </div>
-            <div class="card blank">
-            </div>
-            <div class="card blank">
-            </div>
+        <!--
             <div class="card" onclick="redirectToPage('sales_report/slow_moving','get_today=true')">
                 <h2><?php echo $counter_values['slow_moving_products']; ?></h2>
                 <p>Slow Moving Products</p>
             </div>
-
+        -->
             
         </div>
-        
+        </div>
         <script>
             window.onload = function() {
                 setActivePage("nav_dashboard");

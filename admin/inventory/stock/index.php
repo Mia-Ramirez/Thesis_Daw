@@ -24,6 +24,8 @@
             include '../../components/top_nav.php';
         ?> 
         
+        <div class="content" style="margin-top: 8%;">
+
         <?php
             include($doc_root.'/utils/connect.php');
             
@@ -37,26 +39,88 @@
                                     LEFT JOIN batch b ON p.id=b.product_id
                                     ";
 
+            $filter_str = "";     
+
             $stock_type = 'both';
-            $filter_str = "";
-            if (isset($_GET['is_low'])){
+            $is_low = '';
+            $is_zero = '';
+
+            if (isset($_GET['is_low']) && ($_GET['is_low'] == 'true')){
                 $stock_type = 'in';
+                $is_low = 'true';
                 $filter_str=" WHERE current_quantity BETWEEN 1 AND maintaining_quantity";
             };
 
-            if (isset($_GET['is_zero'])){
+            if (isset($_GET['is_zero']) && ($_GET['is_zero'] == 'true')){
                 $stock_type = 'in';
+                $is_zero = 'true';
                 $filter_str=" WHERE current_quantity=0";
             };
 
-            if (isset($_GET['stock_type'])){
+            if (isset($_GET['stock_type']) && ($_GET['stock_type'] != '')){
                 $stock_type = $_GET['stock_type'];
+            };
+
+            if (isset($_GET['query'])){
+                $query = $_GET['query'];
+                if (strpos($filter_str, "WHERE") != false){
+                    $filter_str .= " AND p.name LIKE '%$query%'";
+                } else {
+                    $filter_str .= " WHERE p.name LIKE '%$query%'";
+                }
+            } else {
+                $query = NULL;
             };
             
             $sqlGetStockProducts .= $filter_str." GROUP BY p.id ORDER BY current_quantity ASC, maintaining_quantity ASC";
 
             $result = mysqli_query($conn,$sqlGetStockProducts);
+            
+            $filtered_product_ids = "";
+            $stock_map = array();
+
+            while($data = mysqli_fetch_array($result)){
+                $stock_map[$data['id']] = [
+                    'id' => $data['id'],
+                    'name' => $data['name'],
+                    'current_quantity' => $data['current_quantity'],
+                    'maintaining_quantity' => $data['maintaining_quantity'],
+                    'batch_count' => $data['batch_count'],
+                    'sold_quantity' => 0,
+                    'disposed_quantity' => 0
+                ];
+                if ($filtered_product_ids == ""){
+                    $filtered_product_ids = $data['id'];
+                } else {
+                    $filtered_product_ids .= ",".$data['id'];
+                };
+            };
+            
+            if ($filtered_product_ids != ""){
+                $sqlGetNumberOfSold = "SELECT SUM(qty) AS sold_qty, product_id FROM product_line WHERE line_type='transaction' AND product_id IN ($filtered_product_ids) GROUP BY product_id";
+                $result = mysqli_query($conn,$sqlGetNumberOfSold);
+                while($data = mysqli_fetch_array($result)){
+                    $stock_map[$data['product_id']]['sold_quantity'] = $data['sold_qty'];
+                };
+
+                $sqlGetNumberOfDisposed = "SELECT product_id, SUM(disposed_quantity) AS disposed_quantity FROM `batch` WHERE disposed_quantity IS NOT NULL AND product_id IN ($filtered_product_ids) GROUP BY product_id";
+                $result = mysqli_query($conn,$sqlGetNumberOfDisposed);
+                while($data = mysqli_fetch_array($result)){
+                    $stock_map[$data['product_id']]['disposed_quantity'] = $data['disposed_quantity'];
+                };
+            };
+            
         ?>
+
+        <div class="search">
+            <form method="GET" id="searchStock" action="">
+                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+                <input type="hidden" name="is_low" value="<?php echo $is_low; ?>">
+                <input type="hidden" name="is_zero" value="<?php echo $is_zero; ?>">
+                <input type="hidden" name="stock_type" value="<?php echo $stock_type; ?>">
+                <button style="background-color: red; color: white; padding: 0.7rem;"  class="btns" type="submit">Search</button>
+            </form>
+        </div>
 
         <div class="table">
             <?php
@@ -83,6 +147,8 @@
                                 echo '<th>Maintaining Quantity</th>';
                             };
                             if (in_array($stock_type, ['out', 'both'])){
+                                echo '<th>Sold</th>';
+                                echo '<th>Disposed</th>';
                                 echo '<th>Number of Batches</th>';
                             };
                         ?>
@@ -92,10 +158,9 @@
 
                 <tbody>
                     <?php
-                    while($data = mysqli_fetch_array($result)){
+                    foreach ($stock_map as $data) {
                     ?>
                     <tr>
-                        
                         <td><?php echo $data["name"];?></td>
                         <td><?php echo $data["current_quantity"];?></td>
                         <?php
@@ -103,6 +168,8 @@
                                 echo '<td>'.$data["maintaining_quantity"].'</td>';
                             };
                             if (in_array($stock_type, ['out', 'both'])){
+                                echo '<td>'.$data["sold_quantity"].'</td>';
+                                echo '<td>'.$data["disposed_quantity"].'</td>';
                                 echo '<td>'.$data["batch_count"].'</td>';
                             };
                         ?>
@@ -126,7 +193,7 @@
 
             </table>
         </div>
-
+        </div>
         <script>
             // function redirectToPage(page) {
             //     window.location.href = './'+page+'/index.php';

@@ -25,6 +25,18 @@ th{
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: lightsalmon;
-  color: black;
+  background-color: red;
+  color: white;
 }
+
+.search{
+    float: right;
+    background-color: transparent;
+    width: 82%;
+    padding: 1rem;
+    margin-top: 1%;
+  }
+  input{
+    padding: 1%;
+    width: 25%;
+  }

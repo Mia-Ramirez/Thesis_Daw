@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>PHARMANEST ESSENTIAL</title>
+        <title>Value MED Generics Pharmacy</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" type="text/css" href="<?php echo $base_url;?>assets/styles/bootstrap.css">
         <link rel="stylesheet" href="../styles.css">
@@ -52,14 +52,14 @@
             }
         ?>
 
-        <div class="search">
-        <form method="GET" action="">
-        <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-            <button class="btns" type="submit">Search</button>
-        </form>
-        </div>
+         <div class="search">
+                <form method="GET" action="" style="margin-right: 1%;">
+                <button style="float: right;" class="btns" type="submit">Search</button>
+                <input style="float: right;" type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+                </form>
+            </div>
 
-        <div class="categories"> <!-- show different types of meds for faster and easier navigation -->
+        <div class="categories" style="background-color: white; position: fixed; top:0;"> <!-- show different types of meds for faster and easier navigation -->
             <div class="meds"><a <?php if (is_null($category_id)){echo 'class=active-category '; }; ?>href="./index.php">All</a></div>
             <?php
                 include($doc_root.'/utils/connect.php');
@@ -75,7 +75,7 @@
                 };
             ?>
         </div>
-
+           
         <div class="details">
             <?php
                 $sqlGetProducts = "SELECT
@@ -120,7 +120,8 @@
                 $product_results = mysqli_query($conn,$sqlGetProducts);
                 while($data = mysqli_fetch_array($product_results)){
             ?>
-            <div class="product">
+             <div class="spasyo" style="margin-top: 20%;"></div>
+            <div class="product" style="margin-top: 5%;">
                 <center>
                     <img class="img" src="<?php echo $data['photo']; ?>" alt="<?php echo $data['product_name']; ?>">
                 </center>
@@ -148,6 +149,7 @@
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'yes')">Buy Now</button>
                             <button class="btn" onclick="addQTY('<?php echo $data['product_id']; ?>', 'no')">Add to Cart</button>
                         </center>
+                        
                     <?php
                     }
                 ?>

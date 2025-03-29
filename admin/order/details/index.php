@@ -23,7 +23,7 @@
             $current_page_title = "order details";
             include '../../components/top_nav.php';
         ?> 
-
+        <div class="content" style="margin-top: 10%;">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['order_id'])) {
@@ -82,7 +82,7 @@
 
         ?>
 
-        <div class="custom-modal" id="cancelOrderModal">
+        <div class="custom-modal" id="cancelOrderModal" style="z-index: 1000;">
             <div class="modal-content">
                 <h1 id="modal_header">Order</h1>
                 <p id="modal_message">Are you sure you want to cancel this Order?</p>
@@ -240,13 +240,13 @@
                     <form action="process.php" method="POST">
                         <input id="order_id" type="hidden" name="order_id" value="<?php echo $order_id; ?>">
                         <?php if ($row['status'] == 'placed'){ ?>
-                        <button class="action_button next_status" type="submit" name="action" value="preparing">Move to 'Preparing'</button>
+                        <button class="action_button next_status" type="submit" name="action" value="preparing">Preparing</button>
                         <?php }?>
                         <?php if ($row['status'] == 'preparing'){ ?>
-                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Move to 'Ready for Pick-up'</button>
+                        <button id="ready_for_pickup" class="action_button next_status disabled" type="submit" name="action" disabled value="for_pickup">Ready for Pick-Up</button>
                         <?php } ?>
                         <?php if ($row['status'] == 'for_pickup'){ ?>
-                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Open Transaction</button>
+                        <button class="action_button next_status" type="button" name="action" onclick="redirectToPOSPage()">Next</button>
                         <?php } ?>
                         <button class="action_button<?php if (in_array($row['status'], ['cancelled','picked_up'])){echo ' disabled';} ?>" type="button" name="action" value="cancel_order" id="cancel_order" <?php if (in_array($row['status'], ['cancelled','picked_up'])){echo 'disabled';} ?> onclick="showCancelOrderModal(<?php echo '\''.$order_id.'\',\''.$row['reference_number'].'\''; ?>)">Cancel Order</button>
                     </form>
@@ -254,6 +254,7 @@
                 </div>
             </div>
 
+        </div>
         </div>
         
         <script src="script.js"></script>

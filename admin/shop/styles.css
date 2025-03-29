@@ -11,8 +11,8 @@
     border-radius: 20% solid black;
     padding-bottom: 1%;
     padding-left: 1%;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 1%;
+    margin-right: 1%;
     margin-top: 4%;
     margin-bottom: 1%;
 }
@@ -34,30 +34,32 @@
     
 }
 .search{
-    background-color: transparent;
-    width: 70%;
-    margin-top: 2%;
-    margin-left: 0.5%;
-    margin-bottom: 0.5%;
+    float: right;
+    background-color: white;
+    width: 100%;
+    position: fixed;
+    z-index: 1000;
+    top: 13%;
 }
 input{
-    padding: 1%; 
+    padding: 0.8%; 
     width: 25%;
 }
-  .btns{
-    background-color: lightsalmon; 
+.btns{
+    background: lightgrey;
     padding: 1%;
     border: solid 1px black;
+    color: rgb(2, 2, 2);
 }
 .categories{
-    width: 100%;
-    background: transparent;
+    width: 85%;
 }
 .categories {
     display: flex;
     overflow-x: auto;
     gap: 10px;
     padding: 10px 0;
+    
 }
 .categories button {
     flex: 0 0 auto;
@@ -67,6 +69,7 @@ input{
     cursor: pointer;
     white-space: nowrap; /* Prevents text from wrapping */
     width: auto; /* Ensures button width adjusts to text length */
+    
 }
 .categories button:hover {
     background-color: #e67e22;
@@ -106,7 +109,7 @@ input{
     padding: 15px;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 100%;
+    height: 5rem;
 }
 .product img {
     width: 100%;
@@ -146,7 +149,7 @@ input{
 }
 
 li a{
-    color: rgb(15, 15, 15); 
+    color: white; 
     font-size: 18px; 
     font-weight: bold; 
     margin-right: 25px;
@@ -163,7 +166,7 @@ button{
     width:100%;
     font-family:Arial;
     background-color:white;
-    color:black;
+    color:white;
     float:right;;
     margin-top:0px;
     margin-right:0px;
@@ -242,12 +245,9 @@ footer{
 
 .active-category {
     color: white !important;
+    background-color: tomato !important;
+    border-radius: 25% !important;
+    padding: 2% !important;
+    width: 2rem;
 }
 
-a {
-    color: black !important;
-}
-
-a.active {
-    color: white !important;
-}

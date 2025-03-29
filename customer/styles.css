@@ -1,3 +1,4 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
 body {
     font-family: Arial, sans-serif;
 }
@@ -10,14 +11,19 @@ body {
 }
 
 .active {
-    color: lightsalmon !important;
+    color: red !important;
 }
 
 .navbar{
-    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
     padding-right: 15px;
     padding-left: 15px;
-    background-color: white;
+    background: linear-gradient(to bottom right, blue,blue);
+    color: white;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    position: fixed;
 }
 .navdiv{
     display: flex; 
@@ -72,7 +78,7 @@ button{
     margin-left: 0%;
 }
 .container{
-    background: linear-gradient(to bottom right, lightsalmon, white);
+   
     padding: 2%;
     padding-left: 4%;
     text-align: justify;
@@ -97,6 +103,8 @@ footer{
     font-size: 16px;
     padding-left: 40px;
   }
+
+  
   
   /* Show sub-menu when hovered or clicked */
   .navbar.menu:hover .sub-menu,
@@ -110,6 +118,10 @@ footer{
     to{
         transform: rotate(360deg);
     }
+}
+.li{
+    margin-right: 2%;
+    color: white;
 }
 
 .li :hover{
@@ -126,10 +138,14 @@ footer{
 
 .active-category {
     color: white !important;
+    background-color: tomato !important;
+    border-radius: 25% !important;
+    padding: 2% !important;
+    width: 2rem;
 }
 
 .active i {
-    color: lightsalmon !important;
+    color: red !important;
 }
 
  /* Gear Icon Container */
@@ -140,7 +156,7 @@ footer{
 
 .menu i {
     font-size: 2rem;
-    color: #333;
+    color: white;
     cursor: pointer;
 }
 .arrow{
@@ -184,7 +200,7 @@ footer{
 }
 
 .body {
-    background: linear-gradient(to bottom right, lightsalmon, white);
+    background-color: white;
     background-repeat: no-repeat;
     background-attachment: fixed;
     margin-top: 0px;
@@ -195,7 +211,7 @@ footer{
 .custom-modal {
     display: none; /* Hidden by default */
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -232,4 +248,8 @@ footer{
     background-color: #f44336; /* Red */
     color: white;
     border: none;
+}
+.modal{
+    position: fixed;
+    z-index: 1000;
 }

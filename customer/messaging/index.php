@@ -25,7 +25,7 @@
         
         <?php include '../components/navbar.php'; ?> 
 
-
+<div class="content" style="margin-top: 12%;">
         <?php
             
             $user_id = $_SESSION['user_id'];
@@ -138,7 +138,7 @@
                 </div>
             </div>
         </div>
-
+        </div>
         <script src="../script.js"></script>
 
         <script>

@@ -23,7 +23,7 @@
             $current_page_title = "archive customer";
             include '../../components/top_nav.php';
         ?>
-
+  <div class="space" style="margin-top: 10%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['employee_id'])) {
@@ -58,8 +58,10 @@
                     <h5>Job Title: <?php echo $row['job_title'];?></h5>
                     <h5>Employment Date: <?php echo $row['employment_date'];?></h5>
                     <hr/>
+                    <div class="grid">
                     <button name="action" id="yes" value="yes">Yes</button>
                     <button name="action" id="no" value="no">No</button>
+                    </div>
                 </form>
             </div>
         </div>

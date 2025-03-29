@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PHARMANEST ESSENTIAL</title>
+	<title>Value MED</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="./assets/styles/landing.css">
 </head>
@@ -16,45 +16,48 @@
             src="./assets/images/logo.png" alt="PHARMANEST ESSENTIAL LOGO">
         </div>
         <div class="title">
-        <h1> PHARMANEST ESSENTIAL </h1>
+        <h1> ValueMED Generics Pharmacy</h1>
         </div>
             <div class="menu">
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
                     <li><a href="./account/login/index.php">Sign In</a></li>
                     <li><a href="./account/register/index.php">Sign Up</a></li>
                 </ul>
             </div>
 		</div>
 	</nav>
+    <!-- Spacer to prevent content from being hidden behind navbar -->
+    <div class="spacer"></div>
+
+<!-- Page Sections -->
+<section id="home">
 <div class="photo">
     <div class="descript">
         <h3>
-        Welcome to PharmaNest Essentials<br/>
-        Your trusted online pharmacy, delivering quality and healthcare products.
-        At PharmaNest Essentials, we prioritize your health and well-being. 
+        Welcome to Value MED Generics Pharmacy<br/>
+        Your trusted pharmacy, delivering quality and healthcare products.
+        At Value MED Generics Pharmacy, we prioritize your health and well-being. 
         With a wide range of prescription medicines, over-the-counter products, 
         and wellness supplements, we make it easy and convenient for you to manage 
         your healthcare needs.
         </h3>
     </div>
 </div>
+</section>
 
+<section id="about">
 <div class="container">
-    <h4>
-    <h3>What We Offer</h3>
-    <h3>Prescription Medications</h3>
-        Access affordable, FDA-approved medications with ease.
-<br>
-    <h3>Vitamins & Supplements</h3>
-    Boost your health with our carefully curated selection of vitamins, minerals, and dietary supplements.
-<br>
-    <h3>Personal Care & Wellness</h3>
-    Explore skincare, haircare, and other essential products to support your daily health and beauty routines.
-    </h4>
+ <center>
+    <h1 class="pamagat">Our Mission</h1>
+    <h2><label for="text">At ValueMed Generics Pharmacy our ultimate mission is to offer consumers
+    quality products at a very affordable price in a very convenient locations.</label></h2>
+</center>
 </div>
+</section>
+<section id="contact">
 <center>
 <div class="containers">
     <h4>
@@ -67,11 +70,12 @@
     <!-- <a href="#" class="fas fa-facebook" aria-hidden="true"></a>
     <a href="#" class="fas fa-mail" aria-hidden="true"></a>
     <br>    -->
-    <button>Shop Now</button>
+    <a href="./account/login/index.php"><button>Shop Now</button></a>
 </div>
 </center>
+</section>
 <footer>
-    <h4><i class="fa fa-copyright" aria-hidden="true"> Pharmanest @ 2025</i></h4>
+    <h4> Value MED @ 2025</h4>
 </footer>
 
 </body>

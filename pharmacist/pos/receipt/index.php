@@ -22,7 +22,7 @@
 
     $receipt_displayed_from = $_SESSION['receipt_displayed_from'];
     // PHP can dynamically generate content, if needed.
-    $content = "<center><h1>Pharmanest</h1></center>";
+    $content = "<center><h1>ValueMed Generics Pharmacy</h1></center>";
 
     include($doc_root.'/utils/connect.php');
     $transaction_id = $_GET['transaction_id'];

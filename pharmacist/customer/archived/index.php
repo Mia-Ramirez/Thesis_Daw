@@ -24,30 +24,28 @@
             include '../../components/top_nav.php';
         ?>
 
-
         <?php
             include($doc_root.'/utils/connect.php');
+            $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
+                            LEFT JOIN user u ON c.user_id=u.id
+                            WHERE (c.is_active=0 OR u.is_active=0)";
+            $filter_str = "";
+            
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=0 OR u.is_active=0) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'
-                            ORDER BY c.id DESC";
+                $filter_str = " AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'";
             } else {
                 $query = NULL;
-                $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
-                            LEFT JOIN user u ON c.user_id=u.id
-                            WHERE (c.is_active=0 OR u.is_active=0)
-                            ORDER BY c.id DESC";
             }
-            
+            $sqlGetCustomers = $sqlGetCustomers . $filter_str . " ORDER BY c.id DESC";
+
             $result = mysqli_query($conn,$sqlGetCustomers);
         ?>
 
-        <div class="search">
+        <div class="search" style="margin-top: 8%;">
             <form method="GET" action="">
             <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-                <button class="btns" type="submit">Search</button>
+                <button style="background-color: red; color: white;" class="btns" type="submit">Search</button>
             </form>
         </div>
 

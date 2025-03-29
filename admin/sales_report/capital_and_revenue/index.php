@@ -22,11 +22,11 @@
             $current_page_title = "capital and revenue";
             include '../../components/top_nav.php';
         ?> 
-
+  <div class="space" style="margin-top: 8%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
 
-            $sqlGetDates="SELECT DISTINCT line_date, DATE_FORMAT(line_date, '%M %d, %Y') AS formatted_date
+            $sqlGetDates="SELECT DISTINCT line_date, DATE_FORMAT(line_date, '%M %d, %Y') AS readable_ref_date
                     FROM (
                         SELECT DATE_FORMAT(date_received, '%Y-%m-%d') AS line_date
                         FROM batch
@@ -40,11 +40,33 @@
                     ) AS combined_dates";
 
             $filter_date_str="";
+            $filter_is_string = true;
             $query = NULL;
         
             if (isset($_GET['query'])){
+                $formats = [
+                    'F d, Y',    // Format like "March 29, 2025"
+                    'm/d/Y',     // Format like "03/29/2025"
+                    'Y-m-d',     // Format like "2025-03-29"
+                    'd-m-Y',     // Format like "29-03-2025"
+                    'd/m/Y',     // Format like "29/03/2025"
+                    'M d, Y',    // Format like "Mar 29, 2025"
+                ];
+
                 $query = $_GET['query'];
-                $filter_date_str=" HAVING formatted_date LIKE '%$query%'";
+                foreach ($formats as $format) {
+                    $date = DateTime::createFromFormat($format, $query);
+                    
+                    // Check if the date is valid and matches the format
+                    if ($date && ($date->format($format) == $query)) {
+                        $filter_is_string = false;
+                        // Return the date in a standard format
+                        $readable_date_str = $date->format('F d, Y');
+                        $filter_date_str=" HAVING readable_ref_date LIKE '%$readable_date_str%'";
+                        break;
+                    };
+                }
+                
             };
 
             $sqlGetDates .= $filter_date_str." ORDER BY line_date DESC LIMIT 0, 10";
@@ -53,6 +75,10 @@
             $table_data = array();
 
             while($date_result = mysqli_fetch_array($date_results)){
+                $filter_name_str='';
+                if ($filter_is_string){
+                    $filter_name_str=" AND p.name LIKE '%$query%'";
+                };
                 $sqlGetRevenueData="SELECT
                                         DATE_FORMAT(transaction_date, '%Y-%m-%d') AS formatted_ref_date,
                                         DATE_FORMAT(transaction_date, '%M %d, %Y') AS readable_ref_date,
@@ -66,9 +92,10 @@
                                     FROM product_line pl
                                     INNER JOIN transaction t ON pl.transaction_id=t.id
                                     INNER JOIN product p ON pl.product_id=p.id
-                                    WHERE pl.line_type='transaction'
-                                    HAVING formatted_ref_date='".$date_result['line_date']."'
-                                ";
+                                    WHERE pl.line_type='transaction'";
+                
+                $sqlGetRevenueData=$sqlGetRevenueData.$filter_name_str." HAVING formatted_ref_date='".$date_result['line_date']."'";
+                
 
                 $revenue_results = mysqli_query($conn,$sqlGetRevenueData);
                 while($revenue_result = mysqli_fetch_array($revenue_results)){
@@ -128,9 +155,9 @@
                                         b.product_id,
                                         p.name AS product_name
                                     FROM batch b
-                                    INNER JOIN product p ON b.product_id=p.id
-                                    HAVING formatted_ref_date='".$date_result['line_date']."'
-                                ";
+                                    INNER JOIN product p ON b.product_id=p.id";
+
+                $sqlGetCapitalData=$sqlGetCapitalData.$filter_name_str." HAVING formatted_ref_date='".$date_result['line_date']."'";
 
                 $capital_results = mysqli_query($conn,$sqlGetCapitalData);
                 while($capital_result = mysqli_fetch_array($capital_results)){
@@ -168,12 +195,12 @@
 
         ?>
 
-        <!-- <div class="search">
+        <div class="search">
             <form method="GET" action="">
-                <input type="text" value="<?php //echo $query; ?>" name="query" placeholder="Search anything...">
+                <input type="text" value="<?php echo $query ?>" name="query" placeholder="Search anything...">
                 <button class="btns" type="submit">Search</button>
             </form>
-        </div> -->
+        </div> 
 
         <div class="table">
             <table>
@@ -181,9 +208,10 @@
                     <tr>
                         <th class="center-text" rowspan="2">Product</th>
                         <th class="center-text" rowspan="2">Date</th>
-                        <th class="center-text" rowspan="2">Total Sales</th>
+                        
                         <th class="center-text" rowspan="2">Capital</th>
-                        <th class="center-text" colspan="2">Revenue</th>
+                        <th class="center-text" colspan="2">Sales</th>
+                        <th class="center-text" rowspan="2">Revenue</th>
                     </tr>
                     <tr>
                         <th class="center-text">Web</th>
@@ -198,19 +226,7 @@
                     <tr>
                         <td><?php echo $data["product_name"];?></td>
                         <td><?php echo $data["line_date"];?></td>
-                        <td>
-                            <?php
-                                $total_sales = ($data["revenue"]["web"] + $data["revenue"]["in_house"]) - $data["capital"];
-                                echo $total_sales;
-                                if (!is_null($data["remarks"])){
-                                    ?>
-                                    <span class="tooltip">*
-                                        <span class="tooltip-text"><?php echo $data["remarks"]; ?></span>
-                                    </span>
-                                    <?php
-                                };
-                            ?>
-                        </td>
+                       
                         <td>
                             <?php
                                 echo $data["capital"];
@@ -225,6 +241,19 @@
                         </td>
                         <td><?php echo $data["revenue"]["web"];?></td>
                         <td><?php echo $data["revenue"]["in_house"];?></td>
+                        <td>
+                            <?php
+                                $total_sales = ($data["revenue"]["web"] + $data["revenue"]["in_house"]) - $data["capital"];
+                                echo $total_sales;
+                                if (!is_null($data["remarks"])){
+                                    ?>
+                                    <span class="tooltip">*
+                                        <span class="tooltip-text"><?php echo $data["remarks"]; ?></span>
+                                    </span>
+                                    <?php
+                                };
+                            ?>
+                        </td>
                     </tr>
                     <?php
                     }
