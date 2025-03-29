@@ -40,16 +40,32 @@
                     ) AS combined_dates";
 
             $filter_date_str="";
+            $filter_is_string = true;
             $query = NULL;
         
             if (isset($_GET['query'])){
-                $query = $_GET['query'];
-                $date = DateTime::createFromFormat('F d, Y', $query);
+                $formats = [
+                    'F d, Y',    // Format like "March 29, 2025"
+                    'm/d/Y',     // Format like "03/29/2025"
+                    'Y-m-d',     // Format like "2025-03-29"
+                    'd-m-Y',     // Format like "29-03-2025"
+                    'd/m/Y',     // Format like "29/03/2025"
+                    'M d, Y',    // Format like "Mar 29, 2025"
+                ];
 
-                // Check if the string matches the format and if there are no parsing errors
-                if ($date && $date->format('F d, Y') === $str) {
-                    $filter_date_str=" HAVING readable_ref_date LIKE '%$query%'"; // It's a valid date in the format "Month day, year"
-                };
+                $query = $_GET['query'];
+                foreach ($formats as $format) {
+                    $date = DateTime::createFromFormat($format, $query);
+                    
+                    // Check if the date is valid and matches the format
+                    if ($date && ($date->format($format) == $query)) {
+                        $filter_is_string = false;
+                        // Return the date in a standard format
+                        $readable_date_str = $date->format('F d, Y');
+                        $filter_date_str=" HAVING readable_ref_date LIKE '%$readable_date_str%'";
+                        break;
+                    };
+                }
                 
             };
 
@@ -60,11 +76,9 @@
 
             while($date_result = mysqli_fetch_array($date_results)){
                 $filter_name_str='';
-                if (isset($_GET['query'])){
-                    if (strpos($query, "-") != true){
-                        $filter_name_str=" AND p.name LIKE '%$query%'";
-                    };
-                }
+                if ($filter_is_string){
+                    $filter_name_str=" AND p.name LIKE '%$query%'";
+                };
                 $sqlGetRevenueData="SELECT
                                         DATE_FORMAT(transaction_date, '%Y-%m-%d') AS formatted_ref_date,
                                         DATE_FORMAT(transaction_date, '%M %d, %Y') AS readable_ref_date,

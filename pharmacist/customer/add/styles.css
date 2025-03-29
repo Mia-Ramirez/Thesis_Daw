@@ -8,7 +8,7 @@
 	float:right;
 	margin-right:80px;
 	margin-bottom:50px;
-	margin-top: 2%;
+	margin-top: 10%;
 	font-family:Arial;
   }
   
@@ -37,7 +37,7 @@
   }
   
   button{
-	background-color: lightsteelblue;
+	background-color: rgb(253, 253, 253);
 	color: rgb(5, 5, 5);
 	padding: 12px 20px;
 	border: none;

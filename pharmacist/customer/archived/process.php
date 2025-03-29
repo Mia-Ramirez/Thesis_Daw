@@ -35,9 +35,6 @@
         };
         $_SESSION["message_string"] = "Customer record recovered successfully!";
         $_SESSION["message_class"] = "info";
-
-    } else {
-
     };
 
     header("Location:index.php");

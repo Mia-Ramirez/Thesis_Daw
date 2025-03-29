@@ -23,8 +23,8 @@
             $current_page_title = "add customer";
             include '../../components/top_nav.php';
         ?>
-<div class="space" style="margin-top: 7%;"></div>
-        <div class="main">
+
+        <div class="main" style="margin-top: 7%;">
             <div class="row">
                 <?php
                     if (isset($_SESSION["message_string"])) {
@@ -69,6 +69,7 @@
                         </div>
                     
                     </div>
+
                     <div class="column">
                         <p>
                             <label for="contact_number">Contact Number: </label><br>
@@ -86,8 +87,7 @@
                         </p>
                     </div>
                     
-                
-                    <button name="action" value="add_customer">Add</button>
+                    <button style="color: white; background-color: red;" name="action" value="add_customer">Add</button>
                 </form>
             </div>
         </div>

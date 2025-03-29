@@ -47,13 +47,14 @@
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: lightsalmon;
-    color: black;
+    background-color: red;
+    color: white;
   }
   
   .btns{
-    background-color: lightsteelblue; 
+    background-color: red; 
     padding: 1%;
+    color: white;
     border: solid black 1px;
   }
   
@@ -68,10 +69,11 @@
     background-color: lightcoral;
 
   }
-  
+
   .button-icon {
     margin-right: 0px;
     margin-left: 0px;
     color: black;
   }
+  
     
