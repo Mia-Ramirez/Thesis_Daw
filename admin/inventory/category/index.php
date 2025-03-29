@@ -25,7 +25,7 @@
         
         <?php include '../../components/side_nav.php'; ?>
         
-        <div class="content" style="margin-top: 11%;">
+        <div class="content" style="margin-top: 8%;">
         <?php
             $current_page_title = "list of categories";
             include '../../components/top_nav.php';

@@ -18,7 +18,7 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; 
     padding-right: 15px;
     padding-left: 15px;
-    background: linear-gradient(to bottom right, lightblue,blue);
+    background: linear-gradient(to bottom right, blue,blue);
     color: white;
     top: 0;
     z-index: 1000;

@@ -1,6 +1,6 @@
 <div class="sidenav">
 	<img id="logo" src=<?php echo $base_url."assets/images/logo.png";?> alt="Logo">
-    <h2 style="text-align: center;"> Pharmanest Essential </h2>
+    <h2 style="text-align: center;"> Value Med Generics Pharmacy </h2>
     
     <div id="nav_dashboard" class="menu">
         <i class="fas fa-dashboard"></i>
@@ -26,8 +26,9 @@
         <i class="fas fa-cash-register"></i>
         <a href=<?php echo $base_url."pharmacist/pos/index.php";?>>Point of Sale</a>
     </div>
+<!--
     <div id="nav_inventory" class="menu">
         <i class="fas fa-warehouse"></i>
         <a href=<?php echo $base_url."pharmacist/inventory/index.php";?>>Inventory</a>
-    </div>
+    </div> -->
 </div>

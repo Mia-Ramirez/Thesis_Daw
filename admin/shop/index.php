@@ -53,14 +53,14 @@
                 }
             ?>
         
-           <div class="search">
-                <form method="GET" action="">
-                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
-                    <button class="btns" type="submit">Search</button>
+           <div class="search" style="margin-top: 1%;">
+                <form method="GET" action="" style="margin-right: 16%;">
+                <button style="float: right;" class="btns" type="submit">Search</button>
+                <input style="float: right;" type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                 </form>
             </div>
             
-            <div class="categories" style="margin-top: 5%; background-color:lightsteelblue;"> <!-- show different types of meds for faster and easier navigation -->
+            <div class="categories" style="margin-top: 2%; background-color:white; position: fixed; top:15%; margin-right: 10%"> <!-- show different types of meds for faster and easier navigation -->
             <div class="meds"><a <?php if (is_null($category_id)){echo 'class=active-category '; }; ?>href="./index.php">All</a></div>
             <?php
                 include($doc_root.'/utils/connect.php');
@@ -77,7 +77,7 @@
             ?>
             </div>
         
-            <div class="details">
+            <div class="details" style="margin-top: 5%; margin-bottom: 0;">
             <?php
                 $sqlGetProducts = "SELECT
                         p.id AS product_id,

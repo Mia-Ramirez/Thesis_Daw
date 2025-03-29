@@ -35,26 +35,24 @@
 }
 .search{
     float: right;
-    background-color: transparent;
-    width: 70%;
-    margin-top: 0.90%;
-    margin-left: 49%;
+    background-color: white;
     width: 100%;
     position: fixed;
     z-index: 1000;
+    top: 13%;
 }
 input{
-    padding: 1%; 
+    padding: 0.8%; 
     width: 25%;
 }
 .btns{
-    background: linear-gradient(to bottom right, red,red);
+    background: lightgrey;
     padding: 1%;
     border: solid 1px black;
-    color: white;
+    color: rgb(2, 2, 2);
 }
 .categories{
-    width: 100%;
+    width: 85%;
 }
 .categories {
     display: flex;

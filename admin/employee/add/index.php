@@ -23,7 +23,7 @@
             $current_page_title = "add employee";
             include '../../components/top_nav.php';
         ?>
-  <div class="space" style="margin-top: 10%;"></div>
+  <div class="space" style="margin-top: 7%;"></div>
         <div class="main">
             <div class="row">
                 <?php

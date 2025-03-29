@@ -23,7 +23,7 @@
             $current_page_title = "update customer details";
             include '../../components/top_nav.php';
         ?>
-        <div class="content" style="margin-top: 11%;">
+        <div class="content" style="margin-top: 6%;">
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['customer_id'])) {

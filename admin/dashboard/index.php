@@ -114,7 +114,7 @@
             }
         ?>
 
-        <div class="pot"  style="margin-top: 3%;">
+        <div class="pot">
 	        <div class="main">
 				<h2 style="text-align: center;">Today's Report</h2>
 				<br>
@@ -122,7 +122,7 @@
 					<div class="boxs"><h4>Total Sales</h4>
 					    <h3><?php echo $counter_values['total_sales']; ?></h3>
 					</div>
-					<div class="boxs"><h4>Total Purchase</h4>
+					<div class="boxs"><h4>Total Capital</h4>
 					    <h3><?php echo $counter_values['total_purchase']; ?></h3>
 					</div>
 				</div>

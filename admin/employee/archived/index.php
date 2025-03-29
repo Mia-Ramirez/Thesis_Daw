@@ -23,7 +23,7 @@
             $current_page_title = "archived employees";
             include '../../components/top_nav.php';
         ?> 
-  <div class="space" style="margin-top: 10%;"></div>
+  <div class="space" style="margin-top: 8%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetEmployees = "SELECT e.first_name, e.last_name, e.address, e.contact_number, u.email, e.id AS employee_id FROM employee e
@@ -88,7 +88,7 @@
                         <td><?php echo $data["email"];?></td>
                         <td>
                             <a href="./process.php?action=recover&employee_id=<?php echo $data["employee_id"]; ?>">Recover</a>
-                            <!-- | <a href="./process.php?action=delete&employee_id=<?php?>">Delete</a> -->
+                            <!-- | <a href="./process.php?action=delete&employee_id=<?php ?>">Delete</a> -->
                         </td>
                     </tr>
                     <?php

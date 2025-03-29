@@ -23,7 +23,7 @@
             $current_page_title = "add product";
             include '../../../components/top_nav.php';
         ?>
-<div class="content" style="margin-top: 9%;">
+<div class="content" style="margin-top: 6%;">
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetCategories = "SELECT name FROM category ORDER BY id";

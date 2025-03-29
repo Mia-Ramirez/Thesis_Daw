@@ -73,7 +73,7 @@
             
             $result = mysqli_query($conn,$sqlGetOrders);
         ?>
-        <div class="content" style="margin-top: 11%;">
+        <div class="content" style="margin-top: 8%;">
         <div class="search">
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">

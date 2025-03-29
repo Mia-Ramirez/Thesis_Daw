@@ -36,10 +36,14 @@
                 $row = mysqli_fetch_array($product_result);
                 $_SESSION['product_id'] = $product_id;
                 if (!is_null($row['cost']) && (isset($_SESSION['cost']) == false)){
-                    $_SESSION['cost'] = $row['cost'];
+                    if ($row['cost'] > 0){
+                        $_SESSION['cost'] = $row['cost'];
+                    };
                 };
                 if (!is_null($row['price']) && (isset($_SESSION['selling_price']) == false)){
-                    $_SESSION['selling_price'] = $row['price'];
+                    if ($row['price'] > 0){
+                        $_SESSION['selling_price'] = $row['price'];
+                    }; 
                 };
 
             } else {

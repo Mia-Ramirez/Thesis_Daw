@@ -23,7 +23,7 @@
             include '../components/top_nav.php';
         ?>
 <div class="content" style="margin-top: 12%;">
-        <div class="main" style="margin-left: 14%; margin-right: 0%">
+        <div class="main" style="margin-left: 15%; margin-right: 0%">
 
         <div class="card product" onclick="redirectToPage('product')">
                 <h3>PRODUCTS</h3>

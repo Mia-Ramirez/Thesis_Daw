@@ -23,7 +23,7 @@
             $current_page_title = "shop";
             include '../components/top_nav.php';
         ?>
-<div class="space" style="margin-top: 10%;"></div>
+<div class="space" style="margin-top: 7%;"></div>
         <?php
             $category_id = NULL;
             $query = NULL;
@@ -53,7 +53,7 @@
                 unset($_SESSION["message_class"]);
                 }
             ?>
-            <div class="search">
+            <div class="search" style="float: right;">
                 <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                     <button class="btns" type="submit">Search</button>

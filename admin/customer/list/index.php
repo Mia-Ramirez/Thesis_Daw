@@ -28,13 +28,13 @@
             include($doc_root.'/utils/connect.php');
             $sqlGetCustomers = "SELECT c.first_name, c.last_name, c.address, c.contact_number, u.email, c.id AS customer_id FROM customer c
                             LEFT JOIN user u ON c.user_id=u.id
-                            WHERE c.is_active=1 OR u.is_active=1";
+                            WHERE (c.is_active=1 OR u.is_active=1)";
             
             $filter_str = "";
             $query = NULL;
             if (isset($_GET['query'])){
                 $query = $_GET['query'];
-                $filter_str = " AND (c.is_active=1 OR u.is_active=1) AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'";  
+                $filter_str = " AND CONCAT(c.first_name, c.last_name, c.address, c.contact_number, COALESCE(u.email, '')) LIKE '%$query%'";  
             };
 
             $offset = 0;
@@ -50,7 +50,7 @@
             $result = mysqli_query($conn,$sqlGetCustomers);
         ?>
 
-        <div class="search"  style="margin-top: 11%;">
+        <div class="search"  style="margin-top: 8%;">
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                 <button class="btns" type="submit">Search</button>

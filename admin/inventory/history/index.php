@@ -22,7 +22,7 @@
             $current_page_title = "stock history";
             include '../../components/top_nav.php';
         ?> 
-    <div class="content" style="margin-top: 11%;">
+    <div class="content" style="margin-top: 8%;">
 <?php
             include($doc_root.'/utils/connect.php');
 
@@ -38,12 +38,22 @@
             ";
 
             $filter_str = "";
-            if (isset($_GET['product_id'])){
+
+            $query = NULL;
+            $product_id = NULL;
+            $stock_type = NULL;
+
+            if (isset($_GET['query'])){
+                $query = $_GET['query'];
+                $filter_str .= " AND CONCAT(p.name, u.username, h.date_recorded) LIKE '%$query%'";  
+            };
+
+            if (isset($_GET['product_id']) && ($_GET['product_id'] != '')){
                 $product_id = $_GET['product_id'];
                 $filter_str .= " AND p.id=".$product_id;
             };
 
-            if (isset($_GET['stock_type'])){
+            if (isset($_GET['stock_type']) && ($_GET['stock_type'] != '')){
                 $stock_type = $_GET['stock_type'];
                 if ($stock_type == 'in'){
                     $filter_str .= " AND h.remarks LIKE '%Add%'";
@@ -64,6 +74,15 @@
             
             $result = mysqli_query($conn,$sqlGetInventoryHistory);
         ?>
+
+        <div class="search">
+            <form method="GET" action="">
+                <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
+                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+                <input type="hidden" name="stock_type" value="<?php echo $stock_type; ?>">
+                <button style="background-color: red; color: white; padding: 0.7rem;"  class="btns" type="submit">Search</button>
+            </form>
+        </div>
 
         <div class="table">
             <?php

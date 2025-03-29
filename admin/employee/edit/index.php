@@ -23,7 +23,7 @@
             $current_page_title = "update employee details";
             include '../../components/top_nav.php';
         ?> 
-  <div class="space" style="margin-top: 10%;"></div>
+  <div class="space" style="margin-top: 6%;"></div>
         <?php
             include($doc_root.'/utils/connect.php');
             if (isset($_GET['employee_id'])) {

@@ -23,7 +23,7 @@
             $current_page_title = "list of products";
             include '../../components/top_nav.php';
         ?>
-    <div class="content" style="margin-top: 11%;">
+    <div class="content" style="margin-top: 8%;">
         <?php
             include($doc_root.'/utils/connect.php');
             $sqlGetProducts = "SELECT id, name, price, rack_location, applicable_discounts FROM product";
@@ -42,7 +42,7 @@
             <form method="GET" action="">
                 <input type="text" value="<?php echo $query; ?>" name="query" placeholder="Search anything...">
                 <button style="background-color: red; color: white;"  class="btns" type="submit">Search</button>
-                <button style="background-color: red; color: white;" type="button" class="btns" onclick="redirectToPage('add')">Add Product</button>  
+                <button style="background-color: red; color: white;" type="button" class="btns" onclick="redirectToPage('add')">Add Product</button>
             </form>
         </div>
 

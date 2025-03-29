@@ -34,20 +34,19 @@
     
 }
 .search{
-    background-color: transparent;
-    width: 70%;
-    margin-top: 1%;
-    margin-left: 0.5%;
-    margin-bottom: 0.5%;
+    float: right;
+    background-color: white;
+    width: 100%;
     position: fixed;
     z-index: 1000;
+    top: 13%;
 }
 input{
-    padding: 1%; 
+    padding: 0.8%; 
     width: 25%;
 }
   .btns{
-    background-color: red; 
+    background-color: lightsteelblue; 
     padding: 1%;
     border: solid 1px white;
 }

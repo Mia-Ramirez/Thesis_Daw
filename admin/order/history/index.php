@@ -22,7 +22,7 @@
             $current_page_title = "order history";
             include '../../components/top_nav.php';
         ?> 
-        <div class="content" style="margin-top: 11%;">
+        <div class="content" style="margin-top: 8%;">
 <?php
             include($doc_root.'/utils/connect.php');
 

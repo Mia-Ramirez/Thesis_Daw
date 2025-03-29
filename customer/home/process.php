@@ -51,6 +51,7 @@
         $customer_cart_id = $row['customer_cart_id'];
     } else {
         $sqlInsertCustomerCart = "INSERT INTO customer_cart(customer_id) VALUES ('$customer_id')";
+        error_log("HERE: sqlInsertCustomerCart ".$sqlInsertCustomerCart);
         if(!mysqli_query($conn,$sqlInsertCustomerCart)){
             die("Something went wrong");
         };
@@ -108,7 +109,7 @@
     if ($action == "buy_now"){
         header("Location:../cart/confirm/index.php");
     } else {
-        $_SESSION["message_string"] = "Product added to cart!";
+       // $_SESSION["message_string"] = "Product added to cart!";
         $_SESSION["message_class"] = "info";
         header("Location:index.php");
     };

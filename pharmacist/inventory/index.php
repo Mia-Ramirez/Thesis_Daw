@@ -30,12 +30,12 @@
                 <img class="pic" src=<?php echo $base_url."assets/images/meds.png"; ?> alt="product">
             </div>
 
-            <div class="card stock_in" onclick="redirectToPage('stock_in')">
+          <!--   <div class="card stock_in" onclick="redirectToPage('stock_in')">
                 <h3>STOCK IN</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/stockIn.png"; ?> alt="history">
             </div>
             
-<!-- <div class="card stock_out" onclick="redirectToPage('stock_out')">
+                <div class="card stock_out" onclick="redirectToPage('stock_out')">
                 <h3>STOCK OUT</h3>
                 <img class="pic" src=<?php echo $base_url."assets/images/stockOut.png"; ?> alt="history">
             </div> -->  
